@@ -1,3 +1,4 @@
+.. -*- mode: rst -*-
 How to use the .dump files
 ------------
 
@@ -19,4 +20,4 @@ These files are python data structures serialized with cPickle library.
 
 Citation
 --------
-TODO
+# TODO
