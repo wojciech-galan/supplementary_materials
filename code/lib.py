@@ -6,7 +6,8 @@ import random
 def rename_host_lineage(hlin):
     if 'Archaea' in hlin or 'Bacteria' in hlin:
         return 'phage'
-    return 'Eucaryota-infecting'
+    elif 'Eukaryota' in hlin:
+        return 'Eucaryota-infecting'
 
 def groupping(hlineages):
     ret = []
