@@ -68,12 +68,12 @@ container_left, blind_set_eu = dataset_creation(desired_container, [
     'Virus-associated RNAs',
     'unclassified ssRNA viruses',
     'Togaviridae', 'Idaeovirus', 'Nodaviridae', 'Dicistroviridae',# ssRNA+ viruses
-    'Ophioviridae', 'Pneumoviridae', 'Filoviridae', 'Bornaviridae', 'Arenaviridae', 'Quaranjavirus'# ssRNA- viruses
-    'Inoviridae', 'Gammatorquevirus', 'Babuvirus', 'unclassified Geminiviridae', 'Densovirinae',
+    'Ophioviridae', 'Pneumoviridae', 'Filoviridae', 'Bornaviridae', 'Arenaviridae',# ssRNA- viruses
+    'Gammatorquevirus', 'Babuvirus', 'unclassified Geminiviridae', 'Densovirinae',
             'unclassified Parvoviridae', 'Curtovirus', 'Turncurtovirus', # ssDNA viruses
     'Hypoviridae', 'Aquareovirus', # dsRNA viruses
     'Nudiviridae', 'Lambdapapillomavirus', 'Aviadenovirus', 'Iridoviridae', 'Betaherpesvirinae',
-            'unclassified dsDNA viruses', # dsDNA viruses, no RNA stage
+            'unclassified dsDNA viruses', 'unclassified Betapolyomavirus', # dsDNA viruses, no RNA stage
     'Babu- and nanovirus-associated alphasatellites', 'Double-stranded RNA satellites',# Satellites
     'Hepadnaviridae', # Retro-transcribing viruses
     'Gemykibivirus' # Genomoviridae
