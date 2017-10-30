@@ -47,3 +47,20 @@ def get_virus(left_viruses, lin, power):
     choosen_viruses = [virus for i, virus in enumerate(viruses_for_the_lineage) if get_or_not(f(i, power))]
     left_viruses = [virus for virus in left_viruses if virus not in set(choosen_viruses)]
     return choosen_viruses, left_viruses
+
+
+def get_feature_index(possible_indices, curr_indices):
+    index = random.choice(possible_indices)
+    possible_indices.remove(index)
+    curr_indices.append(index)
+    return possible_indices, curr_indices
+
+
+def get_feature_indices(feats_cardinality, mean_num_of_choosen_feats, std_num_of_choosen_feats):
+    '''Tworzy listę indeksów cech dla danego osobnika. Długość listy ma rozkład normalny o średniej mean i odchyleniu std'''
+    length = int(random.gauss(mean_num_of_choosen_feats + 0.5, std_num_of_choosen_feats))
+    curr_feat_indices = []
+    possible_indices = range(feats_cardinality)
+    while len(curr_feat_indices) < length:
+        possible_indices, curr_feat_indices = get_feature_index(possible_indices, curr_feat_indices)
+    return creator.Individual([int(i in curr_feat_indices) for i in range(feats_cardinality)])
