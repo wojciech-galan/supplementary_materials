@@ -14,7 +14,7 @@ import pandas as pd
 main_page = 'https://img.jgi.doe.gov/cgi-bin/vr/main.cgi?section=Viral&page=viralScaffoldList&taxon_oid={}'
 fname = 'genomeSet61246_11-oct-2017.csv'
 dirname = os.path.join('..', 'datasets')
-outfile = os.path.join('..', 'datasets', datetime.date.today().strftime("%Y-%m-%d")+'.dump')
+outfile = os.path.join('..', 'datasets', datetime.date.today().strftime("%Y-%m-%d") + '.dump')
 
 
 def get_lengths(driver, address):
@@ -28,12 +28,13 @@ def get_lengths(driver, address):
         opt_all = el.find_element_by_xpath("option[contains(text(), 'All')]")
         opt_all.click()
         elem = driver.find_element_by_class_name("yui-pg-current")
-    elems = driver.find_elements_by_xpath('//td[@class="yui-dt0-col-SequenceLengthbp yui-dt-col-SequenceLengthbp yui-dt-sortable yui-dt-resizeable"]/div/a')
+    elems = driver.find_elements_by_xpath(
+        '//td[@class="yui-dt0-col-SequenceLengthbp yui-dt-col-SequenceLengthbp yui-dt-sortable yui-dt-resizeable"]/div/a')
     return [int(elem.text) for elem in elems]
 
 
 with open(os.path.join(dirname, fname)) as fh:
-    df = pd.read_csv(fh, sep='\t',  lineterminator='\n', names=None)
+    df = pd.read_csv(fh, sep='\t', lineterminator='\n', names=None)
     taxon_oids = df['Taxon OID'].values
     contig_count = df['Viral Contig Count'].values
 

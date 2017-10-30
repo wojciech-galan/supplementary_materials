@@ -17,6 +17,7 @@ def virus_to_attributes(virus, choosen_attributes):
             l.append(virus.__dict__[att])
     return l
 
+
 # loading datasets
 test_eu = pickle.load(open(os.path.join('..', 'datasets', 'viruses_blind_set_eu.dump')))
 learn_eu = pickle.load(open(os.path.join('..', 'datasets', 'viruses_crossvalidation_eu.dump')))
@@ -69,4 +70,3 @@ pickle.dump(classes_learn, open(os.path.join('..', 'datasets', 'classes_learn.du
 pickle.dump(classes_test, open(os.path.join('..', 'datasets', 'classes_test.dump'), 'w'))
 pickle.dump(ids_learn, open(os.path.join('..', 'datasets', 'ids_learn.dump'), 'w'))
 pickle.dump(ids_test, open(os.path.join('..', 'datasets', 'ids_test.dump'), 'w'))
-
