@@ -59,7 +59,6 @@ def knn(X_train, X_test, y_train, neighbours):
 
 
 def knn_for_given_splits_and_features(features_indexes, splits, positive_class, neighbours):
-    length = len(splits)
     results = []
     for split in splits:
         l, t, l_classes, t_classes, l_ids, t_ids = split
