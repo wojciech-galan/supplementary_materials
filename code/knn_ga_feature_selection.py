@@ -5,6 +5,7 @@ import copy
 import argparse
 import os
 import cPickle as pickle
+import numpy as np
 from multiprocessing import Pool
 from deap import base
 from deap import creator
@@ -25,7 +26,8 @@ def wrapper(ml_function, ml_arguments, result_procesing_function, binary_vector)
         return result_procesing_function(ml_function(indexes, *ml_arguments))
 
 
-def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize, num_of_elitte_individuals, pop_size,
+def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
+       num_of_elitte_individuals, pop_size,
        num_of_neighbours, cv_splits, max_turns):
     # GENETIC ALGORITHMS: DECLARATIONS
     creator.create("FitnessMax", base.Fitness, weights=(1.0,))
@@ -40,15 +42,16 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
     toolbox.register("mutate", tools.mutFlipBit, indpb=float(mut_pb) / num_of_possible_feats)  # zmiana!
     toolbox.register("select", tools.selTournament, tournsize=tournsize)
     toolbox.register("select_best", tools.selBest, k=num_of_elitte_individuals)
-    toolbox.register("evaluate", wrapper, knn_for_given_splits_and_features, [cv_splits, 0, num_of_neighbours], individual_fitness)
+    toolbox.register("evaluate", wrapper, knn_for_given_splits_and_features, [cv_splits, 0, num_of_neighbours],
+                     individual_fitness)
 
     pop = toolbox.population(n=pop_size)  # generate initial population
     pop = [l[0] for l in pop]
     pop = checkPopulation(pop)  # check for zero-vectors
 
     # Evaluate the entire population
-    # pool = Pool(3)
-    parents_fitnesses = map(toolbox.evaluate, pop)
+    pool = Pool(3)
+    parents_fitnesses = pool.map(toolbox.evaluate, pop)
     for individual, fit in zip(pop, parents_fitnesses):
         individual.fitness.values = fit
         CACHE[tuple(individual)] = fit
@@ -82,7 +85,7 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
 
         # Evaluate the offspring
         offspring = checkPopulation(offspring)
-        fitnesses = map(toolbox.evaluate, offspring)
+        fitnesses = pool.map(toolbox.evaluate, offspring)
         for individual, fit in zip(offspring, fitnesses):
             individual.fitness.values = fit
             CACHE[tuple(individual)] = fit
@@ -103,8 +106,10 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Genetic algorithms for feature selection")
     parser.add_argument('mean_initial_feats', action='store', type=int, help='mean initial number of features')
-    parser.add_argument('std_initial_feats', action='store', type=int, help='Standard deviation of initial number of features')
-    parser.add_argument('cx', action='store', type=str, choices=['cxUniform', 'cxOnePoint', 'cxTwoPoint'], help='crossover type')
+    parser.add_argument('std_initial_feats', action='store', type=int,
+                        help='Standard deviation of initial number of features')
+    parser.add_argument('cx', action='store', type=str, choices=['cxUniform', 'cxOnePoint', 'cxTwoPoint'],
+                        help='crossover type')
     parser.add_argument('mut_pb', action='store', type=float, help='mutation probability')
     parser.add_argument('tournsize', action='store', type=int, help='number of individuals in tournament')
     parser.add_argument('elitte_individuals', action='store', type=int, help='number of elitte individuals')
@@ -117,5 +122,3 @@ if __name__ == '__main__':
     print args
     ga(num_of_possible_features, args.mean_initial_feats, args.std_initial_feats, args.cx, args.mut_pb, args.tournsize,
        args.elitte_individuals, args.pop_size, args.neighbours, splits, args.max_turns)
-
-
