@@ -51,6 +51,7 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
     out_path = os.path.join(res_dir, out_name)
 
     if not os.path.exists(out_path):
+        print "starting computations for file", out_path
 
         # GENETIC ALGORITHMS: DECLARATIONS
         creator.create("FitnessMax", base.Fitness, weights=(1.0,))
@@ -115,7 +116,7 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
                     pop.append(best_individual)
                     fitnesses.append(best_individual.fitness.values)
             print_summary(generation, pop, fitnesses, eval_time)
-
+        print "writing output to", out_path
         pickle.dump(pop, open(out_path, 'w'))
 
 
