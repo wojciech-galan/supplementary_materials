@@ -45,72 +45,78 @@ def evaluate_and_measure_time(pool, func, population):
 
 def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
        num_of_elitte_individuals, pop_size, num_of_neighbours, cv_splits, max_turns, res_dir, cpus_num):
-    # GENETIC ALGORITHMS: DECLARATIONS
-    creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-    creator.create("Individual", list, fitness=creator.FitnessMax)
 
-    toolbox = base.Toolbox()
-    toolbox.register("attribute", get_feature_indices, num_of_possible_feats, mean_initial_num_of_feats,
-                     std_initial_num_of_feats)
-    toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
-    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-    toolbox.register("mate", eval('tools.%s' % cx))
-    toolbox.register("mutate", tools.mutFlipBit, indpb=float(mut_pb) / num_of_possible_feats)  # zmiana!
-    toolbox.register("select", tools.selTournament, tournsize=tournsize)
-    toolbox.register("select_best", tools.selBest, k=num_of_elitte_individuals)
-    toolbox.register("evaluate", wrapper, knn_for_given_splits_and_features, [cv_splits, 0, num_of_neighbours],
-                     individual_fitness)
-
-    pop = toolbox.population(n=pop_size)  # generate initial population
-    pop = [l[0] for l in pop]
-    pop = checkPopulation(pop)  # check for zero-vectors
-
-    # Evaluate the entire population
-    pool = multiprocessing.Pool(cpus_num)
-    parents_fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, pop)
-    generation = 0
-    print_summary(generation, pop, parents_fitnesses, eval_time)
-
-    # START EVOLUTION
-    while not all(pop[0] == pop[i] for i in range(1, len(pop))) and generation < max_turns:
-        parents = toolbox.select(pop, pop_size)  # Select the next generation individuals
-
-        # elitism
-        best_individuals = sorted(pop, key=lambda x: x.fitness.values, reverse=True)[:num_of_elitte_individuals]
-
-        offspring = []
-        # Apply crossover and mutation on the offspring
-        for i in range(0, len(parents) - 1, 2):
-            child1 = copy.deepcopy(parents[i])
-            child2 = copy.deepcopy(parents[i + 1])
-            if cx == 'cxUniform':
-                toolbox.mate(child1, child2, 0.5)
-            else:
-                toolbox.mate(child1, child2)
-            del child1.fitness.values
-            del child2.fitness.values
-            offspring.append(child1)
-            offspring.append(child2)
-
-        for mutant in offspring:
-            toolbox.mutate(mutant)
-            del mutant.fitness.values
-
-        # Evaluate the offspring
-        offspring = checkPopulation(offspring)
-        fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, offspring)
-
-        pop = offspring
-        generation += 1
-        # dodanie elitarnych osobników
-        for best_individual in best_individuals:
-            if best_individual not in pop:
-                pop.append(best_individual)
-                fitnesses.append(best_individual.fitness.values)
-        print_summary(generation, pop, fitnesses, eval_time)
     out_name = '_'.join([str(x) for x in mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
-       num_of_elitte_individuals, pop_size, num_of_neighbours, max_turns])
-    pickle.dump(pop, open(os.path.join(res_dir, out_name), 'w'))
+                                         num_of_elitte_individuals, pop_size, num_of_neighbours, max_turns])
+    out_path = os.path.join(res_dir, out_name)
+
+    if not os.path.exists(out_path):
+
+        # GENETIC ALGORITHMS: DECLARATIONS
+        creator.create("FitnessMax", base.Fitness, weights=(1.0,))
+        creator.create("Individual", list, fitness=creator.FitnessMax)
+
+        toolbox = base.Toolbox()
+        toolbox.register("attribute", get_feature_indices, num_of_possible_feats, mean_initial_num_of_feats,
+                         std_initial_num_of_feats)
+        toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attribute, n=1)
+        toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+        toolbox.register("mate", eval('tools.%s' % cx))
+        toolbox.register("mutate", tools.mutFlipBit, indpb=float(mut_pb) / num_of_possible_feats)  # zmiana!
+        toolbox.register("select", tools.selTournament, tournsize=tournsize)
+        toolbox.register("select_best", tools.selBest, k=num_of_elitte_individuals)
+        toolbox.register("evaluate", wrapper, knn_for_given_splits_and_features, [cv_splits, 0, num_of_neighbours],
+                         individual_fitness)
+
+        pop = toolbox.population(n=pop_size)  # generate initial population
+        pop = [l[0] for l in pop]
+        pop = checkPopulation(pop)  # check for zero-vectors
+
+        # Evaluate the entire population
+        pool = multiprocessing.Pool(cpus_num)
+        parents_fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, pop)
+        generation = 0
+        print_summary(generation, pop, parents_fitnesses, eval_time)
+
+        # START EVOLUTION
+        while not all(pop[0] == pop[i] for i in range(1, len(pop))) and generation < max_turns:
+            parents = toolbox.select(pop, pop_size)  # Select the next generation individuals
+
+            # elitism
+            best_individuals = sorted(pop, key=lambda x: x.fitness.values, reverse=True)[:num_of_elitte_individuals]
+
+            offspring = []
+            # Apply crossover and mutation on the offspring
+            for i in range(0, len(parents) - 1, 2):
+                child1 = copy.deepcopy(parents[i])
+                child2 = copy.deepcopy(parents[i + 1])
+                if cx == 'cxUniform':
+                    toolbox.mate(child1, child2, 0.5)
+                else:
+                    toolbox.mate(child1, child2)
+                del child1.fitness.values
+                del child2.fitness.values
+                offspring.append(child1)
+                offspring.append(child2)
+
+            for mutant in offspring:
+                toolbox.mutate(mutant)
+                del mutant.fitness.values
+
+            # Evaluate the offspring
+            offspring = checkPopulation(offspring)
+            fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, offspring)
+
+            pop = offspring
+            generation += 1
+            # dodanie elitarnych osobników
+            for best_individual in best_individuals:
+                if best_individual not in pop:
+                    pop.append(best_individual)
+                    fitnesses.append(best_individual.fitness.values)
+            print_summary(generation, pop, fitnesses, eval_time)
+
+        pickle.dump(pop, open(out_path, 'w'))
 
 
 if __name__ == '__main__':
