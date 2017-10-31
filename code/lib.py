@@ -62,6 +62,9 @@ def get_feature_indices(feats_cardinality, mean_num_of_choosen_feats, std_num_of
     length = int(random.gauss(mean_num_of_choosen_feats + 0.5, std_num_of_choosen_feats))
     curr_feat_indices = []
     possible_indices = range(feats_cardinality)
-    while len(curr_feat_indices) < length:
-        possible_indices, curr_feat_indices = get_feature_index(possible_indices, curr_feat_indices)
+    if length >= feats_cardinality: # more features than possible
+        curr_feat_indices = range(feats_cardinality)
+    else:
+        while len(curr_feat_indices) < length:
+            possible_indices, curr_feat_indices = get_feature_index(possible_indices, curr_feat_indices)
     return creator.Individual([int(i in curr_feat_indices) for i in range(feats_cardinality)])
