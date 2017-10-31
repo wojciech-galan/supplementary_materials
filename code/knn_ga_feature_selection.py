@@ -4,8 +4,8 @@
 import copy
 import argparse
 import os
+import time
 import cPickle as pickle
-import numpy as np
 from multiprocessing import Pool
 from deap import base
 from deap import creator
@@ -16,7 +16,6 @@ from ml_stuff import knn_for_given_splits_and_features
 
 CACHE = {}
 
-
 def wrapper(ml_function, ml_arguments, result_procesing_function, binary_vector):
     try:
         res = CACHE[tuple(binary_vector)]
@@ -24,6 +23,22 @@ def wrapper(ml_function, ml_arguments, result_procesing_function, binary_vector)
     except KeyError:
         indexes = [i for i, x in enumerate(binary_vector) if x]
         return result_procesing_function(ml_function(indexes, *ml_arguments))
+
+
+def print_summary(generation, population, fitnesses, evaluation_time):
+    m = max([(k, v) for k, v in zip(population, fitnesses)], key=lambda x: x[1])
+    different_individuals = set(tuple(x) for x in population)
+    print generation, eval_population(fitnesses), m[1], sum(m[0]), len(different_individuals), len(CACHE), evaluation_time
+
+
+def evaluate_and_measure_time(pool, func, population):
+    t = time.time()
+    fitnesses = pool.map(func, population)
+    elapsed_time = time.time() - t
+    for individual, fit in zip(population, fitnesses):
+        individual.fitness.values = fit
+        CACHE[tuple(individual)] = fit
+    return fitnesses, elapsed_time
 
 
 def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
@@ -51,12 +66,9 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
 
     # Evaluate the entire population
     pool = Pool(3)
-    parents_fitnesses = pool.map(toolbox.evaluate, pop)
-    for individual, fit in zip(pop, parents_fitnesses):
-        individual.fitness.values = fit
-        CACHE[tuple(individual)] = fit
+    parents_fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, pop)
     generation = 0
-    print generation, eval_population(parents_fitnesses)
+    print_summary(generation, pop, parents_fitnesses, eval_time)
 
     # START EVOLUTION
     while not all(pop[0] == pop[i] for i in range(1, len(pop))) or generation == max_turns:
@@ -85,22 +97,16 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
 
         # Evaluate the offspring
         offspring = checkPopulation(offspring)
-        fitnesses = pool.map(toolbox.evaluate, offspring)
-        for individual, fit in zip(offspring, fitnesses):
-            individual.fitness.values = fit
-            CACHE[tuple(individual)] = fit
+        fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, offspring)
 
         pop = offspring
         generation += 1
         # dodanie elitarnych osobników
         for best_individual in best_individuals:
             if best_individual not in pop:
-                print "elitte"
                 pop.append(best_individual)
                 fitnesses.append(best_individual.fitness.values)
-        m = max([(k, v) for k, v in zip(pop, fitnesses)], key=lambda x: x[1])
-        different_individuals = set(tuple(x) for x in pop)
-        print generation, eval_population(fitnesses), m[1], sum(m[0]), len(different_individuals), len(CACHE)
+        print_summary(generation, pop, fitnesses, eval_time)
 
 
 if __name__ == '__main__':
