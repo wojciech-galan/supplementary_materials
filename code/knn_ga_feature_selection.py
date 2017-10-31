@@ -17,13 +17,13 @@ from ml_stuff import knn_for_given_splits_and_features
 CACHE = {}
 
 
-def wrapper(ml_function, ml_arguments, result_procesing_function, binary_vector):
+def wrapper(ml_function, ml_arguments, result_processing_function, binary_vector):
     try:
         res = CACHE[tuple(binary_vector)]
         return res
     except KeyError:
         indexes = [i for i, x in enumerate(binary_vector) if x]
-        return result_procesing_function(ml_function(indexes, *ml_arguments))
+        return result_processing_function(ml_function(indexes, *ml_arguments))
 
 
 def print_summary(generation, population, fitnesses, evaluation_time):
