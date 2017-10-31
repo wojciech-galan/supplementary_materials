@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import math
 import random
+import time
+from functools import wraps
 from deap import creator
 
 
@@ -68,3 +70,13 @@ def get_feature_indices(feats_cardinality, mean_num_of_choosen_feats, std_num_of
         while len(curr_feat_indices) < length:
             possible_indices, curr_feat_indices = get_feature_index(possible_indices, curr_feat_indices)
     return creator.Individual([int(i in curr_feat_indices) for i in range(feats_cardinality)])
+
+
+def timing(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = f(*args, **kwargs)
+        print time.time() - start, "seconds"
+        return result
+    return wrapper
