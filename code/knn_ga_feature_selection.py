@@ -5,8 +5,8 @@ import copy
 import argparse
 import os
 import time
-import cPickle as pickle
 import multiprocessing
+import cPickle as pickle
 from deap import base
 from deap import creator
 from deap import tools
