@@ -27,7 +27,7 @@ do
             do
                 for k in {1..7..2}
                 do
-                    python knn_ga_feature_selection.py $mean 5 $crossover $mut_proba $tournsize 1 $k 100 200 $SCRATCHDIR/$subdir --infile $infile --cpus 6
+                    python code/knn_ga_feature_selection.py $mean 5 $crossover $mut_proba $tournsize 1 $k 100 200 $SCRATCHDIR/$subdir --infile $infile --cpus 6
                 done
                 mv $SCRATCHDIR/$subdir/* SLURM_SUBMIT_DIR/$subdir
             done
