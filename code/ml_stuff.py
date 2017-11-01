@@ -57,6 +57,18 @@ def knn(X_train, X_test, y_train, neighbours):
     clf.fit(X_train, y_train)
     return clf.predict_proba(X_test), clf.classes_
 
+def preprocess_results_for_given_splits_and_features(results):
+    '''
+    Scales MCC to range [0,1]
+    :param results: numpy array [[mcc, auc], [mcc, auc],...]
+    :return: scaled results
+    '''
+    print results
+    results[:,0] = (results[:,0] + 1) / 2
+    print results
+    import pdb
+    pdb.set_trace()
+    return results
 
 def knn_for_given_splits_and_features(features_indexes, splits, positive_class, neighbours):
     results = []
@@ -67,5 +79,5 @@ def knn_for_given_splits_and_features(features_indexes, splits, positive_class, 
         res, class_order = knn(l, t, l_classes, neighbours)
         evaluated = binary_classification_evaluation(t_classes, res, t_ids, positive_class, class_order)
         results.append(evaluated)
-    results = np.array(results)
+    results = preprocess_results_for_given_splits_and_features(np.array(results))
     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
