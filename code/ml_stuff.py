@@ -63,11 +63,7 @@ def preprocess_results_for_given_splits_and_features(results):
     :param results: numpy array [[mcc, auc], [mcc, auc],...]
     :return: scaled results
     '''
-    print results
     results[:,0] = (results[:,0] + 1) / 2
-    print results
-    import pdb
-    pdb.set_trace()
     return results
 
 def knn_for_given_splits_and_features(features_indexes, splits, positive_class, neighbours):
