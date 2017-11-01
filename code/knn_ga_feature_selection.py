@@ -45,7 +45,6 @@ def evaluate_and_measure_time(pool, func, population):
 
 def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
        num_of_elitte_individuals, pop_size, num_of_neighbours, cv_splits, max_turns, res_dir, cpus_num):
-
     out_name = '_'.join([str(x) for x in mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
                                          num_of_elitte_individuals, pop_size, num_of_neighbours, max_turns])
     out_path = os.path.join(res_dir, out_name)
@@ -133,12 +132,14 @@ if __name__ == '__main__':
     parser.add_argument('neighbours', action='store', type=int, help='number of neighbours for knn')
     parser.add_argument('pop_size', action='store', type=int, help='ga population size')
     parser.add_argument('max_turns', action='store', type=int, help='max number of ga generations')
+    parser.add_argument('--infile', action='store', type=str, default=os.path.join('..', 'datasets', 'splits.dump'),
+                        help='input file containing cv splits')
     parser.add_argument('res_dir', action='store', type=str, help='directory containing results')
     parser.add_argument('--cpus', action='store', type=int, default=multiprocessing.cpu_count() - 1,
                         help='number of logical cpus used for evaluation of individuals')
-    splits = pickle.load(open(os.path.join('..', 'datasets', 'splits.dump')))
-    num_of_possible_features = len(splits[0][0][0])
     args = parser.parse_args()
-    print "starting computuations using %d processes for evaluation" %args.cpus
+    splits = pickle.load(open(args.infile))
+    num_of_possible_features = len(splits[0][0][0])
+    print "starting computuations using %d processes for evaluation" % args.cpus
     ga(num_of_possible_features, args.mean_initial_feats, args.std_initial_feats, args.cx, args.mut_pb, args.tournsize,
        args.elitte_individuals, args.pop_size, args.neighbours, splits, args.max_turns, args.res_dir, args.cpus)
