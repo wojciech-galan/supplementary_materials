@@ -29,7 +29,7 @@ do
                 do
                     python code/knn_ga_feature_selection.py $mean 5 $crossover $mut_proba $tournsize 1 $k 100 200 $SCRATCHDIR/$subdir --infile $infile --cpus 6 --searchdir $SLURM_SUBMIT_DIR/$subdir
                 done
-                mv $SCRATCHDIR/$subdir/* SLURM_SUBMIT_DIR/$subdir
+                mv $SCRATCHDIR/$subdir/* $SLURM_SUBMIT_DIR/$subdir
             done
         done
     done
