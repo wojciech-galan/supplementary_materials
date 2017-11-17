@@ -51,7 +51,7 @@ attributes_learn = scaler.fit_transform(attributes_learn)
 attributes_test = scaler.transform(attributes_test)
 
 # preparing crossvalidation splits
-skf = StratifiedKFold(n_splits=10)
+skf = StratifiedKFold(n_splits=5)
 cv_splits = []
 for i, (train_index, test_index) in enumerate(skf.split(attributes_learn, classes_learn)):
     cv_splits.append([])
