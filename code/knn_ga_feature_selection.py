@@ -44,13 +44,14 @@ def evaluate_and_measure_time(pool, func, population):
 
 
 def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
-       num_of_elitte_individuals, pop_size, num_of_neighbours, cv_splits, max_turns, res_dir, cpus_num):
-
+       num_of_elitte_individuals, pop_size, num_of_neighbours, cv_splits, max_turns, res_dir, search_dir, cpus_num):
     out_name = '_'.join([str(x) for x in mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
                                          num_of_elitte_individuals, pop_size, num_of_neighbours, max_turns])
+    search_path = os.path.join(search_dir, out_name)
     out_path = os.path.join(res_dir, out_name)
 
-    if not os.path.exists(out_path):
+    print "checking if either %s or %s exists" %(out_path, search_path)
+    if not os.path.exists(out_path) and not os.path.exists(search_path):
         print "starting computations for file", out_path
 
         # GENETIC ALGORITHMS: DECLARATIONS
@@ -136,9 +137,15 @@ if __name__ == '__main__':
     parser.add_argument('res_dir', action='store', type=str, help='directory containing results')
     parser.add_argument('--cpus', action='store', type=int, default=multiprocessing.cpu_count() - 1,
                         help='number of logical cpus used for evaluation of individuals')
-    splits = pickle.load(open(os.path.join('..', 'datasets', 'splits.dump')))
-    num_of_possible_features = len(splits[0][0][0])
+    parser.add_argument('--infile', action='store', type=str, default=os.path.join('..', 'datasets', 'splits.dump'),
+                        help='input file containing cv splits')
+    parser.add_argument('--searchdir', action='store', type=str, default=os.path.join('..', 'datasets', 'splits.dump'),
+                        help='additional directory to be searched for already existing files')
     args = parser.parse_args()
-    print "starting computuations using %d processes for evaluation" %args.cpus
+    splits = pickle.load(open(args.infile))
+    num_of_possible_features = len(splits[0][0][0])
+    search_dir = args.searchdir or args.res_dir
+    print "starting computuations using %d processes for evaluation" % args.cpus
     ga(num_of_possible_features, args.mean_initial_feats, args.std_initial_feats, args.cx, args.mut_pb, args.tournsize,
-       args.elitte_individuals, args.pop_size, args.neighbours, splits, args.max_turns, args.res_dir, args.cpus)
+       args.elitte_individuals, args.pop_size, args.neighbours, splits, args.max_turns, args.res_dir, search_dir,
+       args.cpus)
