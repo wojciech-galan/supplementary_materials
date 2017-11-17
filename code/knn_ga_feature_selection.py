@@ -14,37 +14,40 @@ from ga_stuff import checkPopulation, individual_fitness, eval_population
 from lib import get_feature_indices
 from ml_stuff import knn_for_given_splits_and_features
 
-CACHE = {}
 
-
-def wrapper(ml_function, ml_arguments, result_processing_function, binary_vector):
+def wrapper(ml_function, cache, ml_arguments, result_processing_function, binary_vector):
     try:
-        res = CACHE[tuple(binary_vector)]
+        res = cache[tuple(binary_vector)]
         return res
     except KeyError:
         indexes = [i for i, x in enumerate(binary_vector) if x]
         return result_processing_function(ml_function(indexes, *ml_arguments))
 
 
-def print_summary(generation, population, fitnesses, evaluation_time):
+def print_summary(generation, cache, population, fitnesses, evaluation_time):
     m = max([(k, v) for k, v in zip(population, fitnesses)], key=lambda x: x[1])
     different_individuals = set(tuple(x) for x in population)
-    print generation, eval_population(fitnesses), m[1], sum(m[0]), len(different_individuals), len(
-        CACHE), evaluation_time
+    print "generation_num", generation, "population_fitness", eval_population(fitnesses), \
+        "best_ind_fitness", m[1], "num_of_feats_in_best_ind", sum(m[0]), \
+        "num_of_different_individuals", len(different_individuals), "CACHE_len", len(cache), \
+        "eval_time", evaluation_time
 
 
-def evaluate_and_measure_time(pool, func, population):
+def evaluate_and_measure_time(pool, func, population, cache):
     t = time.time()
     fitnesses = pool.map(func, population)
     elapsed_time = time.time() - t
     for individual, fit in zip(population, fitnesses):
         individual.fitness.values = fit
-        CACHE[tuple(individual)] = fit
+        cache[tuple(individual)] = fit
     return fitnesses, elapsed_time
 
 
 def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
        num_of_elitte_individuals, pop_size, num_of_neighbours, cv_splits, max_turns, res_dir, search_dir, cpus_num):
+
+    cache = {}
+
     out_name = '_'.join([str(x) for x in mean_initial_num_of_feats, std_initial_num_of_feats, cx, mut_pb, tournsize,
                                          num_of_elitte_individuals, pop_size, num_of_neighbours, max_turns])
     search_path = os.path.join(search_dir, out_name)
@@ -67,18 +70,17 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
         toolbox.register("mutate", tools.mutFlipBit, indpb=float(mut_pb) / num_of_possible_feats)  # zmiana!
         toolbox.register("select", tools.selTournament, tournsize=tournsize)
         toolbox.register("select_best", tools.selBest, k=num_of_elitte_individuals)
-        toolbox.register("evaluate", wrapper, knn_for_given_splits_and_features, [cv_splits, 0, num_of_neighbours],
+        toolbox.register("evaluate", wrapper, knn_for_given_splits_and_features, cache, [cv_splits, 0, num_of_neighbours],
                          individual_fitness)
-
         pop = toolbox.population(n=pop_size)  # generate initial population
         pop = [l[0] for l in pop]
         pop = checkPopulation(pop)  # check for zero-vectors
 
         # Evaluate the entire population
         pool = multiprocessing.Pool(cpus_num)
-        parents_fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, pop)
+        parents_fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, pop, cache)
         generation = 0
-        print_summary(generation, pop, parents_fitnesses, eval_time)
+        print_summary(generation, cache, pop, parents_fitnesses, eval_time)
 
         # START EVOLUTION
         while not all(pop[0] == pop[i] for i in range(1, len(pop))) and generation < max_turns:
@@ -107,7 +109,7 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
 
             # Evaluate the offspring
             offspring = checkPopulation(offspring)
-            fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, offspring)
+            fitnesses, eval_time = evaluate_and_measure_time(pool, toolbox.evaluate, offspring, cache)
 
             pop = offspring
             generation += 1
@@ -116,7 +118,7 @@ def ga(num_of_possible_feats, mean_initial_num_of_feats, std_initial_num_of_feat
                 if best_individual not in pop:
                     pop.append(best_individual)
                     fitnesses.append(best_individual.fitness.values)
-            print_summary(generation, pop, fitnesses, eval_time)
+            print_summary(generation, cache, pop, fitnesses, eval_time)
         print "writing output to", out_path
         pickle.dump(pop, open(out_path, 'w'))
 
@@ -146,6 +148,8 @@ if __name__ == '__main__':
     num_of_possible_features = len(splits[0][0][0])
     search_dir = args.searchdir or args.res_dir
     print "starting computuations using %d processes for evaluation" % args.cpus
+    t = time.time()
     ga(num_of_possible_features, args.mean_initial_feats, args.std_initial_feats, args.cx, args.mut_pb, args.tournsize,
        args.elitte_individuals, args.pop_size, args.neighbours, splits, args.max_turns, args.res_dir, search_dir,
        args.cpus)
+    print "Time: ", time.time() - t
