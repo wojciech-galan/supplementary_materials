@@ -98,6 +98,7 @@ assert last_group_cardinality > 0
 random.shuffle(viruses_belonging_to_the_biggest_group)
 cv_eu.extend(viruses_belonging_to_the_biggest_group[:last_group_cardinality])
 assert len(cv_eu) == 5 * cv_cardinality
+cv_eu.sort(key=lambda x:x.lineage)
 
 pickle.dump(blind_set_eu, open(os.path.join('..', 'datasets', 'viruses_blind_set_eu.dump'), 'w'))
 pickle.dump(blind_set_phages, open(os.path.join('..', 'datasets', 'viruses_blind_set_phages.dump'), 'w'))
