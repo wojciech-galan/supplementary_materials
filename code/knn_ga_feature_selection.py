@@ -28,7 +28,7 @@ def print_summary(generation, cache, population, fitnesses, evaluation_time):
     m = max([(k, v) for k, v in zip(population, fitnesses)], key=lambda x: x[1])
     different_individuals = set(tuple(x) for x in population)
     print "generation_num", generation, "population_fitness", eval_population(fitnesses), \
-        "best_ind_fitness", m[1], "num_of_feats_in_best_ind", sum(m[0]), \
+        "best_ind_fitness", m[1][0], "num_of_feats_in_best_ind", sum(m[0]), \
         "num_of_different_individuals", len(different_individuals), "CACHE_len", len(cache), \
         "eval_time", evaluation_time
 
