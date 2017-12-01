@@ -9,7 +9,7 @@
 mut_probas='0.05 0.075 0.1 0.125 0.15 0.175 0.2'
 crossovers='cxOnePoint cxTwoPoint cxUniform'
 
-subdir="ga_res/knn/$1"
+subdir="ga_res/qda/$1"
 echo "resuls written to $subdir"
 infile="$SCRATCHDIR/datasets/splits.dump"
 mkdir $SCRATCHDIR/datasets
