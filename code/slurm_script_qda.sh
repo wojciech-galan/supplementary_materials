@@ -3,13 +3,14 @@
 #SBATCH -p plgrid
 #SBATCH --time=3-00:00:00
 #SBATCH -N 1
-#SBATCH --ntasks-per-node=6
-#SBATCH --mem=6GB
+#SBATCH --ntasks-per-node=1
+#SBATCH --mem=3GB
 
 mut_probas='0.05 0.075 0.1 0.125 0.15 0.175 0.2'
 crossovers='cxOnePoint cxTwoPoint cxUniform'
 
-subdir="ga_res/knn/1"
+subdir="ga_res/knn/$1"
+echo "resuls written to $subdir"
 infile="$SCRATCHDIR/datasets/splits.dump"
 mkdir $SCRATCHDIR/datasets
 mkdir -p $SCRATCHDIR/$subdir
@@ -25,10 +26,7 @@ do
         do
             for tournsize in {2..8..2}
             do
-                for k in {1..7..2}
-                do
-                    python code/knn_ga_feature_selection.py $mean 5 $crossover $mut_proba $tournsize 1 $k 100 200 $SCRATCHDIR/$subdir --infile $infile --cpus 6 --searchdir $SLURM_SUBMIT_DIR/$subdir
-                done
+                python code/qda_ga_feature_selection.py $mean 5 $crossover $mut_proba $tournsize 1 100 200 $SCRATCHDIR/$subdir --infile $infile --cpus 6 --searchdir $SLURM_SUBMIT_DIR/$subdir
                 mv $SCRATCHDIR/$subdir/* $SLURM_SUBMIT_DIR/$subdir
             done
         done
