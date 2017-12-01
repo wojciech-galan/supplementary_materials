@@ -3,7 +3,7 @@
 #SBATCH -p plgrid
 #SBATCH --time=3-00:00:00
 #SBATCH -N 1
-#SBATCH --ntasks-per-node=1
+#SBATCH --ntasks-per-node=6
 #SBATCH --mem=3GB
 
 mut_probas='0.05 0.075 0.1 0.125 0.15 0.175 0.2'
