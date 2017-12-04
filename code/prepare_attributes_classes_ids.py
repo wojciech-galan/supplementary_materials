@@ -53,14 +53,18 @@ attributes_test = scaler.transform(attributes_test)
 # preparing crossvalidation splits
 skf = StratifiedKFold(n_splits=5)
 cv_splits = []
+indices = []
 for i, (train_index, test_index) in enumerate(skf.split(attributes_learn, classes_learn)):
     cv_splits.append([])
+    indices.append([])
     cv_splits[i].append(attributes_learn[train_index])
     cv_splits[i].append(attributes_learn[test_index])
     cv_splits[i].append(classes_learn[train_index])
     cv_splits[i].append(classes_learn[test_index])
     cv_splits[i].append(ids_learn[train_index])
     cv_splits[i].append(ids_learn[test_index])
+    indices[i].append(train_index)
+    indices[i].append(test_index)
 
 # serializing data
 pickle.dump(cv_splits, open(os.path.join('..', 'datasets', 'splits.dump'), 'w'))
@@ -70,3 +74,4 @@ pickle.dump(classes_learn, open(os.path.join('..', 'datasets', 'classes_learn.du
 pickle.dump(classes_test, open(os.path.join('..', 'datasets', 'classes_test.dump'), 'w'))
 pickle.dump(ids_learn, open(os.path.join('..', 'datasets', 'ids_learn.dump'), 'w'))
 pickle.dump(ids_test, open(os.path.join('..', 'datasets', 'ids_test.dump'), 'w'))
+pickle.dump(indices, open(os.path.join('..', 'datasets', 'cv_indices.dump'), 'w'))
