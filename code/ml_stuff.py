@@ -9,7 +9,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
 
-def binary_classification_evaluation(classes_proper, classes_probas, ids, positive_num, class_order):
+def binary_classification_evaluation(classes_proper, classes_probas, ids, positive_num, class_order, pos_ind=1):
     '''Bierze:
         - listę własciwych klas
         - listę prawdopodobieństw klas
@@ -30,7 +30,6 @@ def binary_classification_evaluation(classes_proper, classes_probas, ids, positi
     # na podstawie http://en.wikipedia.org/wiki/Sensitivity_and_specificity
     assert len(classes_proper) == len(classes_probas) == len(ids)
     assert set(classes_proper) == set([0, 1])
-    pos_ind = 1
     pos_probas = classes_probas[:, pos_ind]
     classes_predicted = [class_order[x.argmax()] for x in classes_probas]
 
