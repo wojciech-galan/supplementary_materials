@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import os
+import random
 import cPickle as pickle
 import numpy as np
 from scipy.spatial.distance import euclidean
+from scipy.stats import mannwhitneyu
 
 
 def get_distances_from_point(point, other_points):
@@ -66,26 +68,64 @@ def k_nearest(distances, k):
 
 
 if __name__ == '__main__':
-    attrs_test = pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))
-    ids_test = pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))
-    classes_test = pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))
-    points = zip(ids_test, attrs_test)
-    print classes_test
-    distances_0 = get_distances([points[x] for x in range(len(points)) if classes_test[x] == 0])
-    distances_1 = get_distances([points[x] for x in range(len(points)) if classes_test[x] == 1])
+    attrs = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump'))),
+            pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))))
+    ids = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'ids_learn.dump'))),
+          pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))))
+    classes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump'))),
+              pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))))
+    ga_indices = [0, 4, 5, 8, 22, 23, 24, 26, 27, 30, 34, 35, 36, 39, 77, 93, 98]
+    random_indices_list = []
+    possible_indices = range(attrs.shape[1])
+    for i in range(5):
+        random_indices = random.sample(possible_indices, len(ga_indices))
+        random_indices_list.append(random_indices)
+
+    def compute_distances_for_given_indices(attributes, indices, ids, classes):
+        attribs = attributes[:,indices]
+        points = zip(ids, attribs)
+        distances_0 = get_distances([points[x] for x in range(len(points)) if classes[x] == 0])
+        distances_1 = get_distances([points[x] for x in range(len(points)) if classes[x] == 1])
+        return points, distances_0, distances_1
+
+    def flatten(list_of_lists):
+        return [item for sublist in list_of_lists for item in sublist]
+
+    points_ga, distances_0_ga, distances_1_ga = compute_distances_for_given_indices(attrs, ga_indices, ids,
+                                                                                    classes)
+
+    random_distances_0 = []
+    random_distances_1 = []
+    points_random = []
+    for random_indices in random_indices_list:
+        p, d0, d1 = compute_distances_for_given_indices(attrs, random_indices, ids, classes)
+        points_random.append(p)
+        random_distances_0.append(d0)
+        random_distances_1.append(d1)
+
     for k in range(1, 11):
         print k
         distances_0_1 = get_distances_between_two_groups_of_points(
-            [points[x] for x in range(len(points)) if classes_test[x] == 0],
-            [points[x] for x in range(len(points)) if classes_test[x] == 1],
+            [points_ga[x] for x in range(len(points_ga)) if classes[x] == 0],
+            [points_ga[x] for x in range(len(points_ga)) if classes[x] == 1],
             k
         )
-        distances_1_0 = get_distances_between_two_groups_of_points(
-            [points[x] for x in range(len(points)) if classes_test[x] == 0],
-            [points[x] for x in range(len(points)) if classes_test[x] == 1],
-            k
-        )
-        print np.mean(k_nearest(distances_0, k).values()), np.std(k_nearest(distances_0, k).values())
-        print np.mean(k_nearest(distances_1, k).values()), np.std(k_nearest(distances_1, k).values())
-        print np.mean(distances_0_1.values()), np.std(distances_0_1.values())
-        print np.mean(distances_1_0.values()), np.std(distances_1_0.values())
+        k_nearest_0_ga = flatten([value for value in k_nearest(distances_0_ga, k).values()])
+        k_nearest_1_ga = flatten([value for value in k_nearest(distances_1_ga, k).values()])
+        distances_0_1_all_values = flatten(distances_0_1.values())
+        print np.mean(k_nearest_0_ga), np.std(k_nearest_0_ga)
+        print np.mean(k_nearest(distances_1_ga, k).values()), np.std(k_nearest(distances_1_ga, k).values())
+        print np.mean(distances_0_1_all_values), np.std(distances_0_1_all_values)
+
+        random_distances_0_1_all_values = flatten(flatten([get_distances_between_two_groups_of_points
+            ([points[x] for x in range(len(points)) if classes[x] == 0],
+             [points[x] for x in range(len(points)) if classes[x] == 1], k).values() for points in points_random]))
+        k_nearest_0_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_0]))
+        k_nearest_1_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_1]))
+        print np.mean(k_nearest_0_random), np.std(k_nearest_0_random), \
+            mannwhitneyu(k_nearest_0_ga, k_nearest_0_random, alternative='less')
+        print np.mean(k_nearest_1_random), np.std(k_nearest_1_random), \
+            mannwhitneyu(k_nearest_1_ga, k_nearest_1_random, alternative='less')
+        print np.mean(random_distances_0_1_all_values), np.std(random_distances_0_1_all_values), \
+            mannwhitneyu(distances_0_1_all_values, random_distances_0_1_all_values, alternative='greater')
+
