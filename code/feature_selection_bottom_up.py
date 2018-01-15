@@ -62,12 +62,11 @@ def remove_feature(splits, positive_class, neighbours, curr_feature_indices_stab
 def sort_results_according_to_values(results, function_to_process_values):
     return sorted(results.iteritems(), key=lambda x: function_to_process_values(x[1]), reverse=True)
 
-
+(classifier_func, range(num_of_features), splits, keys, results, num_of_best_res_after_sort, parallel)
 def climb_up(classifier_for_given_splits_and_features, all_feature_indices, splits, procesed_keys, current_results,
-             max_best_results):
+             max_best_results, pool_of_workers, res_dir):
     while True:
-        sorted_results = sort_results_according_to_values(current_results, individual_fitness)
-        raise Exception('ae to ma być dict')
+        sorted_results = dict(sort_results_according_to_values(current_results, individual_fitness)[:max_best_results])
         ch = random.choice([0, 1, 2])
         if ch == 0:
             i = 0
@@ -75,10 +74,13 @@ def climb_up(classifier_for_given_splits_and_features, all_feature_indices, spli
             i = random.choice(range(1, 10))
         else:
             i = random.choice(range(10, 100))
-        append_feature(all_feature_indices, splits, 0, sorted_results[i][0], current_results, '%sres.dump' % res_dir)
+        length = len(sorted_results)# todo remove
+        append_feature(all_feature_indices, splits, 0, sorted_results[i][0], current_results, '%sres.dump' % res_dir) # todo sprawdzic argumenty
+        assert len(sorted_results) > length
+        print len(sorted_results), length
+        #todo zapis
         if not random.choice(range(20)):
-            pickle.dump(curr_results, open('%sres_copy.dump' % res_dir, 'wb'))
-            pickle.dump(curr_results, open('%sres.dump' % res_dir, 'wb'))
+            save_results(sorted_results, res_dir, procesed_keys)
 
 
 def indices_to_number(list_of_indexes):
@@ -183,8 +185,8 @@ if __name__ == '__main__':
     with Parallel(n_jobs=args.n_proc) as parallel:
         initial_results = check_initial_combinations(classifier_func, range(num_of_features), splits, keys, parallel)
         results.update(initial_results)
-        results = dict(sort_results_according_to_values(results, individual_fitness)[:num_of_best_res_after_sort])
         save_results(results, args.res_dir, keys)
+        results = dict(sort_results_according_to_values(results, individual_fitness)[:num_of_best_res_after_sort])
         print len(results), len(keys)
-    print time.time() -t
-    # climb_up(classifier_func, range(num_of_features), splits, procesed_keys, current_results, num_of_best_res_after_sort)
+        print time.time() -t
+        climb_up(classifier_func, range(num_of_features), splits, keys, results, num_of_best_res_after_sort, parallel, args.res_dir)
