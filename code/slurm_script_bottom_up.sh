@@ -11,8 +11,9 @@ infile="$SCRATCHDIR/datasets/splits.dump"
 mkdir $SCRATCHDIR/datasets
 mkdir -p $SCRATCHDIR/$outdir
 mkdir -p $SLURM_SUBMIT_DIR/$outdir
-cp $SLURM_SUBMIT_DIR/datasets/splits.dump $SCRATCHDIR/datasets
-cp $SLURM_SUBMIT_DIR/$outdir $SCRATCHDIR/$outdir -r
+cp $SLURM_SUBMIT_DIR/datasets/splits.dump  /datasets
+cp $SLURM_SUBMIT_DIR/$outdir $SCRATCHDIR/ -r
+echo $SCRATCHDIR
 
 module load plgrid/tools/python/2.7.13
 
