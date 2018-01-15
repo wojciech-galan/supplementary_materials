@@ -16,4 +16,4 @@ cp $SLURM_SUBMIT_DIR/$outdir $SCRATCHDIR/$outdir -r
 
 module load plgrid/tools/python/2.7.13
 
-python code/feature_selection_bottom_up.py $outdir 2
+python code/feature_selection_bottom_up.py $SCRATCHDIR/$outdir 2 --infile $infile
