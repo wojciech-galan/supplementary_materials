@@ -3,6 +3,7 @@
 
 import os
 import random
+import datetime
 import argparse
 import itertools
 import cPickle as pickle
@@ -13,7 +14,7 @@ from ga_stuff import individual_fitness
 from ml_stuff import knn_for_given_splits_and_features, qda_for_given_splits_and_features
 
 
-def check_initial_combinations(classifier_for_given_splits_and_features, all_feature_indices, splits,
+def check_initial_combinations(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class,
                                processed_combinations, pool_of_workers):
     results = {}
     for i in range(1, 4):
@@ -24,46 +25,52 @@ def check_initial_combinations(classifier_for_given_splits_and_features, all_fea
                 keys_to_be_processed.append(key)
         print len(keys_to_be_processed), "keys will be processed"
         processed_results = pool_of_workers(
-            delayed(classifier_for_given_splits_and_features)(number_to_indices(key), splits, 0) for key in
+            delayed(classifier_for_given_splits_and_features)(number_to_indices(key), splits, positive_class) for key in
             keys_to_be_processed)
         results.update({keys_to_be_processed[i]: processed_results[i] for i in range(len(keys_to_be_processed))})
         processed_combinations.update(keys_to_be_processed)
     return results
 
 
-def append_feature(all_feature_indices, splits, positive_class, curr_feature_indices, curr_results,
-                   classifier_for_given_splits_and_features):
-    # curr_feature_indices to powinien być set
+def append_feature(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class, curr_feature_indices, processed_keys, best_results, pool_of_workers):
     curr_feature_indices = curr_feature_indices[:]
     not_present_features_indices = [index for index in all_feature_indices if not index in curr_feature_indices]
-    while not_present_features_indices:
-        feature_index = random.choice(not_present_features_indices)
+    for feature_index in not_present_features_indices:
         curr_feature_indices.append(feature_index)
         key = indices_to_number(set(curr_feature_indices))
-        if not key in curr_results:
-            curr_results[key] = classifier_for_given_splits_and_features(curr_feature_indices, splits, positive_class)
+        if not key in processed_keys:
+            best_results[key] = classifier_for_given_splits_and_features(curr_feature_indices, splits, positive_class)
+            processed_keys.update(key)
+            print "num of results before removing", len(best_results)
             remove_feature(curr_feature_indices, splits, positive_class, key, curr_results,
                            classifier_for_given_splits_and_features)
-            print number_to_indices(key), curr_results[key][-4:]
-        not_present_features_indices.remove(feature_index)
+            print "num of results after removing", len(best_results)
+            print number_to_indices(key), curr_results[key][-4:], datetime.datetime.now()
 
 
-def remove_feature(splits, positive_class, neighbours, curr_feature_indices_stable_copy,
-                   curr_results, classifier_for_given_splits_and_features):
-    for index in curr_feature_indices_stable_copy:  # todo ale to mają być słownik + set
-        curr_feature_indices = curr_feature_indices_stable_copy[:]
-        curr_feature_indices.remove(index)
-        key = indices_to_number(set(curr_feature_indices))
+def remove_feature(classifier_for_given_splits_and_features, splits, positive_class, curr_feature_indices,
+                   curr_results):
+    keys_to_be_processed = []
+    for index in curr_feature_indices:  # todo ale to mają być słownik + set
+        indices = curr_feature_indices[:]
+        indices.remove(index)
+        key = indices_to_number(set(indices))
         if key not in curr_results:
-            curr_results[key] = classifier_for_given_splits_and_features(curr_feature_indices, splits, positive_class)
-            print '(removing)', key, curr_results[key]
+            keys_to_be_processed.append(key)
+    curr_results[key] = classifier_for_given_splits_and_features(curr_feature_indices, splits, positive_class)
+    processed_results = pool_of_workers(
+        delayed(classifier_for_given_splits_and_features)(number_to_indices(key), splits, positive_class) for key in
+        keys_to_be_processed)
+    results.update({keys_to_be_processed[i]: processed_results[i] for i in range(len(keys_to_be_processed))})
+    processed_combinations.update(keys_to_be_processed)
+    print '(removing)', key, curr_results[key]
 
 
 def sort_results_according_to_values(results, function_to_process_values):
     return sorted(results.iteritems(), key=lambda x: function_to_process_values(x[1]), reverse=True)
 
-(classifier_func, range(num_of_features), splits, keys, results, num_of_best_res_after_sort, parallel)
-def climb_up(classifier_for_given_splits_and_features, all_feature_indices, splits, procesed_keys, current_results,
+
+def climb_up(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class, procesed_keys, current_results,
              max_best_results, pool_of_workers, res_dir):
     while True:
         sorted_results = dict(sort_results_according_to_values(current_results, individual_fitness)[:max_best_results])
@@ -75,7 +82,9 @@ def climb_up(classifier_for_given_splits_and_features, all_feature_indices, spli
         else:
             i = random.choice(range(10, 100))
         length = len(sorted_results)# todo remove
-        append_feature(all_feature_indices, splits, 0, sorted_results[i][0], current_results, '%sres.dump' % res_dir) # todo sprawdzic argumenty
+        #               wszystkie indeksy                            konkretny zestaw cech                    klucze
+        #(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class, curr_feature_indices, processed_keys, best_results, pool_of_workers)
+        append_feature(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class, number_to_indices(sorted_results[i][0]), procesed_keys, sorted_results, pool_of_workers) # todo sprawdzic argumenty
         assert len(sorted_results) > length
         print len(sorted_results), length
         #todo zapis
@@ -182,11 +191,14 @@ if __name__ == '__main__':
     print len(results), len(keys)
     import time
     t = time.time()
+    pos_class_num = 0
     with Parallel(n_jobs=args.n_proc) as parallel:
-        initial_results = check_initial_combinations(classifier_func, range(num_of_features), splits, keys, parallel)
+        initial_results = check_initial_combinations(classifier_func, range(num_of_features), splits, pos_class_num, keys, parallel)
         results.update(initial_results)
         save_results(results, args.res_dir, keys)
         results = dict(sort_results_according_to_values(results, individual_fitness)[:num_of_best_res_after_sort])
         print len(results), len(keys)
         print time.time() -t
-        climb_up(classifier_func, range(num_of_features), splits, keys, results, num_of_best_res_after_sort, parallel, args.res_dir)
+    raise
+    climb_up(classifier_func, range(num_of_features), splits, pos_class_num, keys, results, num_of_best_res_after_sort, None, args.res_dir) #TODO wrzucić to do context managera
+    # TODO zmienić None na parallel
