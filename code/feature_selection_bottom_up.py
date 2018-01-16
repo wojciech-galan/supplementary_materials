@@ -8,8 +8,7 @@ import datetime
 import argparse
 import itertools
 import cPickle as pickle
-import numpy as np
-from funcy import rpartial
+from functools import partial
 from joblib import Parallel, delayed
 from ga_stuff import individual_fitness
 from ml_stuff import knn_for_given_splits_and_features, qda_for_given_splits_and_features
@@ -18,7 +17,7 @@ from ml_stuff import knn_for_given_splits_and_features, qda_for_given_splits_and
 def check_initial_combinations(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class,
                                processed_combinations, pool_of_workers):
     results = {}
-    for i in range(1, 4):
+    for i in range(1, 2):
         keys_to_be_processed = []
         for indices_combination in itertools.combinations(all_feature_indices, i):
             key = indices_to_number(set(indices_combination))
@@ -189,7 +188,10 @@ if __name__ == '__main__':
 
         if args.neighbours < 1 or not is_odd(args.neighbours):
             raise Exception("Number of neighbours has to be an odd number >= 1")
-        classifier_func = rpartial(knn_for_given_splits_and_features, args.neighbours)
+        def knn_for_given_splits_and_features_wrapper(neighbours, features_indexes, splits, positive_class):
+            return knn_for_given_splits_and_features(features_indexes, splits, positive_class, neighbours)
+
+        classifier_func = partial(knn_for_given_splits_and_features_wrapper, args.neighbours)
 
     num_of_features = splits[0][0].shape[1]
     results, keys = load_results(args.res_dir)
