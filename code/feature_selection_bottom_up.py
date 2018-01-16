@@ -17,7 +17,7 @@ from ml_stuff import knn_for_given_splits_and_features, qda_for_given_splits_and
 def check_initial_combinations(classifier_for_given_splits_and_features, all_feature_indices, splits, positive_class,
                                processed_combinations, pool_of_workers):
     results = {}
-    for i in range(1, 2):
+    for i in range(1, 4):
         keys_to_be_processed = []
         for indices_combination in itertools.combinations(all_feature_indices, i):
             key = indices_to_number(set(indices_combination))
