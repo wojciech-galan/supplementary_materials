@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 #SBATCH -A hostphylumpred
 #SBATCH -p plgrid
-#SBATCH --time=0-05:00:00
+#SBATCH --time=3-00:00:00
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=3
-#SBATCH --mem=10GB
+#SBATCH --mem=8GB
 
 outdir="bottom_up_feature_selection_results"
 infile="$SCRATCHDIR/datasets/splits.dump"
