@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=3
 #SBATCH --mem=8GB
 
-outdir="bottom_up_feature_selection_results"
+outdir="bottom_up_feature_selection_results_qda"
 infile="$SCRATCHDIR/datasets/splits.dump"
 mkdir $SCRATCHDIR/datasets
 mkdir -p $SCRATCHDIR/$outdir
