@@ -54,14 +54,14 @@ def remove_feature(classifier_for_given_splits_and_features, splits, positive_cl
         key = indices_to_number(set(indices))
         if key not in processed_keys:
             keys_to_be_processed.append(key)
-            curr_results[key] = classifier_for_given_splits_and_features(indices, splits, positive_class) # todo remove
-            processed_keys.add(key) #todo remove
-            print '(removing)', key, curr_results[key]
-    # processed_results = pool_of_workers(
-    #     delayed(classifier_for_given_splits_and_features)(number_to_indices(key), splits, positive_class) for key in
-    #     keys_to_be_processed)
-    # curr_results.update({keys_to_be_processed[i]: processed_results[i] for i in range(len(keys_to_be_processed))})
-    # processed_keys.update(keys_to_be_processed)
+            # curr_results[key] = classifier_for_given_splits_and_features(indices, splits, positive_class)
+            # processed_keys.add(key)
+            print '(removing), current indices:', indices
+    processed_results = pool_of_workers(
+        delayed(classifier_for_given_splits_and_features)(number_to_indices(key), splits, positive_class) for key in
+        keys_to_be_processed)
+    curr_results.update({keys_to_be_processed[i]: processed_results[i] for i in range(len(keys_to_be_processed))})
+    processed_keys.update(keys_to_be_processed)
 
 
 def sort_results_according_to_values(results, function_to_process_values):
@@ -93,8 +93,7 @@ def climb_up(classifier_for_given_splits_and_features, all_feature_indices, spli
             num_of_consecutive_turns_without_change = 0
         num_of_turns += 1
         print "Number of turns:", num_of_turns
-        if not (num_of_turns%20): #todo przemyśleć
-            save_results(current_results, res_dir, procesed_keys)
+        save_results(current_results, res_dir, procesed_keys)
 
 
 def indices_to_number(list_of_indexes):
@@ -205,5 +204,5 @@ if __name__ == '__main__':
         results = dict(sort_results_according_to_values(results, individual_fitness)[:num_of_best_res_after_sort])
         print len(results), len(keys)
         print time.time() -t
-    climb_up(classifier_func, range(num_of_features), splits, pos_class_num, keys, results, num_of_best_res_after_sort, None, args.res_dir) #TODO wrzucić to do context managera
-    # TODO zmienić None na parallel
+        climb_up(classifier_func, range(num_of_features), splits, pos_class_num, keys, results, num_of_best_res_after_sort, parallel, args.res_dir)
+
