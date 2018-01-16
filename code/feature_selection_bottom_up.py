@@ -176,6 +176,7 @@ if __name__ == '__main__':
     parser.add_argument('--neighbours', action='store', type=int, default=0,
                         help='Number od nearest neighbours. Valid only for knn classifier.')
     args = parser.parse_args()
+    print args
     splits = pickle.load(open(args.infile))
     num_of_possible_features = len(splits[0][0][0])
     num_of_best_res_after_sort = 100
