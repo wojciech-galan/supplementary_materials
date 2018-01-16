@@ -72,7 +72,7 @@ def climb_up(classifier_for_given_splits_and_features, all_feature_indices, spli
              max_best_results, pool_of_workers, res_dir):
     num_of_consecutive_turns_without_change = 0
     num_of_turns = 0
-    while num_of_consecutive_turns_without_change < 100: # todo sprawdzić, czy miało być 100
+    while num_of_consecutive_turns_without_change < 1000:
         sorted_results_list = sort_results_according_to_values(current_results, individual_fitness)[:max_best_results]
         current_results = dict(sorted_results_list)
         current_results_copy = copy.copy(current_results)
