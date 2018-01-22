@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # imports
-import sys
-import time
-import logging
 from argparse import ArgumentParser, RawTextHelpFormatter
 import os
 import pandas as pd
@@ -119,10 +116,10 @@ if __name__ == '__main__':
             os.mkdir(directory)
         except OSError:
             pass
-    create_dir_if_not_exists(plot_dir, "cx_k_mutpb")
-    create_dir_if_not_exists(plot_dir,"cx_mutpb")
-    create_dir_if_not_exists(plot_dir,"k_mutpb")
-    create_dir_if_not_exists(plot_dir,"cx_k")
+    create_dir_if_not_exists(os.path.join(plot_dir, "cx_k_mutpb"))
+    create_dir_if_not_exists(os.path.join(plot_dir,"cx_mutpb"))
+    create_dir_if_not_exists(os.path.join(plot_dir,"k_mutpb"))
+    create_dir_if_not_exists(os.path.join(plot_dir,"cx_k"))
 
     main_df = pd.read_csv(results, sep="\t", index_col=0)
     col_names = main_df.columns.values
