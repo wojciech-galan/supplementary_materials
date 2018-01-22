@@ -123,7 +123,7 @@ if __name__ == '__main__':
 
     main_df = pd.read_csv(results, sep="\t", index_col=0)
     col_names = main_df.columns.values
-    params = ["rep", "mean_1", "std_1", "cx", "mut_pb", "t_size", "elitism", "pop_size", "k", "max_t"]
+    params = ["rep", "mean_1", "std_1", "cx", "mut_pb", "t_size", "elitism", "pop_size", "max_t"]
 
     # some parameters are fixed, remove them, convert some floats to int
     # for i in params: print(i,list(set(main_df[i])))
