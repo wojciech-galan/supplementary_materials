@@ -40,5 +40,8 @@ if __name__ == '__main__':
             fittest = max(population, key=lambda x: x.fitness.getValues()[0])
             df.loc[len(df)] = [repetition] + params + [fittest.fitness.getValues()[0]] + [fittest]  # this is ugly
 
-    df.to_csv(os.path.join(os.getcwd(), "results.tsv"), sep="\t")
+    out_dir = os.path.join('..', 'ga_res', 'qda_results')
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+    df.to_csv(os.path.join(out_dir, 'qda_results.tsv'), sep="\t")
 
