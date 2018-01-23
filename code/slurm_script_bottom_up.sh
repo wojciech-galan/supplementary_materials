@@ -3,7 +3,7 @@
 #SBATCH -p plgrid
 #SBATCH --time=3-00:00:00
 #SBATCH -N 1
-#SBATCH --ntasks-per-node=3
+#SBATCH --ntasks-per-node=4
 #SBATCH --mem=8GB
 
 outdir="bottom_up_feature_selection_results_qda"
