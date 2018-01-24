@@ -2,24 +2,12 @@
 # -*- coding: utf-8 -*-
 
 # imports
-from argparse import ArgumentParser, RawTextHelpFormatter
 import os
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 import copy
-
-
-def facet_heatmap(data, val_col, **kws):
-    '''Create n heatmaps on one plot'''
-    data = data.pivot(index="t_size", columns='mean_1', values=val_col)
-    print data
-    data = data.reindex_axis(sorted(data.index)[::-1], axis=0)
-    print '-------------------'
-    print data
-    sns.heatmap(data, **kws)
-
 
 def PLOT_cx_mutpb(df, cx, mut_pb, prefix, plot_dir, val_col):
     df = df.pivot(index="t_size", columns="mean_1", values=val_col)
@@ -32,60 +20,6 @@ def PLOT_cx_mutpb(df, cx, mut_pb, prefix, plot_dir, val_col):
     fig.savefig(os.path.join(os.path.join(plot_dir, "cx_mutpb"), fname), dpi=300)
     plt.close()
 
-
-# def PLOT_cx_mutpb(df,cx,mut_pb,prefix,plot_dir,val_col):
-#     print mut_pb,prefix,plot_dir,[val_col]
-#     g = sns.FacetGrid(df, col="t_size", col_wrap=2, size=3, aspect=2)
-#     g = g.map_dataframe(facet_heatmap,
-#     val_col=val_col, cmap="hot", vmin=1.80, vmax=1.90, annot=True, annot_kws={"size": 8}, fmt=".3f")
-#     plt.subplots_adjust(top=0.9)
-#     g.fig.suptitle("Crossing-over:"+str(cx)[2:]+" Mutation Probability:"+str(mut_pb))
-#     g.axes[0].set_ylabel("t_size")
-#     g.axes[2].set_ylabel("t_size")
-#     g.axes[2].set_xlabel("mean_1")
-#     g.axes[3].set_xlabel("mean_1")
-#     facecolor=plt.gcf().get_facecolor()
-#     for ax in g.axes.flat:
-#         ax.set_aspect('equal','box-forced')
-#         ax.set_axis_bgcolor(facecolor)
-#     fname = prefix+"_"+str(cx)+"_mutpb"+str(mut_pb)+".png"
-#     g.savefig(os.path.join(os.path.join(plot_dir,"cx_mutpb"),fname),dpi=300)
-#     plt.close()
-
-
-def PLOT_k_mutpb(df, k, mut_pb, prefix, plot_dir, val_col):
-    g = sns.FacetGrid(df, col="cx", col_wrap=3, size=3, aspect=2)
-    g = g.map_dataframe(facet_heatmap,
-                        val_col=val_col, cmap="hot", vmin=1.80, vmax=1.90, annot=True, annot_kws={"size": 8}, fmt=".3f")
-    plt.subplots_adjust(top=0.8)
-    g.fig.suptitle("Neighbours:" + str(k) + " Mutation Probability:" + str(mut_pb))
-    g.axes[0].set_ylabel("t_size")
-    facecolor = plt.gcf().get_facecolor()
-    for ax in g.axes.flat:
-        ax.set_aspect('equal', 'box-forced')
-        ax.set_axis_bgcolor(facecolor)
-        ax.set_xlabel("mean_1")
-    fname = prefix + "_k" + str(k) + "_mutpb" + str(mut_pb) + ".png"
-    g.savefig(os.path.join(os.path.join(plot_dir, "k_mutpb"), fname), dpi=300)
-    plt.close()
-
-
-def PLOT_cx_k(df, cx, k, prefix, plot_dir, val_col):
-    g = sns.FacetGrid(df, col="mut_pb", col_wrap=3, size=3, aspect=2)
-    g = g.map_dataframe(facet_heatmap,
-                        val_col=val_col, cmap="hot", vmin=1.80, vmax=1.90, annot=True, annot_kws={"size": 8}, fmt=".3f")
-    plt.subplots_adjust(top=0.8, hspace=0.4)
-    g.fig.suptitle("Crossing-over:" + str(cx)[2:] + " Neighbours:" + str(k))
-    g.axes[0].set_ylabel("t_size")
-    facecolor = plt.gcf().get_facecolor()
-    for ax in g.axes.flat:
-        ax.set_aspect('equal', 'box-forced')
-        ax.set_axis_bgcolor(facecolor)
-        ax.set_xlabel("mean_1")
-    fname = prefix + "_" + str(cx) + "_k" + str(k) + ".png"
-    g.savefig(os.path.join(os.path.join(plot_dir, "cx_k"), fname), dpi=300)
-
-    plt.close()
 
 
 if __name__ == '__main__':
@@ -100,10 +34,7 @@ if __name__ == '__main__':
             pass
 
 
-    create_dir_if_not_exists(os.path.join(plot_dir, "cx_k_mutpb"))
     create_dir_if_not_exists(os.path.join(plot_dir, "cx_mutpb"))
-    create_dir_if_not_exists(os.path.join(plot_dir, "k_mutpb"))
-    create_dir_if_not_exists(os.path.join(plot_dir, "cx_k"))
 
     main_df = pd.read_csv(results, sep="\t", index_col=0)
     col_names = main_df.columns.values
@@ -150,53 +81,13 @@ if __name__ == '__main__':
     # Plots for MAX df
     for cx in list(set(main_df["cx"])):
         cx_df = max_df[max_df["cx"] == cx]
-        # for k in list(set(main_df["k"])):
-        #     cx_k_df = cx_df[cx_df["k"] == k]
         for mut_pb in list(set(main_df["mut_pb"])):
             cx_mutpb_df = cx_df[cx_df["mut_pb"] == mut_pb]
             PLOT_cx_mutpb(cx_mutpb_df, cx, mut_pb, "MAXF", plot_dir, "max_val")
-    # for cx in list(set(main_df["cx"])):
-    #     cx_df = max_df[max_df["cx"] == cx]
-    #     for mut_pb in list(set(main_df["mut_pb"])):
-    #         cx_mutpb_df = cx_df[cx_df["mut_pb"] == mut_pb]
-    #         # print cx_mutpb_df
-    #         PLOT_cx_mutpb(cx_mutpb_df, cx, mut_pb, "MAXF", plot_dir, "max_val")
-    # for k in list(set(main_df["k"])):
-    #     k_df = max_df[max_df["k"] == k]
-    #     for mut_pb in list(set(main_df["mut_pb"])):
-    #         k_mutpb_df = k_df[k_df["mut_pb"] == mut_pb]
-    #         PLOT_k_mutpb(k_mutpb_df, k, mut_pb, "MAXF", plot_dir, "max_val")
-    # for cx in list(set(main_df["cx"])):
-    #     cx_df = max_df[max_df["cx"] == cx]
-    #     for k in list(set(main_df["k"])):
-    #         cx_k_df = cx_df[cx_df["k"] == k]
-    #         PLOT_cx_k(cx_k_df, cx, k, "MAXF", plot_dir, "max_val")
 
     # Plots for AVG df
-    # for cx in list(set(main_df["cx"])):
-    #     cx_df = avg_df[avg_df["cx"] == cx]
-    #     for k in list(set(main_df["k"])):
-    #         cx_k_df = cx_df[cx_df["k"] == k]
-    #         for mut_pb in list(set(main_df["mut_pb"])):
-    #             cx_k_mutpb_df = cx_k_df[cx_k_df["mut_pb"] == mut_pb]
-    #             PLOT_cx_k_mutpb(cx_k_mutpb_df, cx, k, mut_pb, "AVGF", plot_dir, "avg_val")
     for cx in list(set(main_df["cx"])):
         cx_df = avg_df[max_df["cx"] == cx]
         for mut_pb in list(set(main_df["mut_pb"])):
             cx_mutpb_df = cx_df[cx_df["mut_pb"] == mut_pb]
             PLOT_cx_mutpb(cx_mutpb_df, cx, mut_pb, "AVGF", plot_dir, "avg_val")
-            # for cx in list(set(main_df["cx"])):
-            #     cx_df = avg_df[avg_df["cx"] == cx]
-            #     for mut_pb in list(set(main_df["mut_pb"])):
-            #         cx_mutpb_df = cx_df[cx_df["mut_pb"] == mut_pb]
-            #         PLOT_cx_mutpb(cx_mutpb_df, cx, mut_pb, "AVGF", plot_dir, "avg_val")
-            # for k in list(set(main_df["k"])):
-            #     k_df = avg_df[avg_df["k"] == k]
-            #     for mut_pb in list(set(main_df["mut_pb"])):
-            #         k_mutpb_df = k_df[k_df["mut_pb"] == mut_pb]
-            #         PLOT_k_mutpb(k_mutpb_df, k, mut_pb, "AVGF", plot_dir, "avg_val")
-            # for cx in list(set(main_df["cx"])):
-            #     cx_df = avg_df[avg_df["cx"] == cx]
-            #     for k in list(set(main_df["k"])):
-            #         cx_k_df = cx_df[cx_df["k"] == k]
-            #         PLOT_cx_k(cx_k_df, cx, k, "AVGF", plot_dir, "avg_val")
