@@ -29,7 +29,7 @@ def binary_classification_evaluation(classes_proper, classes_probas, ids, positi
         - Mathews correlation coefficient
         - dla każdego niepoprawnie sklasyfikowanego elementu obiekt typu ImproperlyClassified. Obiekty te będa zwracane w liście'''
     # na podstawie http://en.wikipedia.org/wiki/Sensitivity_and_specificity
-    assert len(classes_proper) == len(classes_probas) == len(ids)
+    assert len(classes_proper) == len(classes_probas)
     assert set(classes_proper) == set([0, 1])
     pos_probas = classes_probas[:, pos_ind]
     classes_predicted = [class_order[x.argmax()] for x in classes_probas]
@@ -41,7 +41,7 @@ def binary_classification_evaluation(classes_proper, classes_probas, ids, positi
     if matthews_corrcoef:
         mcc = matthews_corrcoef(classes_proper, classes_predicted)
     else:
-        l = len(ids)
+        l = len(classes_proper)
         tp = float(len([x for x in range(l) if classes_proper[x] == classes_predicted[x] == positive_num]))
         fp = float(len([x for x in range(l) if classes_proper[x] != classes_predicted[x] == positive_num]))
         tn = float(len([x for x in range(l) if classes_proper[x] == classes_predicted[x] != positive_num]))
