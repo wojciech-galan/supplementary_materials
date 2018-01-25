@@ -4,6 +4,7 @@
 import math
 import numpy as np
 from sklearn import neighbors
+from sklearn.svm import SVC
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import roc_auc_score
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
@@ -63,6 +64,12 @@ def qda(X_train, X_test, y_train):
     clf.fit(X_train, y_train)
     return clf.predict_proba(X_test), clf.classes_
 
+def svc(X_train, X_test, y_train, probability=True, **kwargs):
+    print kwargs
+    clf = SVC(probability=probability, **kwargs)
+    clf.fit(X_train, y_train)
+    return clf.predict_proba(X_test), clf.classes_
+
 
 def preprocess_results_for_given_splits_and_features(results):
     '''
@@ -94,6 +101,18 @@ def qda_for_given_splits_and_features(features_indexes, splits, positive_class):
         l = l[:, features_indexes]
         t = t[:, features_indexes]
         res, class_order = qda(l, t, l_classes)
+        evaluated = binary_classification_evaluation(t_classes, res, t_ids, positive_class, class_order)
+        results.append(evaluated)
+    results = preprocess_results_for_given_splits_and_features(np.array(results))
+    return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
+
+def svc_for_given_splits_and_features(features_indexes, splits, positive_class, **kwargs):
+    results = []
+    for split in splits:
+        l, t, l_classes, t_classes, l_ids, t_ids = split
+        l = l[:, features_indexes]
+        t = t[:, features_indexes]
+        res, class_order = svc(l, t, l_classes, **kwargs)
         evaluated = binary_classification_evaluation(t_classes, res, t_ids, positive_class, class_order)
         results.append(evaluated)
     results = preprocess_results_for_given_splits_and_features(np.array(results))
