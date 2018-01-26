@@ -2,15 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import os
+import warnings
 import cPickle as pickle
 import numpy as np
+from rpy2.robjects import numpy2ri
 from sklearn.svm import SVC
 from sklearn.feature_selection import RFECV
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.metrics import make_scorer
 from sklearn.metrics import roc_auc_score
+from rpy2.robjects import r
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import binarize
 from ml_stuff import binary_classification_evaluation
 from ml_stuff import preprocess_results_for_given_splits_and_features
 
@@ -62,10 +66,17 @@ if not os.path.exists(res_dir):
 
 # TODO zmienić w publikacji chi2 na f_classif
 
-kbest = SelectKBest(f_classif)  # TODO zmienić funkcję!
-pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear'))])  # TODO probas!
-grid_search = GridSearchCV(pipeline,
-                           {'kbest__k': range(attributes_learn.shape[1] - 1, 0, -1),
-                            'svc__C': 2 ** np.linspace(-5, 15, 21)},
-                           scoring=None, cv=indices, n_jobs=2)  # TODO zmienic scoring
-grid_search.fit(attributes_learn, classes_learn)
+# kbest = SelectKBest(f_classif)  # TODO zmienić funkcję!
+# pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear'))])  # TODO probas!
+# grid_search = GridSearchCV(pipeline,
+#                            {'kbest__k': range(attributes_learn.shape[1] - 1, 0, -1),
+#                             'svc__C': 2 ** np.linspace(-5, 15, 21)},
+#                            scoring=None, cv=indices, n_jobs=2)  # TODO zmienic scoring
+# grid_search.fit(attributes_learn, classes_learn)
+
+binarized_attributes_learn = binarize(attributes_learn)
+binarized_attributes_test = binarize(attributes_test)
+
+with warnings.catch_warnings():
+	warnings.simplefilter("ignore")
+	r.library( 'penalizedSVM' )
