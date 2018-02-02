@@ -15,6 +15,7 @@ from rpy2.robjects import r
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import binarize
+from sklearn.externals import joblib
 from ml_stuff import binary_classification_evaluation
 from ml_stuff import preprocess_results_for_given_splits_and_features
 
@@ -47,32 +48,39 @@ res_dir = os.path.join('..', 'svm_res')
 if not os.path.exists(res_dir):
     os.makedirs(res_dir)
 
-# scorer = make_scorer(scorer_function, needs_proba=True)
-# results = {}
-# for C in 2 ** np.linspace(-5, 15, 21):
-#     estimator = SVC(C=C, kernel='linear', probability=True)
-#     selector = RFECV(estimator, cv=indices, scoring=scorer)
-#     selector.fit(attributes_learn, classes_learn)
-#     support = selector.get_support(indices=True)
-#     results[C] = (
-#     cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support), selector)
-#
-# pickle.dump(results, open(os.path.join(results, 'RFE.dump')))
-# best_result = max(results.items(), key=lambda item: item[1][0])
-# best_selector = best_result[1][1]
-# print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
+scorer = make_scorer(scorer_function, needs_proba=True)
+results = {}
+c_range = 2 ** np.linspace(-5, 5, 11)
+for C in c_range:
+    print C
+    estimator = SVC(C=C, kernel='linear', probability=True)
+    selector = RFECV(estimator, cv=indices, scoring=scorer)
+    selector.fit(attributes_learn, classes_learn)
+    support = selector.get_support(indices=True)
+    result = cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support)
+    print result
+    results[C] = (result, selector)
+
+pickle.dump(results, open(os.path.join(res_dir, 'RFE.dump'), 'w'))
+best_result = max(results.items(), key=lambda item: item[1][0])
+best_selector = best_result[1][1]
+print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
+joblib.dump(best_selector, os.path.join(res_dir, 'RFE_best.dump'))
+
 
 # TODo zmienić w publikacji na linear kernel
 
 # TODO zmienić w publikacji chi2 na f_classif
 
-# kbest = SelectKBest(f_classif)  # TODO zmienić funkcję!
-# pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear'))])  # TODO probas!
-# grid_search = GridSearchCV(pipeline,
-#                            {'kbest__k': range(attributes_learn.shape[1] - 1, 0, -1),
-#                             'svc__C': 2 ** np.linspace(-5, 15, 21)},
-#                            scoring=None, cv=indices, n_jobs=2)  # TODO zmienic scoring
-# grid_search.fit(attributes_learn, classes_learn)
+kbest = SelectKBest(f_classif)  # TODO zmienić funkcję!
+pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear'))])  # TODO probas!
+grid_search = GridSearchCV(pipeline,
+                           {'kbest__k': range(attributes_learn.shape[1] - 1, 0, -1),
+                            'svc__C': c_range},
+                           scoring=None, cv=indices, n_jobs=7)  # TODO zmienic scoring
+grid_search.fit(attributes_learn, classes_learn)
+
+joblib.dump(grid_search, 'blah')
 
 binarized_attributes_learn = binarize(attributes_learn)
 binarized_attributes_test = binarize(attributes_test)
