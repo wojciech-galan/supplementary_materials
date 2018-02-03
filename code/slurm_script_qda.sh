@@ -6,7 +6,7 @@
 #SBATCH --ntasks-per-node=6
 #SBATCH --mem=3GB
 
-mut_probas='0.05 0.075 0.1 0.125 0.15 0.175 0.2'
+mut_probas='0.25 0.3'
 crossovers='cxOnePoint cxTwoPoint cxUniform'
 
 subdir="ga_res/qda/$1"
@@ -18,7 +18,7 @@ mkdir -p $SLURM_SUBMIT_DIR/$subdir
 cp $SLURM_SUBMIT_DIR/datasets/splits.dump $SCRATCHDIR/datasets
 
 module load plgrid/tools/python/2.7.13
-for mean in {10..90..10}
+for mean in {10..80..10}
 do
     for crossover in $crossovers
     do
