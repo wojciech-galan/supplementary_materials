@@ -89,3 +89,4 @@ ENV/
 
 # Excluded by me
 .idea
+.Rhistory
