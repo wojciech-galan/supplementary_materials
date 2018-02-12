@@ -65,7 +65,6 @@ def qda(X_train, X_test, y_train):
     return clf.predict_proba(X_test), clf.classes_
 
 def svc(X_train, X_test, y_train, probability=True, **kwargs):
-    print kwargs
     clf = SVC(probability=probability, **kwargs)
     clf.fit(X_train, y_train)
     return clf.predict_proba(X_test), clf.classes_
