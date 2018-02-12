@@ -5,16 +5,13 @@ import os
 import warnings
 import cPickle as pickle
 import numpy as np
-from rpy2.robjects import numpy2ri
 from sklearn.svm import SVC
 from sklearn.feature_selection import RFECV
 from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.metrics import make_scorer
 from sklearn.metrics import roc_auc_score
-from rpy2.robjects import r
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
-from sklearn.preprocessing import binarize
 from sklearn.externals import joblib
 from ml_stuff import binary_classification_evaluation
 from ml_stuff import preprocess_results_for_given_splits_and_features
@@ -82,9 +79,3 @@ grid_search.fit(attributes_learn, classes_learn)
 
 joblib.dump(grid_search, 'blah')
 
-binarized_attributes_learn = binarize(attributes_learn)
-binarized_attributes_test = binarize(attributes_test)
-
-with warnings.catch_warnings():
-	warnings.simplefilter("ignore")
-	r.library( 'penalizedSVM' )
