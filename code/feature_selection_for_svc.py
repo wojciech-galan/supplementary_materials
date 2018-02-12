@@ -32,7 +32,7 @@ def cv_for_given_splits_and_features(estimator, X, y, split_indices, feature_ind
         estimator.fit(l, y_learn)
         probas = estimator.predict_proba(t)
         results.append(scorer_function(y_test, probas))
-    return np.mean(results)
+    return np.mean(results) - 0.25*np.std(results)
 
 
 attributes_learn = pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump')))
