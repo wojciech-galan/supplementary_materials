@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-import warnings
+import psutil
 import cPickle as pickle
 import numpy as np
 from sklearn.svm import SVC
@@ -15,6 +15,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.externals import joblib
 from ml_stuff import binary_classification_evaluation
 from ml_stuff import preprocess_results_for_given_splits_and_features
+from ga_stuff import individual_fitness
 
 
 def scorer_function(y_true, y_predicted):
@@ -31,9 +32,22 @@ def cv_for_given_splits_and_features(estimator, X, y, split_indices, feature_ind
         y_test = y[test_indices]
         estimator.fit(l, y_learn)
         probas = estimator.predict_proba(t)
-        results.append(scorer_function(y_test, probas))
-    return np.mean(results) - 0.25*np.std(results)
-
+        evaluated = binary_classification_evaluation(y_test, probas, None, 0, [0, 1])
+        results.append(evaluated)
+    results = preprocess_results_for_given_splits_and_features(np.array(results))
+    #print results
+    return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
+# def svc_for_given_splits_and_features(features_indexes, splits, positive_class, **kwargs):
+#     results = []
+#     for split in splits:
+#         l, t, l_classes, t_classes, l_ids, t_ids = split
+#         l = l[:, features_indexes]
+#         t = t[:, features_indexes]
+#         res, class_order = svc(l, t, l_classes, **kwargs)
+#         evaluated = binary_classification_evaluation(t_classes, res, t_ids, positive_class, class_order)
+#         results.append(evaluated)
+#     results = preprocess_results_for_given_splits_and_features(np.array(results))
+#     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
 
 attributes_learn = pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump')))
 classes_learn = pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump')))
@@ -48,13 +62,14 @@ if not os.path.exists(res_dir):
 scorer = make_scorer(scorer_function, needs_proba=True)
 results = {}
 c_range = 2 ** np.linspace(-5, 5, 11)
+num_of_jobs = psutil.cpu_count()-1 or 1
 for C in c_range:
     print C
     estimator = SVC(C=C, kernel='linear', probability=True)
-    selector = RFECV(estimator, cv=indices, scoring=scorer)
+    selector = RFECV(estimator, cv=indices, scoring=scorer, n_jobs=num_of_jobs)
     selector.fit(attributes_learn, classes_learn)
     support = selector.get_support(indices=True)
-    result = cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support)
+    result = individual_fitness(cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support))
     print result
     results[C] = (result, selector)
 
