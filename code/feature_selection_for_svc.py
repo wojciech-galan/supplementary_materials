@@ -37,17 +37,6 @@ def cv_for_given_splits_and_features(estimator, X, y, split_indices, feature_ind
     results = preprocess_results_for_given_splits_and_features(np.array(results))
     #print results
     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
-# def svc_for_given_splits_and_features(features_indexes, splits, positive_class, **kwargs):
-#     results = []
-#     for split in splits:
-#         l, t, l_classes, t_classes, l_ids, t_ids = split
-#         l = l[:, features_indexes]
-#         t = t[:, features_indexes]
-#         res, class_order = svc(l, t, l_classes, **kwargs)
-#         evaluated = binary_classification_evaluation(t_classes, res, t_ids, positive_class, class_order)
-#         results.append(evaluated)
-#     results = preprocess_results_for_given_splits_and_features(np.array(results))
-#     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
 
 attributes_learn = pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump')))
 classes_learn = pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump')))
@@ -63,22 +52,21 @@ scorer = make_scorer(scorer_function, needs_proba=True)
 results = {}
 c_range = 2 ** np.linspace(-5, 5, 11)
 num_of_jobs = psutil.cpu_count()-1 or 1
-# for C in c_range:
-#     print C
-#     estimator = SVC(C=C, kernel='linear', probability=True)
-#     selector = RFECV(estimator, cv=indices, scoring=scorer, n_jobs=num_of_jobs)
-#     selector.fit(attributes_learn, classes_learn)
-#     support = selector.get_support(indices=True)
-#     result = individual_fitness(cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support))
-#     print result
-#     results[C] = (result, selector)
-#
-# pickle.dump(results, open(os.path.join(res_dir, 'RFE.dump'), 'w'))
-# best_result = max(results.items(), key=lambda item: item[1][0])
-# best_selector = best_result[1][1]
-# print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
-# joblib.dump(best_selector, os.path.join(res_dir, 'RFE_best.dump'))
+for C in c_range:
+    print C
+    estimator = SVC(C=C, kernel='linear', probability=True)
+    selector = RFECV(estimator, cv=indices, scoring=scorer, n_jobs=num_of_jobs)
+    selector.fit(attributes_learn, classes_learn)
+    support = selector.get_support(indices=True)
+    result = individual_fitness(cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support))
+    print result
+    results[C] = (result, selector)
 
+pickle.dump(results, open(os.path.join(res_dir, 'RFE.dump'), 'w'))
+best_result = max(results.items(), key=lambda item: item[1][0])
+best_selector = best_result[1][1]
+print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
+joblib.dump(best_selector, os.path.join(res_dir, 'RFE_best.dump'))
 
 # TODo zmienić w publikacji na linear kernel
 
@@ -92,12 +80,19 @@ grid_search = GridSearchCV(pipeline,
                            scoring=scorer, cv=indices, n_jobs=num_of_jobs)
 grid_search.fit(attributes_learn, classes_learn)
 
-print grid_search.cv_results_
-print '-----------------------'
-print grid_search.best_estimator_
-print '-----------------------'
+
 print grid_search.best_score_
 print '-----------------------'
 print grid_search.best_params_
-#joblib.dump(grid_search, 'blah')
+
+pickle.dump(grid_search.best_params_, open(os.path.join(res_dir, 'grid_search_best.dump'), 'w'))
+selection = SelectKBest(f_classif, k=grid_search.best_params_['kbest__k'])
+selection.fit(attributes_learn, classes_learn)
+feat_indices = selection.get_support(indices=True)
+best_clf = SVC(kernel='linear', probability=True, C=grid_search.best_params_['svc__C'])
+result = individual_fitness(cv_for_given_splits_and_features(best_clf, attributes_learn, classes_learn, indices, feat_indices))
+print 'SelectKBest result in CV:', result
+best_clf.fit(attributes_learn, classes_learn)
+probas = best_clf.predict_proba(attributes_test)
+print "SelectKBest AUC:", roc_auc_score(classes_test, probas[:, 1])
 
