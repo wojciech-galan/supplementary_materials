@@ -63,34 +63,41 @@ scorer = make_scorer(scorer_function, needs_proba=True)
 results = {}
 c_range = 2 ** np.linspace(-5, 5, 11)
 num_of_jobs = psutil.cpu_count()-1 or 1
-for C in c_range:
-    print C
-    estimator = SVC(C=C, kernel='linear', probability=True)
-    selector = RFECV(estimator, cv=indices, scoring=scorer, n_jobs=num_of_jobs)
-    selector.fit(attributes_learn, classes_learn)
-    support = selector.get_support(indices=True)
-    result = individual_fitness(cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support))
-    print result
-    results[C] = (result, selector)
-
-pickle.dump(results, open(os.path.join(res_dir, 'RFE.dump'), 'w'))
-best_result = max(results.items(), key=lambda item: item[1][0])
-best_selector = best_result[1][1]
-print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
-joblib.dump(best_selector, os.path.join(res_dir, 'RFE_best.dump'))
+# for C in c_range:
+#     print C
+#     estimator = SVC(C=C, kernel='linear', probability=True)
+#     selector = RFECV(estimator, cv=indices, scoring=scorer, n_jobs=num_of_jobs)
+#     selector.fit(attributes_learn, classes_learn)
+#     support = selector.get_support(indices=True)
+#     result = individual_fitness(cv_for_given_splits_and_features(selector.estimator, attributes_learn, classes_learn, indices, support))
+#     print result
+#     results[C] = (result, selector)
+#
+# pickle.dump(results, open(os.path.join(res_dir, 'RFE.dump'), 'w'))
+# best_result = max(results.items(), key=lambda item: item[1][0])
+# best_selector = best_result[1][1]
+# print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
+# joblib.dump(best_selector, os.path.join(res_dir, 'RFE_best.dump'))
 
 
 # TODo zmienić w publikacji na linear kernel
 
 # TODO zmienić w publikacji chi2 na f_classif
 
-kbest = SelectKBest(f_classif)  # TODO zmienić funkcję!
-pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear'))])  # TODO probas!
+kbest = SelectKBest(f_classif)
+pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear', probability=True))])
 grid_search = GridSearchCV(pipeline,
                            {'kbest__k': range(attributes_learn.shape[1] - 1, 0, -1),
                             'svc__C': c_range},
-                           scoring=None, cv=indices, n_jobs=7)  # TODO zmienic scoring
+                           scoring=scorer, cv=indices, n_jobs=num_of_jobs)
 grid_search.fit(attributes_learn, classes_learn)
 
-joblib.dump(grid_search, 'blah')
+print grid_search.cv_results_
+print '-----------------------'
+print grid_search.best_estimator_
+print '-----------------------'
+print grid_search.best_score_
+print '-----------------------'
+print grid_search.best_params_
+#joblib.dump(grid_search, 'blah')
 
