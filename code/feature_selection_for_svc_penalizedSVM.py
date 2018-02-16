@@ -19,14 +19,14 @@ if __name__ == '__main__':
                         help='input file containing cv splits')
     parser.add_argument('--outdir', action='store', type=str, default=os.path.join('..', 'svm_res'),
                         help='directory for results')
-    parser.parse_args()
+    args = parser.parse_args()
 
     # attributes_learn = pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump')))
     # classes_learn = pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump')))
     # attributes_test = pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))
     # classes_test = pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))
     # indices = pickle.load(open(os.path.join('..', 'datasets', 'cv_indices.dump')))
-    splits = pickle.load(open(parser.infile))
+    splits = pickle.load(open(args.infile))
 
     lambdas = np.linspace(0.01, 0.05, 41)
 
@@ -47,7 +47,7 @@ if __name__ == '__main__':
         features_indices = [x - 1 for x in model.rx('xind')[0]]
         feature_sets.append(np.array(features_indices))
         models.append(model)
-        pickle.dump(model, open(parser.outdir, 'w'))
+        pickle.dump(model, open(args.outdir, 'w'))
         raise
         # p_values = r.test_features(split[2], binarized_attributes_learn, quick=True)
         # significant_features = [x for x in range(len(p_values)) if p_values[x] < 0.0001]
