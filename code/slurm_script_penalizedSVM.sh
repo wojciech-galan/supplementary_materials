@@ -10,17 +10,16 @@ module load plgrid/apps/r/3.3.0
 
 export R_LIBS_USER="/net/people/plgalan/R/libs"
 
-infile="$SCRATCHDIR/datasets/splits.dump"
-outdir="$SCRATCHDIR/svm_res"
-
 subdir="svm_res"
+infile="$SCRATCHDIR/datasets/splits.dump"
+outdir="$SCRATCHDIR/$subdir"
 
 mkdir $SCRATCHDIR/datasets
 mkdir -p $SCRATCHDIR/$subdir
 mkdir -p $SLURM_SUBMIT_DIR/$subdir
 cp $SLURM_SUBMIT_DIR/datasets/splits.dump $SCRATCHDIR/datasets
 
-python code/feature_selection_for_svc_penalizedSVM.py --infile $infile --outdir
+python code/feature_selection_for_svc_penalizedSVM.py --infile $infile --outdir outdir
 #for mean in {10..90..10}
 #do
 #    for crossover in $crossovers
