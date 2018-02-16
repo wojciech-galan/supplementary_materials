@@ -10,7 +10,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import roc_auc_score, matthews_corrcoef, accuracy_score
 from rpy2.robjects import numpy2ri
 from rpy2.robjects import r
-from feature_selection_for_svc_biogram import svc_for_given_splits_and_features
+from ml_stuff import svc_for_given_splits_and_features
 from ga_stuff import individual_fitness
 
 if __name__ == '__main__':
