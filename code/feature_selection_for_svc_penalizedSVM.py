@@ -30,14 +30,20 @@ if __name__ == '__main__':
 
     lambdas = np.linspace(0.01, 0.05, 41)
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        r.library('penalizedSVM')
+    r.library('e1071')
+    r.library('MASS')
+    r.library('corpcor')
+    r.library('statmod')
+    r.library('tgp')
+    r.library('mlegp')
+    r.library('lhs')
+    r.library('penalizedSVM')
 
     numpy2ri.activate()
     # in the first round of cross-validation 5 possible feature sets are selected
     feature_sets = []
     models=[]
+    models_fname = os.path.join(args.outdir, 'models.dump')
     for split in splits:
         l_classes_negative = np.asarray([x or -1 for x in split[2]])
         a_res = r['svm.fs'](split[0], l_classes_negative, fs_method='scad', lambda1_set=lambdas)
@@ -47,7 +53,7 @@ if __name__ == '__main__':
         features_indices = [x - 1 for x in model.rx('xind')[0]]
         feature_sets.append(np.array(features_indices))
         models.append(model)
-        pickle.dump(model, open(args.outdir, 'w'))
+        pickle.dump(model, open(models_fname, 'w'))
         raise
         # p_values = r.test_features(split[2], binarized_attributes_learn, quick=True)
         # significant_features = [x for x in range(len(p_values)) if p_values[x] < 0.0001]
