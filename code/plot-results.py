@@ -23,7 +23,7 @@ def PLOT_cx_mutpb(df, cx, mut_pb, prefix, plot_dir, val_col):
 
 
 if __name__ == '__main__':
-    plot_dir = os.path.join('..', 'ga_res', 'qda_results')
+    plot_dir = os.path.join('..', 'ga_res', 'qda_500_results')
     results = os.path.join(plot_dir, 'qda_results.tsv')
 
 
