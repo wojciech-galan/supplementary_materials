@@ -43,7 +43,9 @@ if __name__ == '__main__':
     # in the first round of cross-validation 5 possible feature sets are selected
     feature_sets = []
     models=[]
-    models_fname = os.path.join(args.outdir, 'models.dump')
+    results = []
+    models_fname = os.path.join(args.outdir, 'penalized_svm_models.dump')
+    results_fname = os.path.join(args.outdir, 'pealized_svm_results.dump')
     for split in splits:
         l_classes_negative = np.asarray([x or -1 for x in split[2]])
         a_res = r['svm.fs'](split[0], l_classes_negative, fs_method='scad', lambda1_set=lambdas)
@@ -53,8 +55,9 @@ if __name__ == '__main__':
         features_indices = [x - 1 for x in model.rx('xind')[0]]
         feature_sets.append(np.array(features_indices))
         models.append(model)
-        pickle.dump(model, open(models_fname, 'w'))
-        raise
+        results.append((features_indices, model.rx('lam.opt')))
+        pickle.dump(models, open(models_fname, 'w'))
+        pickle.dump(results, open(results_fname, 'w'))
         # p_values = r.test_features(split[2], binarized_attributes_learn, quick=True)
         # significant_features = [x for x in range(len(p_values)) if p_values[x] < 0.0001]
         # feature_sets.append(np.array(significant_features))
