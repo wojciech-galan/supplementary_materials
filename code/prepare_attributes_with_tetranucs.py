@@ -424,8 +424,6 @@ if __name__ == '__main__':
     attributes_learn = scaler.fit_transform(attributes_learn)
     attributes_test = scaler.transform(attributes_test)
     pickle.dump(attributes_learn,
-                open('/home/wojtek/PycharmProjects/supplementary_materials/datasets/attributes_learn_with_tetra.dump',
-                     'w'))
+                open(os.path.join('..', 'datasets', 'attributes_learn_with_tetra.dump', 'w')))
     pickle.dump(attributes_test,
-                open('/home/wojtek/PycharmProjects/supplementary_materials/datasets/attributes_test_with_tetra.dump',
-                     'w'))
+                open(os.path.join('..', 'datasets', 'attributes_test_with_tetra.dump', 'w')))
