@@ -165,7 +165,7 @@ def load_results(directory):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Genetic algorithms for feature selection")
+    parser = argparse.ArgumentParser(description="Bottom-up feature selection")
     parser.add_argument('res_dir', action='store', type=str, help='directory containing results')
     parser.add_argument('n_proc', action='store', type=int, help='number_of_additional_processes')
     parser.add_argument('--infile', action='store', type=str, default=os.path.join('..', 'datasets', 'splits.dump'),

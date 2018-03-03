@@ -85,7 +85,7 @@ if __name__ == '__main__':
     print '-----------------------'
     print grid_search.best_params_
 
-    pickle.dump(grid_search.best_params_, open(os.path.join(res_dir, 'grid_search_best.dump'), 'w'))
+    pickle.dump(grid_search, open(os.path.join(res_dir, 'grid_search.dump'), 'w'))
     selection = SelectKBest(f_classif, k=grid_search.best_params_['kbest__k'])
     selection.fit(attributes_learn, classes_learn)
     feat_indices = selection.get_support(indices=True)
