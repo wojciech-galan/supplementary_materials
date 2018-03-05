@@ -24,7 +24,7 @@ if __name__ == '__main__':
                  "vector"]
     df = pd.DataFrame(columns=col_names)
 
-    for d in glob.glob(os.path.join('..', 'ga_res', 'qda', "*")):  # over all repetitions
+    for d in glob.glob(os.path.join('..', 'ga_res', 'qda_500', "*")):  # over all repetitions
         repetition = d.split("/")[-1]
         for f in glob.glob(os.path.join(d, "*")):  # over all final populations for all params runs
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
             fittest = max(population, key=lambda x: x.fitness.getValues()[0])
             df.loc[len(df)] = [repetition] + params + [fittest.fitness.getValues()[0]] + [fittest]  # this is ugly
 
-    out_dir = os.path.join('..', 'ga_res', 'qda_results')
+    out_dir = os.path.join('..', 'ga_res', 'qda_500_results')
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
     df.to_csv(os.path.join(out_dir, 'qda_results.tsv'), sep="\t")
