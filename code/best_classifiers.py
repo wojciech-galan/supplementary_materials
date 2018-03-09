@@ -4,9 +4,13 @@
 import os
 import glob
 import cPickle as pickle
+from deap import creator, base
 from feature_selection_bottom_up import number_to_indices
 from feature_selection_for_svc import scorer_function
 from ga_stuff import individual_fitness
+
+creator.create("FitnessMax", base.Fitness, weights=(1.0,))
+creator.create("Individual", list, fitness=creator.FitnessMax)
 
 
 def get_bottom_up(directory):
@@ -16,8 +20,17 @@ def get_bottom_up(directory):
     names = glob.glob(os.path.join(directory, 'results.dump*'))
     best_name = max(names, key=lambda x: int(x.rsplit('_', 1)[1]))
     best_res = max(pickle.load(open(best_name)).items(), key=lambda x: individual_fitness(x[1]))
-    print individual_fitness(best_res[1])
+    # print individual_fitness(best_res[1])
     return number_to_indices(best_res[0])
+
+
+def get_ga(directory, neighbours=None):
+    names = glob.glob(os.path.join(directory, '*', '*'))
+    if neighbours:
+        neighbours = str(neighbours)
+        names = [name for name in names if name.rsplit('_', 2)[-2] == neighbours]
+    res = max([max(pickle.load(open(name)), key=lambda x: x.fitness) for name in names], key=lambda x: x.fitness)
+    print res.fitness
 
 
 def get_best_params_for_selectkbest(selectkbest_results_pickled):
@@ -39,11 +52,22 @@ if __name__ == '__main__':
     # https://stackoverflow.com/questions/44999289/print-feature-names-for-selectkbest-where-k-value-is-inside-param-grid-of-gridse
     svc_SelectKBest_best_features, svc_RFE_SelectKBest_C = get_best_params_for_selectkbest(
         os.path.join('..', 'svm_res', 'grid_search.dump'))
-    raise
-    svc_SelectKBest_best_features = []
     # bottom up QDA
-    get_bottom_up(os.path.join('..', 'bottom_up_feature_selection_results_qda'))
+    qda_bottomup_best_features = get_bottom_up(os.path.join('..', 'bottom_up_feature_selection_results_qda'))
 
     for i in range(1, 10, 2):
-        print i
+        # print i
         get_bottom_up(os.path.join('..', 'bottom_up_feature_selection_results_knn_%d' % i))
+
+    names = glob.glob(os.path.join('..', 'ga_res', 'knn', '*', '*'))
+    ks = [name.rsplit('_', 2)[-2] for name in names]
+    for i in range(1, max(set(names))+2, 2):
+        get_ga(os.path.join('..', 'ga_res', 'knn'), i)
+
+    names = glob.glob(os.path.join('..', 'ga_res', 'knn_500', '*', '*'))
+    ks = [name.rsplit('_', 2)[-2] for name in names]
+    for i in range(1, max(set(names))+2, 2):
+        get_ga(os.path.join('..', 'ga_res', 'knn_500'), i)
+
+    get_ga(os.path.join('..', 'ga_res', 'qda'))
+    get_ga(os.path.join('..', 'ga_res', 'qda_500'))
