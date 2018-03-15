@@ -27,8 +27,9 @@ if __name__ == '__main__':
     # classes_test = pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))
     # indices = pickle.load(open(os.path.join('..', 'datasets', 'cv_indices.dump')))
     splits = pickle.load(open(args.infile))
+    c_range = 2 ** np.linspace(-5, 5, 11)
+    lambdas = 1/c_range
 
-    lambdas = np.linspace(0.01, 0.05, 41)
 
     r.library('e1071')
     r.library('MASS')
@@ -55,15 +56,16 @@ if __name__ == '__main__':
         features_indices = [x - 1 for x in model.rx('xind')[0]]
         feature_sets.append(np.array(features_indices))
         models.append(model)
-        results.append((features_indices, model.rx('lam.opt')))
+        results.append((np.array(features_indices), model.rx('lam.opt')))
     pickle.dump(models, open(models_fname, 'w'))
     pickle.dump(results, open(results_fname, 'w'))
 
     # in the second round of cross-validation 5 possible feature sets are evaluated
     scores = []
-    for features_indexes in feature_sets:
+    for res in results:
+        features_indices, lam = res
         scores.append(individual_fitness(
-            svc_for_given_splits_and_features(features_indexes, splits, 0, kernel='linear', probability=True)))
+            svc_for_given_splits_and_features(features_indices, splits, 0, kernel='linear', C=1/lam, probability=True)))
     print scores  #
     max_score = max(scores)
     index = scores.index(max_score)
