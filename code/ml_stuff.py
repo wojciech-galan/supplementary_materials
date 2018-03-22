@@ -7,6 +7,7 @@ from sklearn import neighbors
 from sklearn.svm import SVC
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import roc_auc_score
+from sklearn.metrics import accuracy_score
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
 
@@ -55,6 +56,7 @@ def binary_classification_evaluation(classes_proper, classes_probas, ids, positi
 
 def knn(X_train, X_test, y_train, neighbours):
     clf = neighbors.KNeighborsClassifier(neighbours)
+    #print 'in ml_stuff', clf
     clf.fit(X_train, y_train)
     return clf.predict_proba(X_test), clf.classes_
 
@@ -63,6 +65,7 @@ def qda(X_train, X_test, y_train):
     clf = QuadraticDiscriminantAnalysis()
     clf.fit(X_train, y_train)
     return clf.predict_proba(X_test), clf.classes_
+
 
 def svc(X_train, X_test, y_train, probability=True, **kwargs):
     clf = SVC(probability=probability, **kwargs)
@@ -80,13 +83,13 @@ def preprocess_results_for_given_splits_and_features(results):
     return results
 
 
-def knn_for_given_splits_and_features(features_indexes, splits, positive_class, neighbours):
+def knn_for_given_splits_and_features(features_indexes, splits, positive_class, n_neighbors):
     results = []
     for split in splits:
         l, t, l_classes, t_classes, l_ids, t_ids = split
         l = l[:, features_indexes]
         t = t[:, features_indexes]
-        res, class_order = knn(l, t, l_classes, neighbours)
+        res, class_order = knn(l, t, l_classes, n_neighbors)
         evaluated = binary_classification_evaluation(t_classes, res, t_ids, positive_class, class_order)
         results.append(evaluated)
     results = preprocess_results_for_given_splits_and_features(np.array(results))
@@ -105,6 +108,7 @@ def qda_for_given_splits_and_features(features_indexes, splits, positive_class):
     results = preprocess_results_for_given_splits_and_features(np.array(results))
     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
 
+
 def svc_for_given_splits_and_features(features_indexes, splits, positive_class, **kwargs):
     results = []
     for split in splits:
@@ -116,3 +120,31 @@ def svc_for_given_splits_and_features(features_indexes, splits, positive_class, 
         results.append(evaluated)
     results = preprocess_results_for_given_splits_and_features(np.array(results))
     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
+
+
+def generic_cv_for_given_splits_and_features(classifier, features_indexes, splits, positive_class):
+    results = []
+    for split in splits:
+        l, t, l_classes, t_classes, l_ids, t_ids = split
+        l = l[:, features_indexes]
+        t = t[:, features_indexes]
+        classifier.fit(l, l_classes)
+        predicted = classifier.predict_proba(t)
+        evaluated = binary_classification_evaluation_extended(t_classes, predicted, positive_class, classifier.classes_)
+        results.append(evaluated)
+    results = np.array(results)
+    final_results = []
+    for i in range(results.shape[1]):
+        final_results.append(np.mean(results[:,i]))
+        final_results.append(np.std(results[:,i]))
+    return np.array(final_results)
+
+
+def binary_classification_evaluation_extended(classes_proper, classes_probas, positive_num, class_order):
+    assert len(classes_proper) == len(classes_probas)
+    assert set(classes_proper) == set([0, 1])
+    pos_probas = classes_probas[:, positive_num]
+    classes_predicted = [class_order[x.argmax()] for x in classes_probas]
+    auc = roc_auc_score(classes_proper, pos_probas, None)
+    mcc = matthews_corrcoef(classes_proper, classes_predicted)
+    return mcc, auc, accuracy_score(classes_proper, classes_predicted)
