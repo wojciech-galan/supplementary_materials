@@ -61,20 +61,21 @@ if __name__ == '__main__':
     pickle.dump(results, open(results_fname, 'w'))
 
     # in the second round of cross-validation 5 possible feature sets are evaluated
-    scores = []
+    scores = {}
     for res in results:
-        features_indices, lam = res
-        scores.append(individual_fitness(
-            svc_for_given_splits_and_features(features_indices, splits, 0, kernel='linear', C=1/lam, probability=True)))
+        for c in c_range:
+            features_indices, _ = res
+            scores[(tuple(features_indices), c)] = individual_fitness(svc_for_given_splits_and_features(features_indices, splits, 0, kernel='linear', C=c, probability=True))
     print scores  #
-    max_score = max(scores)
-    index = scores.index(max_score)
-    max_features = feature_sets[index]
+    max_score = max(scores.items(), key=lambda x: x[1])
+    max_features = max_score[0]
+    max_c = max_score[1]
     res_dir = os.path.join('..', 'svm_res')
     if not os.path.exists(res_dir):
         os.makedirs(res_dir)
 
     pickle.dump(max_features, open(os.path.join(res_dir, 'best_features_penalizedSVM.dump'), 'w'))
+    pickle.dump(max_c, open(os.path.join(res_dir, 'best_C_penalizedSVM.dump'), 'w'))
     scores_for_left_features = []
 
     clf = SVC(kernel='linear', probability=True)
