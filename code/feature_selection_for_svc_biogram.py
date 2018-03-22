@@ -33,19 +33,21 @@ for split in splits:
     features_left.append(np.array(list(set(range(len(p_values))) - set(significant_features))))
 
 # in the second round of cross-validation 5 possible feature sets are evaluated
-scores = []
+c_range = 2 ** np.linspace(-5, 5, 11)
+scores = {}
 for features_indexes in feature_sets:
-    scores.append(individual_fitness(
-        svc_for_given_splits_and_features(features_indexes, splits, 0, kernel='linear', probability=True)))
-print scores  # [(1.8262310714659573,), (1.8389146555594416,), (1.8396458851692163,), (1.8275493008041139,), (1.8213059895311217,)]
-max_score = max(scores)
-index = scores.index(max_score)
-max_features = feature_sets[index]
+    for c in c_range:
+        scores[(tuple(features_indexes), c)] = individual_fitness(svc_for_given_splits_and_features(features_indexes, splits, 0, kernel='linear', C=c, probability=True))
+max_score = max(scores.items(), key=lambda x: x[1])
+max_features = max_score[0]
+max_c = max_score[1]
 res_dir = os.path.join('..', 'svm_res')
 if not os.path.exists(res_dir):
     os.makedirs(res_dir)
 
 pickle.dump(max_features, open(os.path.join(res_dir, 'best_features_biogram.dump'), 'w'))
+pickle.dump(max_c, open(os.path.join(res_dir, 'best_C_biogram.dump'), 'w'))
+
 scores_for_left_features = []
 
 clf = SVC(kernel='linear', probability=True)
