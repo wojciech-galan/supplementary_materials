@@ -40,9 +40,10 @@ class Res(object):
         print classifier
         # print method_to_compute_cv_fitness(features, cv_splits, pos_class, **params)
         self.cv_res = generic_cv_for_given_splits_and_features(classifier, features, cv_splits, pos_class)
+        # assert cv_res == self.cv_res
         # print self.cv_res
-        classifier.fit(x_learn, y_learn)
-        probas = classifier.predict_proba(x_test)
+        classifier.fit(x_learn[:, features], y_learn)
+        probas = classifier.predict_proba(x_test[:, features])
         # print zip(y_test, probas[:, 0])
         self.blind_res = binary_classification_evaluation_extended(y_test, probas, positive_class, classifier.classes_)
         self.description = description
