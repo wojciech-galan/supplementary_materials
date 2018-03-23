@@ -83,7 +83,7 @@ def preprocess_results_for_given_splits_and_features(results):
     return results
 
 
-def knn_for_given_splits_and_features(features_indexes, splits, positive_class, n_neighbors):
+def knn_for_given_splits_and_features(features_indexes, splits, positive_class, n_neighbors=5):
     results = []
     for split in splits:
         l, t, l_classes, t_classes, l_ids, t_ids = split
