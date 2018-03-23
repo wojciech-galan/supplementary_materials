@@ -10,6 +10,7 @@ from deap import creator, base
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.linear_model import LogisticRegression
 from feature_selection_bottom_up import number_to_indices
 from feature_selection_for_svc import scorer_function
 from ga_stuff import individual_fitness
@@ -37,12 +38,12 @@ class Res(object):
         np.random.seed(seed)
         classifier = eval('%s(**params)' % method)
         print classifier
-        #print method_to_compute_cv_fitness(features, cv_splits, pos_class, **params)
+        # print method_to_compute_cv_fitness(features, cv_splits, pos_class, **params)
         self.cv_res = generic_cv_for_given_splits_and_features(classifier, features, cv_splits, pos_class)
         # print self.cv_res
         classifier.fit(x_learn, y_learn)
         probas = classifier.predict_proba(x_test)
-        #print zip(y_test, probas[:, 0])
+        # print zip(y_test, probas[:, 0])
         self.blind_res = binary_classification_evaluation_extended(y_test, probas, positive_class, classifier.classes_)
         self.description = description
 
@@ -88,10 +89,26 @@ if __name__ == '__main__':
     positive_class = 1
     results = []
     num_of_feats = cv_splits[0][0].shape[1]
+    # simple LogisticRegression
+    results.append(
+        Res('LogisticRegression', range(num_of_feats), {}, cv_splits,
+            positive_class,
+            functools.partial(generic_cv_for_given_splits_and_features, LogisticRegression()),
+            attributes_learn, attributes_test, classes_learn, classes_test,
+            description='simple LogisticRegression'))
+    # LogisticRegression with lasso- feature selection
+    lasso_features = pickle.load(open(os.path.join('..', 'lr_res', 'best_features_LogisticRegression.dump')))
+    lasso_c = pickle.load(open(os.path.join('..', 'lr_res', 'best_C_LogisticRegression.dump')))[0]
+    results.append(
+        Res('LogisticRegression', lasso_features, {'C': lasso_c}, cv_splits, positive_class,
+            functools.partial(generic_cv_for_given_splits_and_features, LogisticRegression(C=lasso_c)),
+            attributes_learn, attributes_test, classes_learn, classes_test,
+            description='LogisticRegression with lasso- feature selection'))
     # simple svm
     results.append(
         Res('SVC', range(num_of_feats), {'kernel': 'linear', 'probability': True}, cv_splits, positive_class,
-            svc_for_given_splits_and_features, attributes_learn, attributes_test, classes_learn, classes_test, description='simple svc'))
+            svc_for_given_splits_and_features, attributes_learn, attributes_test, classes_learn, classes_test,
+            description='simple svc'))
     # simple kNN
     results.append(Res('KNeighborsClassifier', range(num_of_feats), {},
                        cv_splits, positive_class, knn_for_given_splits_and_features,
@@ -125,15 +142,16 @@ if __name__ == '__main__':
     svc_biogram_best_features = pickle.load(open(os.path.join('..', 'svm_res', 'best_features_biogram.dump'), 'rb'))
     svc_biogram_best_c = pickle.load(open(os.path.join('..', 'svm_res', 'best_C_biogram.dump'), 'rb'))
     results.append(
-        Res('SVC', svc_biogram_best_features, {'C':svc_biogram_best_c, 'kernel': 'linear', 'probability': True},
+        Res('SVC', svc_biogram_best_features, {'C': svc_biogram_best_c, 'kernel': 'linear', 'probability': True},
             cv_splits, positive_class, svc_for_given_splits_and_features, attributes_learn, attributes_test,
             classes_learn, classes_test, description='svm_biogram'))
 
     # penalized svm
-    svc_penalized_best_features = pickle.load(open(os.path.join('..', 'svm_res', 'best_features_penalizedSVM.dump'), 'rb'))
+    svc_penalized_best_features = pickle.load(
+        open(os.path.join('..', 'svm_res', 'best_features_penalizedSVM.dump'), 'rb'))
     svc_penalized_best_c = pickle.load(open(os.path.join('..', 'svm_res', 'best_C_penalizedSVM.dump'), 'rb'))
     results.append(
-        Res('SVC', svc_biogram_best_features, {'kernel': 'linear', 'probability': True, 'C':svc_penalized_best_c},
+        Res('SVC', svc_biogram_best_features, {'kernel': 'linear', 'probability': True, 'C': svc_penalized_best_c},
             cv_splits, positive_class, svc_for_given_splits_and_features, attributes_learn, attributes_test,
             classes_learn, classes_test, description='svm_penalized'))
 

@@ -122,7 +122,7 @@ def svc_for_given_splits_and_features(features_indexes, splits, positive_class, 
     return np.mean(results[:, 0]), np.std(results[:, 0]), np.mean(results[:, 1]), np.std(results[:, 1])
 
 
-def generic_cv_for_given_splits_and_features(classifier, features_indexes, splits, positive_class):
+def generic_cv_for_given_splits_and_features(classifier, features_indexes, splits, positive_class, **kwargs):
     results = []
     for split in splits:
         l, t, l_classes, t_classes, l_ids, t_ids = split
