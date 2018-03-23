@@ -99,7 +99,7 @@ if __name__ == '__main__':
                        classes_learn, classes_test, description='simple kNN'))
 
     # simple QDA
-    results.append(Res('QuadraticDiscriminantAnalysis', range(num_of_feats), {'n_neighbors': 5},
+    results.append(Res('QuadraticDiscriminantAnalysis', range(num_of_feats), {},
                        cv_splits, positive_class, qda_for_given_splits_and_features, attributes_learn,
                        attributes_test,
                        classes_learn, classes_test, description='simple QDA'))
@@ -123,17 +123,19 @@ if __name__ == '__main__':
 
     # svm biogram
     svc_biogram_best_features = pickle.load(open(os.path.join('..', 'svm_res', 'best_features_biogram.dump'), 'rb'))
+    svc_biogram_best_c = pickle.load(open(os.path.join('..', 'svm_res', 'best_C_biogram.dump'), 'rb'))
     results.append(
-        Res('SVC', svc_biogram_best_features, {'kernel': 'linear', 'probability': True},
+        Res('SVC', svc_biogram_best_features, {'C':svc_biogram_best_c, 'kernel': 'linear', 'probability': True},
             cv_splits, positive_class, svc_for_given_splits_and_features, attributes_learn, attributes_test,
             classes_learn, classes_test, description='svm_biogram'))
 
     # penalized svm
     svc_penalized_best_features = pickle.load(open(os.path.join('..', 'svm_res', 'best_features_penalizedSVM.dump'), 'rb'))
+    svc_penalized_best_c = pickle.load(open(os.path.join('..', 'svm_res', 'best_C_penalizedSVM.dump'), 'rb'))
     results.append(
-        Res('SVC', svc_biogram_best_features, {'kernel': 'linear', 'probability': True},
+        Res('SVC', svc_biogram_best_features, {'kernel': 'linear', 'probability': True, 'C':svc_penalized_best_c},
             cv_splits, positive_class, svc_for_given_splits_and_features, attributes_learn, attributes_test,
-            classes_learn, classes_test, description='svm_biogram'))
+            classes_learn, classes_test, description='svm_penalized'))
 
     # bottom up QDA
     qda_bottomup_best_features = get_bottom_up(os.path.join('..', 'bottom_up_feature_selection_results_qda'))
