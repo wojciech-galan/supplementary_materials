@@ -39,8 +39,8 @@ for features_indexes in feature_sets:
     for c in c_range:
         scores[(tuple(features_indexes), c)] = individual_fitness(svc_for_given_splits_and_features(features_indexes, splits, 0, kernel='linear', C=c, probability=True))
 max_score = max(scores.items(), key=lambda x: x[1])
-max_features = max_score[0]
-max_c = max_score[1]
+max_features = max_score[0][0]
+max_c = max_score[0][1]
 res_dir = os.path.join('..', 'svm_res')
 if not os.path.exists(res_dir):
     os.makedirs(res_dir)

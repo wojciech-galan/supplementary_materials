@@ -1,4 +1,4 @@
-((cnumpy.core.multiarray
+(cnumpy.core.multiarray
 scalar
 p1
 (cnumpy
@@ -151,18 +151,5 @@ g1
 (g3
 S'b\x00\x00\x00\x00\x00\x00\x00'
 tRp38
-tg1
-(g2
-(S'f8'
-I0
-I1
-tRp39
-(I3
-S'<'
-NNNI-1
-I-1
-I0
-tbS'\x00\x00\x00\x00\x00\x00\xa0?'
-tRp40
-tp41
+tp39
 .
