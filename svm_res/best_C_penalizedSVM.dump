@@ -1,4 +1,4 @@
-(cnumpy.core.multiarray
+cnumpy.core.multiarray
 scalar
 p1
 (cnumpy
@@ -13,7 +13,6 @@ S'<'
 NNNI-1
 I-1
 I0
-tbS'\xb7L\xd3\xbe\xf4\xcd\xfd?'
+tbS'\x00\x00\x00\x00\x00\x00\xf0?'
 tRp4
-tp5
 .

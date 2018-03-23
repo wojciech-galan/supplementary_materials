@@ -68,8 +68,8 @@ if __name__ == '__main__':
             scores[(tuple(features_indices), c)] = individual_fitness(svc_for_given_splits_and_features(features_indices, splits, 0, kernel='linear', C=c, probability=True))
     print scores  #
     max_score = max(scores.items(), key=lambda x: x[1])
-    max_features = max_score[0]
-    max_c = max_score[1]
+    max_features = max_score[0][0]
+    max_c = max_score[0][1]
     res_dir = os.path.join('..', 'svm_res')
     if not os.path.exists(res_dir):
         os.makedirs(res_dir)
