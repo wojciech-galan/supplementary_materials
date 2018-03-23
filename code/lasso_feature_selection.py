@@ -40,7 +40,7 @@ if __name__ == '__main__':
     feature_indices = [i for i, element in enumerate(model.coef_[0] != np.zeros(model.coef_[0].shape)) if element]
     print feature_indices
     print model.C_
-    res_dir = os.path.join('..', 'svm_res')
+    res_dir = os.path.join('..', 'lr_res')
     pickle.dump(feature_indices, open(os.path.join(res_dir, 'best_features_LogisticRegression.dump'), 'w'))
     pickle.dump(model.C_, open(os.path.join(res_dir, 'best_C_LogisticRegression.dump'), 'w'))
 
