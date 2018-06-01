@@ -6,6 +6,7 @@ import glob
 import cPickle as pickle
 from deap import creator, base
 from ga_stuff import individual_fitness
+from feature_selection_for_svc import scorer_function
 from feature_selection_bottom_up import number_to_indices
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))

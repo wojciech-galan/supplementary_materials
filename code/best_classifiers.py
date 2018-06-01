@@ -11,7 +11,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.linear_model import LogisticRegression
 from feature_selection_bottom_up import number_to_indices
-from feature_selection_for_svc import scorer_function
 from ga_stuff import individual_fitness
 from ml_stuff import generic_cv_for_given_splits_and_features
 from ml_stuff import svc_for_given_splits_and_features
