@@ -189,7 +189,7 @@ if __name__ == '__main__':
         results.append(Res('KNeighborsClassifier', feats, {'n_neighbors': k},
                            cv_splits, positive_class, knn_for_given_splits_and_features, attributes_learn,
                            attributes_test,
-                           classes_learn, classes_test, description='GA knn 500'))
+                           classes_learn, classes_test, description='GA knn 500, %d neighbours'))
 
     feats = get_ga(os.path.join('..', 'ga_res', 'qda'))
     results.append(Res('QuadraticDiscriminantAnalysis', feats, {},
@@ -205,6 +205,6 @@ if __name__ == '__main__':
     print feats
     print feats500
     for res in results:
-        print res.description, res.cv_fitness
+        print res.description, res.cv_fitness[0]
         print res.cv_res, res.blind_res
         print '--------------------------------------------------'
