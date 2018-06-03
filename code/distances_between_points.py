@@ -7,9 +7,9 @@ import cPickle as pickle
 import numpy as np
 from scipy.spatial.distance import euclidean
 from scipy.stats import mannwhitneyu
-from best_features_and_params import lasso_features
 from lib import get_best_params_for_selectkbest
 from feature_selection_for_svc import scorer_function
+from best_features_and_params import lasso_features
 from best_features_and_params import svc_biogram_best_features
 from best_features_and_params import svc_penalized_best_features
 from best_features_and_params import qda_bottomup_best_features
@@ -120,7 +120,7 @@ def compute_statistics(indices, k_lowest, k_highest):
         k_nearest_1_ga = flatten([value for value in k_nearest(distances_1_ga, k).values()])
         distances_0_1_all_values = flatten(distances_0_1.values())
         print np.mean(k_nearest_0_ga), np.std(k_nearest_0_ga)
-        print np.mean(k_nearest(distances_1_ga, k).values()), np.std(k_nearest(distances_1_ga, k).values())
+        print np.mean(k_nearest_1_ga), np.std(k_nearest_1_ga)
         print np.mean(distances_0_1_all_values), np.std(distances_0_1_all_values)
 
         random_distances_0_1_all_values = flatten(flatten([get_distances_between_two_groups_of_points
@@ -156,6 +156,8 @@ if __name__ == '__main__':
 
     k_low = 1
     k_high = 5
+    print "LogisticRegression, lasso"
+    compute_statistics(lasso_features, k_low, k_high)
     print "svm_RFE"
     compute_statistics(svc_RFE_best_features, k_low, k_high)
     print "SelectKBEst"
