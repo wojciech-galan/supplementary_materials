@@ -19,7 +19,6 @@ from best_features_and_params import feats_bottomup_knn
 from best_features_and_params import feats_ga_qda
 from best_features_and_params import feats_ga_qda_500
 
-print lasso_features
 
 def get_distances_from_point(point, other_points):
     """
@@ -80,45 +79,25 @@ def k_nearest(distances, k):
     return res
 
 
-if __name__ == '__main__':
-    attrs = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump'))),
-                            pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))))
-    ids = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'ids_learn.dump'))),
-                          pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))))
-    classes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump'))),
-                              pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))))
+def compute_distances_for_given_indices(attributes, indices, ids, classes):
+    attribs = attributes[:, indices]
+    points = zip(ids, attribs)
+    distances_0 = get_distances([points[x] for x in range(len(points)) if classes[x] == 0])
+    distances_1 = get_distances([points[x] for x in range(len(points)) if classes[x] == 1])
+    return points, distances_0, distances_1
 
-    # svm_RFE
-    svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
-    best_result = max(svc_RFE_results.items(), key=lambda item: item[1][0])
-    svc_RFE_best_features = [i for i, b in enumerate(best_result[1][1].support_) if b]
 
-    # svm_SelectKBest
-    svc_SelectKBest_best_features, _ = get_best_params_for_selectkbest(
-        os.path.join('..', 'svm_res', 'grid_search.dump'))
+def flatten(list_of_lists):
+    return [item for sublist in list_of_lists for item in sublist]
 
-    ga_indices = [0, 4, 5, 8, 22, 23, 24, 26, 27, 30, 34, 35, 36, 39, 77, 93, 98]
 
+def compute_statistics(indices, k_lowest, k_highest):
     random_indices_list = []
     possible_indices = range(attrs.shape[1])
     for i in range(5):
-        random_indices = random.sample(possible_indices, len(ga_indices))
+        random_indices = random.sample(possible_indices, len(indices))
         random_indices_list.append(random_indices)
-
-
-    def compute_distances_for_given_indices(attributes, indices, ids, classes):
-        attribs = attributes[:, indices]
-        points = zip(ids, attribs)
-        distances_0 = get_distances([points[x] for x in range(len(points)) if classes[x] == 0])
-        distances_1 = get_distances([points[x] for x in range(len(points)) if classes[x] == 1])
-        return points, distances_0, distances_1
-
-
-    def flatten(list_of_lists):
-        return [item for sublist in list_of_lists for item in sublist]
-
-
-    points_ga, distances_0_ga, distances_1_ga = compute_distances_for_given_indices(attrs, ga_indices, ids,
+    points_ga, distances_0_ga, distances_1_ga = compute_distances_for_given_indices(attrs, indices, ids,
                                                                                     classes)
 
     random_distances_0 = []
@@ -130,7 +109,7 @@ if __name__ == '__main__':
         random_distances_0.append(d0)
         random_distances_1.append(d1)
 
-    for k in range(1, 11):
+    for k in range(k_lowest, k_highest+1):
         print k
         distances_0_1 = get_distances_between_two_groups_of_points(
             [points_ga[x] for x in range(len(points_ga)) if classes[x] == 0],
@@ -156,6 +135,50 @@ if __name__ == '__main__':
             mannwhitneyu(k_nearest_1_ga, k_nearest_1_random, alternative='less')
         print np.mean(random_distances_0_1_all_values), np.std(random_distances_0_1_all_values), \
             mannwhitneyu(distances_0_1_all_values, random_distances_0_1_all_values, alternative='greater')
+        print '----------------------------------------------------'
+
+if __name__ == '__main__':
+    attrs = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump'))),
+                            pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))))
+    ids = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'ids_learn.dump'))),
+                          pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))))
+    classes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump'))),
+                              pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))))
+
+    # svm_RFE
+    svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
+    best_result = max(svc_RFE_results.items(), key=lambda item: item[1][0])
+    svc_RFE_best_features = [i for i, b in enumerate(best_result[1][1].support_) if b]
+
+    # svm_SelectKBest
+    svc_SelectKBest_best_features, _ = get_best_params_for_selectkbest(
+        os.path.join('..', 'svm_res', 'grid_search.dump'))
+
+    k_low = 1
+    k_high = 5
+    print "svm_RFE"
+    compute_statistics(svc_RFE_best_features, k_low, k_high)
+    print "SelectKBEst"
+    compute_statistics(svc_SelectKBest_best_features, k_low, k_high)
+    print "svc_biogram_best_features"
+    compute_statistics(svc_biogram_best_features, k_low, k_high)
+    print "svc_penalized_best_features"
+    compute_statistics(svc_penalized_best_features, k_low, k_high)
+    print "qda_bottomup_best_features"
+    compute_statistics(qda_bottomup_best_features, k_low, k_high)
+    for neighbours, indices in feats_ga_knn.iteritems():
+        print "feats_ga_knn", neighbours
+        compute_statistics(indices, k_low, k_high)
+    for neighbours, indices in feats_ga_knn_500.iteritems():
+        print "feats_ga_knn_500", neighbours
+        compute_statistics(indices, k_low, k_high)
+    print "feats_bottomup_knn"
+    compute_statistics(feats_bottomup_knn, k_low, k_high)
+    print "feats_ga_qda"
+    compute_statistics(feats_ga_qda, k_low, k_high)
+    print "feats_ga_qda_500"
+    compute_statistics(feats_ga_qda_500, k_low, k_high)
+
 
 # 1
 # 2.01410542882 0.750136990695
