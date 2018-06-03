@@ -3,6 +3,7 @@
 import math
 import random
 import time
+import cPickle as pickle
 from functools import wraps
 from deap import creator
 
@@ -70,6 +71,16 @@ def get_feature_indices(feats_cardinality, mean_num_of_choosen_feats, std_num_of
         while len(curr_feat_indices) < length:
             possible_indices, curr_feat_indices = get_feature_index(possible_indices, curr_feat_indices)
     return creator.Individual([int(i in curr_feat_indices) for i in range(feats_cardinality)])
+
+
+def get_best_params_for_selectkbest(selectkbest_results_pickled):
+    # https://stackoverflow.com/questions/44999289/print-feature-names-for-selectkbest-where-k-value-is-inside-param-grid-of-gridse
+    with open(selectkbest_results_pickled) as f:
+        selectkbest_results = pickle.load(f)
+    scores = selectkbest_results.best_estimator_.steps[0][1].scores_
+    p_values = selectkbest_results.best_estimator_.steps[0][1].pvalues_
+    indices = [x[-1] for x in sorted(zip(scores, range(len(p_values))), reverse=True)]
+    return sorted(indices[:selectkbest_results.best_params_['kbest__k']]), selectkbest_results.best_params_['svc__C']
 
 
 def timing(f):

@@ -6,21 +6,10 @@ import glob
 import cPickle as pickle
 from deap import creator, base
 from ga_stuff import individual_fitness
-from feature_selection_for_svc import scorer_function
 from feature_selection_bottom_up import number_to_indices
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMax)
-
-
-def get_best_params_for_selectkbest(selectkbest_results_pickled):
-    # https://stackoverflow.com/questions/44999289/print-feature-names-for-selectkbest-where-k-value-is-inside-param-grid-of-gridse
-    with open(selectkbest_results_pickled) as f:
-        selectkbest_results = pickle.load(f)
-    scores = selectkbest_results.best_estimator_.steps[0][1].scores_
-    p_values = selectkbest_results.best_estimator_.steps[0][1].pvalues_
-    indices = [x[-1] for x in sorted(zip(scores, range(len(p_values))), reverse=True)]
-    return sorted(indices[:selectkbest_results.best_params_['kbest__k']]), selectkbest_results.best_params_['svc__C']
 
 
 def get_bottom_up(directory):
@@ -45,16 +34,6 @@ def get_ga(directory, neighbours=None):
 # LogisticRegression with lasso- feature selection
 lasso_features = pickle.load(open(os.path.join('..', 'lr_res', 'best_features_LogisticRegression.dump')))
 lasso_c = pickle.load(open(os.path.join('..', 'lr_res', 'best_C_LogisticRegression.dump')))[0]
-
-# svm_RFE
-svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
-best_result = max(svc_RFE_results.items(), key=lambda item: item[1][0])
-svc_RFE_best_features = [i for i, b in enumerate(best_result[1][1].support_) if b]
-svc_RFE_best_C = best_result[1][1].estimator.C
-
-# svm_SelectKBest
-svc_SelectKBest_best_features, svc_RFE_SelectKBest_C = get_best_params_for_selectkbest(
-    os.path.join('..', 'svm_res', 'grid_search.dump'))
 
 # svm biogram
 svc_biogram_best_features = pickle.load(open(os.path.join('..', 'svm_res', 'best_features_biogram.dump'), 'rb'))

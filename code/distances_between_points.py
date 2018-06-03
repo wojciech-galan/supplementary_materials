@@ -8,8 +8,8 @@ import numpy as np
 from scipy.spatial.distance import euclidean
 from scipy.stats import mannwhitneyu
 from best_features_and_params import lasso_features
-from best_features_and_params import svc_RFE_best_features
-from best_features_and_params import svc_SelectKBest_best_features
+from lib import get_best_params_for_selectkbest
+from feature_selection_for_svc import scorer_function
 from best_features_and_params import svc_biogram_best_features
 from best_features_and_params import svc_penalized_best_features
 from best_features_and_params import qda_bottomup_best_features
@@ -87,6 +87,16 @@ if __name__ == '__main__':
                           pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))))
     classes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump'))),
                               pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))))
+
+    # svm_RFE
+    svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
+    best_result = max(svc_RFE_results.items(), key=lambda item: item[1][0])
+    svc_RFE_best_features = [i for i, b in enumerate(best_result[1][1].support_) if b]
+
+    # svm_SelectKBest
+    svc_SelectKBest_best_features, _ = get_best_params_for_selectkbest(
+        os.path.join('..', 'svm_res', 'grid_search.dump'))
+
     ga_indices = [0, 4, 5, 8, 22, 23, 24, 26, 27, 30, 34, 35, 36, 39, 77, 93, 98]
 
     random_indices_list = []
