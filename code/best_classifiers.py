@@ -51,7 +51,8 @@ class Res(object):
         classifier.fit(x_learn[:, features], y_learn)
         probas = classifier.predict_proba(x_test[:, features])
         # print zip(y_test, probas[:, 0])
-        self.blind_res = binary_classification_evaluation_extended(y_test, probas, positive_class, classifier.classes_)
+        self.blind_res = binary_classification_evaluation_extended(y_test, probas, positive_class, classifier.classes_,
+                                                                   fpr=True)
         self.description = description
 
     def __str__(self):

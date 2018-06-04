@@ -8,6 +8,7 @@ from sklearn.svm import SVC
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_curve
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
 
@@ -56,7 +57,7 @@ def binary_classification_evaluation(classes_proper, classes_probas, ids, positi
 
 def knn(X_train, X_test, y_train, neighbours):
     clf = neighbors.KNeighborsClassifier(neighbours)
-    #print 'in ml_stuff', clf
+    # print 'in ml_stuff', clf
     clf.fit(X_train, y_train)
     return clf.predict_proba(X_test), clf.classes_
 
@@ -135,16 +136,20 @@ def generic_cv_for_given_splits_and_features(classifier, features_indexes, split
     results = np.array(results)
     final_results = []
     for i in range(results.shape[1]):
-        final_results.append(np.mean(results[:,i]))
-        final_results.append(np.std(results[:,i]))
+        final_results.append(np.mean(results[:, i]))
+        final_results.append(np.std(results[:, i]))
     return np.array(final_results)
 
 
-def binary_classification_evaluation_extended(classes_proper, classes_probas, positive_num, class_order):
+def binary_classification_evaluation_extended(classes_proper, classes_probas, positive_num, class_order, fpr=False):
     assert len(classes_proper) == len(classes_probas)
     assert set(classes_proper) == set([0, 1])
     pos_probas = classes_probas[:, positive_num]
     classes_predicted = [class_order[x.argmax()] for x in classes_probas]
     auc = roc_auc_score(classes_proper, pos_probas, None)
     mcc = matthews_corrcoef(classes_proper, classes_predicted)
-    return mcc, auc, accuracy_score(classes_proper, classes_predicted)
+    fpr, tpr, thresholds = roc_curve(classes_proper, pos_probas)
+    if fpr:
+        pass
+    else:
+        return mcc, auc, accuracy_score(classes_proper, classes_predicted), fpr, tpr, thresholds
