@@ -20,6 +20,11 @@ from best_features_and_params import feats_ga_qda
 from best_features_and_params import feats_ga_qda_500
 
 
+class Data(object):
+    def __init__(self):
+        pass
+
+
 def get_distances_from_point(point, other_points):
     """
     Computes distances between a point and other points in multidimensional space
@@ -45,17 +50,16 @@ def get_distances(points):
     return distances
 
 
-def get_distances_between_two_groups_of_points(points1, points2, k):
+def get_distances_between_two_groups_of_points(points1, points2):
     """
     Computes distances between points from group1 and group2
     :param points1:
     :param points2:
-    :param k: num of nearest neighbours
     :return:dictionary point1:sorted(distances)
     """
     distances = {}
     for point in points1:
-        distances[point[0]] = sorted(get_distances_from_point(point, points2).values())[:k]
+        distances[point[0]] = sorted(get_distances_from_point(point, points2).values())
     return distances
 
 
@@ -91,14 +95,18 @@ def flatten(list_of_lists):
     return [item for sublist in list_of_lists for item in sublist]
 
 
-def compute_statistics(indices, k_lowest, k_highest):
+def compute_statistics(indices, k_lowest, k_highest, attrs, classes, ids, description):
+    print description
     random_indices_list = []
     possible_indices = range(attrs.shape[1])
-    for i in range(5):
+    for _ in range(5):
         random_indices = random.sample(possible_indices, len(indices))
         random_indices_list.append(random_indices)
-    points_ga, distances_0_ga, distances_1_ga = compute_distances_for_given_indices(attrs, indices, ids,
-                                                                                    classes)
+    points_ga, distances_0, distances_1 = compute_distances_for_given_indices(attrs, indices, ids,
+                                                                              classes)
+    distances_0_1 = get_distances_between_two_groups_of_points(
+        [points_ga[x] for x in range(len(points_ga)) if classes[x] == 0],
+        [points_ga[x] for x in range(len(points_ga)) if classes[x] == 1]).values()
 
     random_distances_0 = []
     random_distances_1 = []
@@ -109,41 +117,43 @@ def compute_statistics(indices, k_lowest, k_highest):
         random_distances_0.append(d0)
         random_distances_1.append(d1)
 
-    for k in range(k_lowest, k_highest+1):
-        print k
-        distances_0_1 = get_distances_between_two_groups_of_points(
-            [points_ga[x] for x in range(len(points_ga)) if classes[x] == 0],
-            [points_ga[x] for x in range(len(points_ga)) if classes[x] == 1],
-            k
-        )
-        k_nearest_0_ga = flatten([value for value in k_nearest(distances_0_ga, k).values()])
-        k_nearest_1_ga = flatten([value for value in k_nearest(distances_1_ga, k).values()])
-        distances_0_1_all_values = flatten(distances_0_1.values())
-        print np.mean(k_nearest_0_ga), np.std(k_nearest_0_ga)
-        print np.mean(k_nearest_1_ga), np.std(k_nearest_1_ga)
-        print np.mean(distances_0_1_all_values), np.std(distances_0_1_all_values)
+    random_distances_0_1 = [
+        get_distances_between_two_groups_of_points([points[x] for x in range(len(points)) if classes[x] == 0],
+                                                   [points[x] for x in range(len(points)) if classes[x] == 1]).values()
+        for points in points_random]
 
-        random_distances_0_1_all_values = flatten(flatten([get_distances_between_two_groups_of_points
-                                                           ([points[x] for x in range(len(points)) if classes[x] == 0],
-                                                            [points[x] for x in range(len(points)) if classes[x] == 1],
-                                                            k).values() for points in points_random]))
+    for k in range(k_lowest, k_highest + 1):
+        print k
+        distances_0_1_k = flatten([sorted_distances[:k] for sorted_distances in distances_0_1])
+
+        k_nearest_0 = flatten([value for value in k_nearest(distances_0, k).values()])
+        k_nearest_1 = flatten([value for value in k_nearest(distances_1, k).values()])
+        print np.mean(k_nearest_0), np.std(k_nearest_0)
+        print np.mean(k_nearest_1), np.std(k_nearest_1)
+        print np.mean(distances_0_1_k), np.std(distances_0_1_k)
+
+        random_distances_0_1_k = flatten(flatten([sorted_distances[:k] for sorted_distances in random_distances_0_1]))
         k_nearest_0_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_0]))
         k_nearest_1_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_1]))
         print np.mean(k_nearest_0_random), np.std(k_nearest_0_random), \
-            mannwhitneyu(k_nearest_0_ga, k_nearest_0_random, alternative='less')
+            mannwhitneyu(k_nearest_0, k_nearest_0_random, alternative='less')
         print np.mean(k_nearest_1_random), np.std(k_nearest_1_random), \
-            mannwhitneyu(k_nearest_1_ga, k_nearest_1_random, alternative='less')
-        print np.mean(random_distances_0_1_all_values), np.std(random_distances_0_1_all_values), \
-            mannwhitneyu(distances_0_1_all_values, random_distances_0_1_all_values, alternative='greater')
+            mannwhitneyu(k_nearest_1, k_nearest_1_random, alternative='less')
+        print np.mean(random_distances_0_1_k), np.std(random_distances_0_1_k), \
+            mannwhitneyu(distances_0_1_k, random_distances_0_1_k, alternative='greater')
         print '----------------------------------------------------'
 
+
 if __name__ == '__main__':
-    attrs = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump'))),
+    attributes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump'))),
                             pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))))
     ids = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'ids_learn.dump'))),
                           pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))))
     classes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump'))),
                               pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))))
+    np.random.seed(77)
+    compute_statistics(range(2), 1, 3, 'blah')
+    raise
 
     # svm_RFE
     svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
@@ -156,31 +166,19 @@ if __name__ == '__main__':
 
     k_low = 1
     k_high = 5
-    print "LogisticRegression, lasso"
-    compute_statistics(lasso_features, k_low, k_high)
-    print "svm_RFE"
-    compute_statistics(svc_RFE_best_features, k_low, k_high)
-    print "SelectKBEst"
-    compute_statistics(svc_SelectKBest_best_features, k_low, k_high)
-    print "svc_biogram_best_features"
-    compute_statistics(svc_biogram_best_features, k_low, k_high)
-    print "svc_penalized_best_features"
-    compute_statistics(svc_penalized_best_features, k_low, k_high)
-    print "qda_bottomup_best_features"
-    compute_statistics(qda_bottomup_best_features, k_low, k_high)
+    compute_statistics(lasso_features, k_low, k_high, attributes, classes, ids, "LogisticRegression, lasso")
+    compute_statistics(svc_RFE_best_features, k_low, k_high, attributes, classes, ids, "svm_RFE")
+    compute_statistics(svc_SelectKBest_best_features, k_low, k_high, attributes, classes, ids, "SelectKBEst")
+    compute_statistics(svc_biogram_best_features, k_low, k_high, attributes, classes, ids, "svc_biogram_best_features")
+    compute_statistics(svc_penalized_best_features, k_low, k_high, attributes, classes, ids, "svc_penalized_best_features")
+    compute_statistics(qda_bottomup_best_features, k_low, k_high, attributes, classes, ids, "qda_bottomup_best_features")
     for neighbours, indices in feats_ga_knn.iteritems():
-        print "feats_ga_knn", neighbours
-        compute_statistics(indices, k_low, k_high)
+        compute_statistics(indices, k_low, k_high, attributes, classes, ids, "feats_ga_knn%d" % neighbours)
     for neighbours, indices in feats_ga_knn_500.iteritems():
-        print "feats_ga_knn_500", neighbours
-        compute_statistics(indices, k_low, k_high)
-    print "feats_bottomup_knn"
-    compute_statistics(feats_bottomup_knn, k_low, k_high)
-    print "feats_ga_qda"
-    compute_statistics(feats_ga_qda, k_low, k_high)
-    print "feats_ga_qda_500"
-    compute_statistics(feats_ga_qda_500, k_low, k_high)
-
+        compute_statistics(indices, k_low, k_high, attributes, classes, ids, "feats_ga_knn_500%d" % neighbours)
+    compute_statistics(feats_bottomup_knn, k_low, k_high, attributes, classes, ids, "feats_bottomup_knn")
+    compute_statistics(feats_ga_qda, k_low, k_high, attributes, classes, ids, "feats_ga_qda")
+    compute_statistics(feats_ga_qda_500, k_low, k_high, attributes, classes, ids, "feats_ga_qda_500")
 
 # 1
 # 2.01410542882 0.750136990695
