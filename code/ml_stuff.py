@@ -148,8 +148,8 @@ def binary_classification_evaluation_extended(classes_proper, classes_probas, po
     classes_predicted = [class_order[x.argmax()] for x in classes_probas]
     auc = roc_auc_score(classes_proper, pos_probas, None)
     mcc = matthews_corrcoef(classes_proper, classes_predicted)
-    fpr, tpr, thresholds = roc_curve(classes_proper, pos_probas)
     if fpr:
-        pass
-    else:
+        fpr, tpr, thresholds = roc_curve(classes_proper, pos_probas)
         return mcc, auc, accuracy_score(classes_proper, classes_predicted), fpr, tpr, thresholds
+    else:
+        return mcc, auc, accuracy_score(classes_proper, classes_predicted)
