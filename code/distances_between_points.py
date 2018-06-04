@@ -21,8 +21,24 @@ from best_features_and_params import feats_ga_qda_500
 
 
 class Data(object):
-    def __init__(self):
-        pass
+    def __init__(self, description, k, indices, random_indices, distances_0, random_distances_0, distances_1,
+                 random_distances_1, distances_0_1, random_distances_0_1, k_nearest_0, k_nearest_1, distances_0_1_k,
+                 k_nearest_0_random, k_nearest_1_random, random_distances_0_1_k):
+        self.fname = description + '_' + k
+        self.indices = indices
+        self.random_indices = random_indices
+        self.distances_0 = distances_0
+        self.random_distances_0 = random_distances_0
+        self.distances_1 = distances_1
+        self.random_distances_1 = random_distances_1
+        self.distances_0_1 = distances_0_1
+        self.random_distances_0_1 = random_distances_0_1
+        self.k_nearest_0 = k_nearest_0
+        self.k_nearest_1 = k_nearest_1
+        self.distances_0_1_k = distances_0_1_k
+        self.k_nearest_0_random = k_nearest_0_random
+        self.k_nearest_1_random = k_nearest_1_random
+        self.random_distances_0_1_k = random_distances_0_1_k
 
 
 def get_distances_from_point(point, other_points):
@@ -75,11 +91,14 @@ def k_nearest(distances, k):
     for key in distances:
         points.update(key)
     for point in points:
-        temp = []
-        for key, value in distances.iteritems():
-            if point in key:
-                temp.append(value)
-        res[point] = sorted(temp)[:k]
+        temp = [value for key, value in distances.iteritems() if point in key]
+        # res[point] = sorted(temp)[:k]
+        # alternative
+        res[point] = []
+        for _ in range(k):
+            m = min(temp)
+            res[point].append(m)
+            temp.remove(m)
     return res
 
 
@@ -128,32 +147,37 @@ def compute_statistics(indices, k_lowest, k_highest, attrs, classes, ids, descri
 
         k_nearest_0 = flatten([value for value in k_nearest(distances_0, k).values()])
         k_nearest_1 = flatten([value for value in k_nearest(distances_1, k).values()])
-        print np.mean(k_nearest_0), np.std(k_nearest_0)
-        print np.mean(k_nearest_1), np.std(k_nearest_1)
-        print np.mean(distances_0_1_k), np.std(distances_0_1_k)
+        print np.mean(k_nearest_0), np.median(k_nearest_0), np.std(k_nearest_0)
+        print np.mean(k_nearest_1), np.median(k_nearest_1), np.std(k_nearest_1)
+        print np.mean(distances_0_1_k), np.median(distances_0_1_k), np.std(distances_0_1_k)
 
         random_distances_0_1_k = flatten(flatten([sorted_distances[:k] for sorted_distances in random_distances_0_1]))
         k_nearest_0_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_0]))
         k_nearest_1_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_1]))
-        print np.mean(k_nearest_0_random), np.std(k_nearest_0_random), \
+        print np.mean(k_nearest_0_random), np.median(k_nearest_0_random), np.std(k_nearest_0_random), \
             mannwhitneyu(k_nearest_0, k_nearest_0_random, alternative='less')
-        print np.mean(k_nearest_1_random), np.std(k_nearest_1_random), \
+        print np.mean(k_nearest_1_random), np.median(k_nearest_1_random), np.std(k_nearest_1_random), \
             mannwhitneyu(k_nearest_1, k_nearest_1_random, alternative='less')
-        print np.mean(random_distances_0_1_k), np.std(random_distances_0_1_k), \
+        print np.mean(random_distances_0_1_k), np.median(random_distances_0_1_k), np.std(random_distances_0_1_k), \
             mannwhitneyu(distances_0_1_k, random_distances_0_1_k, alternative='greater')
         print '----------------------------------------------------'
+        data = Data(description, k, indices, random_indices, distances_0, random_distances_0, distances_1,
+                 random_distances_1, distances_0_1, random_distances_0_1, k_nearest_0, k_nearest_1, distances_0_1_k,
+                 k_nearest_0_random, k_nearest_1_random, random_distances_0_1_k)
+        with open(data.fname, 'w') as f:
+            pickle.dump(data, f)
 
 
 if __name__ == '__main__':
     attributes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump'))),
-                            pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))))
+                                 pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))))
     ids = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'ids_learn.dump'))),
                           pickle.load(open(os.path.join('..', 'datasets', 'ids_test.dump')))))
     classes = np.concatenate((pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump'))),
                               pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))))
     np.random.seed(77)
-    compute_statistics(range(2), 1, 3, 'blah')
-    raise
+    # compute_statistics(range(2), 1, 1, attributes, classes, ids, 'blah')
+    # raise
 
     # svm_RFE
     svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
@@ -170,8 +194,10 @@ if __name__ == '__main__':
     compute_statistics(svc_RFE_best_features, k_low, k_high, attributes, classes, ids, "svm_RFE")
     compute_statistics(svc_SelectKBest_best_features, k_low, k_high, attributes, classes, ids, "SelectKBEst")
     compute_statistics(svc_biogram_best_features, k_low, k_high, attributes, classes, ids, "svc_biogram_best_features")
-    compute_statistics(svc_penalized_best_features, k_low, k_high, attributes, classes, ids, "svc_penalized_best_features")
-    compute_statistics(qda_bottomup_best_features, k_low, k_high, attributes, classes, ids, "qda_bottomup_best_features")
+    compute_statistics(svc_penalized_best_features, k_low, k_high, attributes, classes, ids,
+                       "svc_penalized_best_features")
+    compute_statistics(qda_bottomup_best_features, k_low, k_high, attributes, classes, ids,
+                       "qda_bottomup_best_features")
     for neighbours, indices in feats_ga_knn.iteritems():
         compute_statistics(indices, k_low, k_high, attributes, classes, ids, "feats_ga_knn%d" % neighbours)
     for neighbours, indices in feats_ga_knn_500.iteritems():
