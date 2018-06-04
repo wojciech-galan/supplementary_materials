@@ -68,6 +68,7 @@ if __name__ == '__main__':
     positive_class = 1
     results = []
     num_of_feats = cv_splits[0][0].shape[1]
+    np.random.seed(77)
     # simple LogisticRegression
     results.append(
         Res('LogisticRegression', range(num_of_feats), {}, cv_splits,
