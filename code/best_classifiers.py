@@ -140,7 +140,7 @@ if __name__ == '__main__':
         results.append(Res('KNeighborsClassifier', feats_bottomup_knn[i], {'n_neighbors': i},
                            cv_splits, positive_class, knn_for_given_splits_and_features, attributes_learn,
                            attributes_test,
-                           classes_learn, classes_test, description='bottom up kNN'))
+                           classes_learn, classes_test, description='bottom up kNN, %d neighbours' % i))
 
     # GA knn
     names = glob.glob(os.path.join('..', 'ga_res', 'knn', '*', '*'))
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     for k in sorted(set(ks)):
         results.append(Res('KNeighborsClassifier', feats_ga_knn[k], {'n_neighbors': k},
                            cv_splits, positive_class, knn_for_given_splits_and_features, attributes_learn,
-                           attributes_test, classes_learn, classes_test, description='GA knn 100'))
+                           attributes_test, classes_learn, classes_test, description='GA knn 100, %d neighbours' % k))
 
     names = glob.glob(os.path.join('..', 'ga_res', 'knn_500', '*', '*'))
     ks = [int(name.rsplit('_', 2)[-2]) for name in names]
