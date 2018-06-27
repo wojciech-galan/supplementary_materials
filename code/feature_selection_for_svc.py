@@ -68,9 +68,6 @@ if __name__ == '__main__':
     print "RFE AUC:", roc_auc_score(classes_test, best_selector.predict_proba(attributes_test)[:, 1])
     joblib.dump(best_selector, os.path.join(res_dir, 'RFE_best.dump'))
 
-    # TODo zmienić w publikacji na linear kernel
-
-    # TODO zmienić w publikacji chi2 na f_classif
 
     kbest = SelectKBest(f_classif)
     pipeline = Pipeline([('kbest', kbest), ('svc', SVC(kernel='linear', probability=True))])
