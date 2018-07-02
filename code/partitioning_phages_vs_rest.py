@@ -39,8 +39,6 @@ for result in results:
         processed_results.append((tuple(eval(result[0])), rename_host_lineage(eval(result[1])), result[2]), )
 
 pickle.dump(desired_container, open(os.path.join('..', 'datasets', 'all_viruses_with_desired_attributes.dump'), 'w'))
-raise
-
 
 phage_cardinality = sum([x[2] for x in processed_results if x[1] == 'phage'])
 eucarya_cardinality = sum([x[2] for x in processed_results if x[1] == 'Eucaryota-infecting'])
