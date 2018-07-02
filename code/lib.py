@@ -24,7 +24,7 @@ def groupping(hlineages):
 
 
 def dataset_creation(container, lineage_fragments, what):
-    # lineage_fragments np. 'Microviridae'
+    # lineage_fragments e.g. 'Microviridae'
     # what - either phage or 'Eucaryota-infecting'
     blind_set = []
     for lineage_fragment in lineage_fragments:
