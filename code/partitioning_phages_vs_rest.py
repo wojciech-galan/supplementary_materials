@@ -38,6 +38,9 @@ for result in results:
     if not 'Viruses' in result[1]:
         processed_results.append((tuple(eval(result[0])), rename_host_lineage(eval(result[1])), result[2]), )
 
+pickle.dump(processed_results, open(os.path.join('..', 'datasets', 'viruses_without_viral_renamed_lineage.dump'), 'w'))
+
+
 phage_cardinality = sum([x[2] for x in processed_results if x[1] == 'phage'])
 eucarya_cardinality = sum([x[2] for x in processed_results if x[1] == 'Eucaryota-infecting'])
 group_cardinality = min(phage_cardinality, eucarya_cardinality)

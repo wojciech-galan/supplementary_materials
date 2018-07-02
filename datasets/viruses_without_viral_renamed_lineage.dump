@@ -1,0 +1,3925 @@
+(lp1
+((S'Viruses'
+p2
+S'Genomoviridae'
+p3
+S'Gemycircularvirus'
+p4
+S'unclassified Gemycircularvirus'
+tS'Eucaryota-infecting'
+p5
+I9
+tp6
+a((g2
+g3
+g4
+S'unclassified Gemycircularvirus'
+tg5
+I1
+tp7
+a((g2
+g3
+g4
+tg5
+I16
+tp8
+a((g2
+g3
+S'Gemyduguivirus'
+tg5
+I1
+tp9
+a((g2
+g3
+S'Gemygorvirus'
+tg5
+I4
+tp10
+a((g2
+g3
+S'Gemykibivirus'
+p11
+tg5
+I6
+tp12
+a((g2
+g3
+S'Gemykroznavirus'
+tg5
+I1
+tp13
+a((g2
+g3
+S'Gemytondvirus'
+tg5
+I1
+tp14
+a((g2
+g3
+S'Gemyvongvirus'
+tg5
+I1
+tp15
+a((g2
+g3
+S'unclassified Genomoviridae'
+tg5
+I7
+tp16
+a((g2
+S'Retro-transcribing viruses'
+S'Caulimoviridae'
+p17
+S'Badnavirus'
+tg5
+I22
+tp18
+a((g2
+S'Retro-transcribing viruses'
+g17
+S'Caulimovirus'
+p19
+S'unclassified Caulimovirus'
+tg5
+I2
+tp20
+a((g2
+S'Retro-transcribing viruses'
+g17
+g19
+tg5
+I3
+tp21
+a((g2
+S'Retro-transcribing viruses'
+g17
+S'Cavemovirus'
+S'unclassified Cavemovirus'
+tg5
+I1
+tp22
+a((g2
+S'Retro-transcribing viruses'
+g17
+S'Solendovirus'
+tg5
+I1
+tp23
+a((g2
+S'Retro-transcribing viruses'
+g17
+S'Soymovirus'
+tg5
+I1
+tp24
+a((g2
+S'Retro-transcribing viruses'
+g17
+S'unclassified Caulimoviridae'
+tg5
+I2
+tp25
+a((g2
+S'Retro-transcribing viruses'
+S'Hepadnaviridae'
+p26
+S'Avihepadnavirus'
+S'unclassified Avihepadnavirus'
+tg5
+I2
+tp27
+a((g2
+S'Retro-transcribing viruses'
+g26
+S'Orthohepadnavirus'
+p28
+S'unclassified Orthohepadnavirus'
+tg5
+I1
+tp29
+a((g2
+S'Retro-transcribing viruses'
+g26
+g28
+tg5
+I1
+tp30
+a((g2
+S'Retro-transcribing viruses'
+g26
+S'unclassified Hepadnaviridae'
+tg5
+I4
+tp31
+a((g2
+S'Retro-transcribing viruses'
+g26
+tg5
+I1
+tp32
+a((g2
+S'Retro-transcribing viruses'
+S'Retroviridae'
+p33
+S'Orthoretrovirinae'
+p34
+S'Alpharetrovirus'
+tg5
+I1
+tp35
+a((g2
+S'Retro-transcribing viruses'
+g33
+g34
+S'Betaretrovirus'
+tg5
+I5
+tp36
+a((g2
+S'Retro-transcribing viruses'
+g33
+g34
+S'Deltaretrovirus'
+tg5
+I2
+tp37
+a((g2
+S'Retro-transcribing viruses'
+g33
+g34
+S'Gammaretrovirus'
+tg5
+I4
+tp38
+a((g2
+S'Retro-transcribing viruses'
+g33
+g34
+S'Lentivirus'
+tg5
+I2
+tp39
+a((g2
+S'Retro-transcribing viruses'
+g33
+tg5
+I3
+tp40
+a((g2
+S'Satellites'
+p41
+S'Satellite Nucleic Acids'
+S'Double-stranded RNA satellites'
+tg5
+I3
+tp42
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'RNA satellites'
+tg5
+I2
+tp43
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'Single stranded DNA satellites'
+S'Alphasatellites'
+tg5
+I44
+tp44
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'Single stranded DNA satellites'
+S'unclassified Single stranded DNA satellites'
+tg5
+I5
+tp45
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'Single stranded RNA satellites'
+S'Circular single stranded RNA satellites'
+tg5
+I1
+tp46
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'Single stranded RNA satellites'
+S'Small linear single stranded RNA satellites'
+tg5
+I1
+tp47
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'Single stranded RNA satellites'
+S'unclassified Single stranded RNA satellites'
+tg5
+I1
+tp48
+a((g2
+g41
+S'Satellite Nucleic Acids'
+S'unclassified Satellite Nucleic Acids'
+tg5
+I2
+tp49
+a((g2
+g41
+S'Satellite Viruses'
+S'unclassified Satellite Viruses'
+tg5
+I1
+tp50
+a((g2
+g41
+S'Satellite Viruses'
+tg5
+I1
+tp51
+a((g2
+g41
+S'Tolecusatellitidae'
+p52
+S'Betasatellite'
+p53
+S'Mungbean yellow mosaic betasatellite'
+tg5
+I1
+tp54
+a((g2
+g41
+g52
+g53
+tg5
+I71
+tp55
+a((g2
+g41
+S'ssDNA satellites'
+S'unclassified ssDNA satellites'
+tg5
+I3
+tp56
+a((g2
+S'Virus families not assigned to an order'
+S'Botybirnavirus'
+p57
+S'unclassified Botybirnavirus'
+tg5
+I2
+tp58
+a((g2
+S'Virus families not assigned to an order'
+g57
+tg5
+I1
+tp59
+a((g2
+S'Virus families not assigned to an order'
+S'Lavidaviridae'
+tg5
+I1
+tp60
+a((g2
+S'Virus families not assigned to an order'
+S'Pleolipoviridae'
+tS'phage'
+p61
+I3
+tp62
+a((g2
+S'Virus families not assigned to an order'
+S'Sinaivirus'
+p63
+S'unclassified Sinaivirus'
+tg5
+I5
+tp64
+a((g2
+S'Virus families not assigned to an order'
+g63
+tg5
+I2
+tp65
+a((g2
+S'Virus families not assigned to an order'
+S'Sphaerolipoviridae'
+p66
+S'Alphasphaerolipovirus'
+tg61
+I3
+tp67
+a((g2
+S'Virus families not assigned to an order'
+g66
+S'Gammasphaerolipovirus'
+tg61
+I2
+tp68
+a((g2
+S'Virus families not assigned to an order'
+g66
+S'unclassified Sphaerolipoviridae'
+tg61
+I1
+tp69
+a((g2
+S'Virus-associated RNAs'
+tg5
+I1
+tp70
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Adenoviridae'
+p71
+S'Atadenovirus'
+p72
+tg5
+I4
+tp73
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g72
+tg5
+I1
+tp74
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+S'Aviadenovirus'
+p75
+S'Fowl aviadenovirus B'
+tg5
+I1
+tp76
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+S'Goose aviadenovirus A'
+tg5
+I1
+tp77
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+S'Pigeon aviadenovirus A'
+tg5
+I1
+tp78
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+S'Turkey aviadenovirus B'
+tg5
+I1
+tp79
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+S'Turkey aviadenovirus C'
+tg5
+I1
+tp80
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+S'Turkey aviadenovirus D'
+tg5
+I1
+tp81
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+S'unclassified Aviadenovirus'
+tg5
+I1
+tp82
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g75
+tg5
+I1
+tp83
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+S'Mastadenovirus'
+p84
+S'Bat mastadenovirus A'
+tg5
+I1
+tp85
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+S'Bat mastadenovirus B'
+tg5
+I1
+tp86
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+S'Equine mastadenovirus A'
+tg5
+I1
+tp87
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+S'Equine mastadenovirus B'
+tg5
+I1
+tp88
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+S'Human mastadenovirus E'
+tg5
+I1
+tp89
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+S'Murine mastadenovirus C'
+tg5
+I1
+tp90
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+S'unclassified Mastadenovirus'
+tg5
+I2
+tp91
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+tg5
+I21
+tp92
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+g84
+tg5
+I1
+tp93
+a((g2
+S'dsDNA viruses, no RNA stage'
+g71
+S'Siadenovirus'
+tg5
+I2
+tp94
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Ampullaviridae'
+p95
+S'Ampullavirus'
+p96
+S'unclassified Ampullavirus'
+tg61
+I1
+tp97
+a((g2
+S'dsDNA viruses, no RNA stage'
+g95
+g96
+tg61
+I1
+tp98
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Baculoviridae'
+p99
+S'Alphabaculovirus'
+p100
+S'unclassified Alphabaculovirus'
+tg5
+I6
+tp101
+a((g2
+S'dsDNA viruses, no RNA stage'
+g99
+g100
+tg5
+I5
+tp102
+a((g2
+S'dsDNA viruses, no RNA stage'
+g99
+S'Betabaculovirus'
+p103
+S'unclassified Betabaculovirus'
+tg5
+I3
+tp104
+a((g2
+S'dsDNA viruses, no RNA stage'
+g99
+g103
+S'unclassified Betabaculovirus'
+tg5
+I1
+tp105
+a((g2
+S'dsDNA viruses, no RNA stage'
+g99
+g103
+tg5
+I3
+tp106
+a((g2
+S'dsDNA viruses, no RNA stage'
+g99
+S'Gammabaculovirus'
+p107
+S'unclassified Gammabaculovirus'
+tg5
+I1
+tp108
+a((g2
+S'dsDNA viruses, no RNA stage'
+g99
+g107
+tg5
+I1
+tp109
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Bicaudaviridae'
+p110
+S'Bicaudavirus'
+tg61
+I1
+tp111
+a((g2
+S'dsDNA viruses, no RNA stage'
+g110
+S'unclassified Bicaudaviridae'
+tg61
+I2
+tp112
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Caudovirales'
+p113
+S'Myoviridae'
+p114
+S'Ap22virus'
+tg61
+I1
+tp115
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'B4virus'
+tg61
+I1
+tp116
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Bastillevirus'
+tg61
+I2
+tp117
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Bxz1virus'
+tg61
+I2
+tp118
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Cd119virus'
+tg61
+I3
+tp119
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Cp51virus'
+tg61
+I1
+tp120
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Cp8virus'
+tg61
+I4
+tp121
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Muvirus'
+tg61
+I4
+tp122
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Nit1virus'
+tg61
+I3
+tp123
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Ounavirinae'
+tg61
+I12
+tp124
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'P1virus'
+tg61
+I2
+tp125
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Peduovirinae'
+p126
+tg61
+I28
+tp127
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Sep1virus'
+tg61
+I1
+tp128
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Spounavirinae'
+tg61
+I17
+tp129
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Tevenvirinae'
+tg61
+I6
+tp130
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Vequintavirinae'
+p131
+tg61
+I10
+tp132
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Vhmlvirus'
+tg61
+I1
+tp133
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'Wphvirus'
+tg61
+I2
+tp134
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+S'unclassified Pbunalikevirus'
+tg61
+I2
+tp135
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+tg61
+I1
+tp136
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+tg61
+I129
+tp137
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g114
+tg61
+I1
+tp138
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+S'Podoviridae'
+p139
+S'Autographivirinae'
+p140
+tg61
+I82
+tp141
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Cba41virus'
+tg61
+I2
+tp142
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'G7cvirus'
+tg61
+I4
+tp143
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Lit1virus'
+tg61
+I3
+tp144
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'N4virus'
+tg61
+I12
+tp145
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'P22virus'
+p146
+tg61
+I9
+tp147
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Phieco32virus'
+tg61
+I7
+tp148
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Picovirinae'
+p149
+tg61
+I14
+tp150
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Prtbvirus'
+tg61
+I2
+tp151
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Sepvirinae'
+tg61
+I10
+tp152
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Una961virus'
+tg61
+I3
+tp153
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'Vp5virus'
+tg61
+I3
+tp154
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+S'unclassified Luz24likevirus'
+tg61
+I1
+tp155
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g139
+tg61
+I122
+tp156
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+S'Siphoviridae'
+p157
+S'Ab18virus'
+tg61
+I2
+tp158
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Andromedavirus'
+p159
+tg61
+I7
+tp160
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Barnyardvirus'
+tg61
+I2
+tp161
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Bclasvirinae'
+tg61
+I6
+tp162
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Biseptimavirus'
+tg61
+I3
+tp163
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'C2virus'
+tg61
+I7
+tp164
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'C5virus'
+tg61
+I4
+tp165
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Cba181virus'
+tg61
+I3
+tp166
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Cecivirus'
+tg61
+I1
+tp167
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Che8virus'
+tg61
+I5
+tp168
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Che9cvirus'
+tg61
+I1
+tp169
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Chivirus'
+tg61
+I5
+tp170
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Cjw1virus'
+tg61
+I2
+tp171
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Corndogvirus'
+tg61
+I1
+tp172
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'D3112virus'
+tg61
+I6
+tp173
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'D3virus'
+tg61
+I2
+tp174
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'E125virus'
+tg61
+I3
+tp175
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Eiauvirus'
+tg61
+I1
+tp176
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Gilesvirus'
+tg61
+I1
+tp177
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Guernseyvirinae'
+tg61
+I7
+tp178
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Hk578virus'
+tg61
+I5
+tp179
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Jwxvirus'
+tg61
+I2
+tp180
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'L5virus'
+tg61
+I5
+tp181
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Lambdavirus'
+tg61
+I13
+tp182
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Nonagvirus'
+tg61
+I4
+tp183
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Omegavirus'
+tg61
+I1
+tp184
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'P23virus'
+tg61
+I2
+tp185
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'P70virus'
+tg61
+I3
+tp186
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Pa6virus'
+tg61
+I29
+tp187
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Pbi1virus'
+tg61
+I1
+tp188
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Phic31virus'
+tg61
+I1
+tp189
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Phietavirus'
+p190
+tg61
+I28
+tp191
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Phifelvirus'
+tg61
+I3
+tp192
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Phijl1virus'
+tg61
+I2
+tp193
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Rdjlvirus'
+tg61
+I1
+tp194
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Rer2virus'
+tg61
+I1
+tp195
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Sap6virus'
+tg61
+I2
+tp196
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Septima3virus'
+tg61
+I3
+tp197
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Seuratvirus'
+tg61
+I2
+tp198
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Sextaecvirus'
+tg5
+I1
+tp199
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Sfi11virus'
+tg61
+I4
+tp200
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Sfi21dt1virus'
+tg61
+I5
+tp201
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Sitaravirus'
+tg61
+I1
+tp202
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Sk1virus'
+p203
+tg61
+I10
+tp204
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Slashvirus'
+tg61
+I4
+tp205
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Spbetavirus'
+tg61
+I2
+tp206
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'T5virus'
+tg61
+I9
+tp207
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Tin2virus'
+tg61
+I2
+tp208
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Tm4virus'
+tg61
+I1
+tp209
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Tp21virus'
+tg61
+I1
+tp210
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Triavirus'
+tg61
+I5
+tp211
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Tunavirinae'
+tg61
+I12
+tp212
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Vegasvirus'
+tg61
+I1
+tp213
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Wbetavirus'
+tg61
+I1
+tp214
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Xp10virus'
+tg61
+I4
+tp215
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+S'Yuavirus'
+tg61
+I4
+tp216
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+tg61
+I1
+tp217
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+g157
+tg61
+I287
+tp218
+a((g2
+S'dsDNA viruses, no RNA stage'
+g113
+tg61
+I6
+tp219
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Corticoviridae'
+S'Corticovirus'
+tg61
+I1
+tp220
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Fuselloviridae'
+p221
+S'Alphafusellovirus'
+tg61
+I4
+tp222
+a((g2
+S'dsDNA viruses, no RNA stage'
+g221
+S'Betafusellovirus'
+tg61
+I1
+tp223
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Globuloviridae'
+S'Globulovirus'
+tg61
+I2
+tp224
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Guttaviridae'
+S'Betaguttavirus'
+tg61
+I1
+tp225
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Herpesvirales'
+p226
+S'Alloherpesviridae'
+S'Ictalurivirus'
+tg5
+I1
+tp227
+a((g2
+S'dsDNA viruses, no RNA stage'
+g226
+S'Herpesviridae'
+p228
+S'Alphaherpesvirinae'
+tg5
+I22
+tp229
+a((g2
+S'dsDNA viruses, no RNA stage'
+g226
+g228
+S'Betaherpesvirinae'
+p230
+tg5
+I4
+tp231
+a((g2
+S'dsDNA viruses, no RNA stage'
+g226
+g228
+S'Gammaherpesvirinae'
+tg5
+I8
+tp232
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Iridoviridae'
+p233
+S'Alphairidovirinae'
+S'Ranavirus'
+tg5
+I4
+tp234
+a((g2
+S'dsDNA viruses, no RNA stage'
+g233
+S'unclassified Iridoviridae'
+tg5
+I2
+tp235
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Ligamenvirales'
+p236
+S'Lipothrixviridae'
+p237
+S'Betalipothrixvirus'
+tg61
+I3
+tp238
+a((g2
+S'dsDNA viruses, no RNA stage'
+g236
+g237
+S'Deltalipothrixvirus'
+tg61
+I1
+tp239
+a((g2
+S'dsDNA viruses, no RNA stage'
+g236
+g237
+S'Gammalipothrixvirus'
+tg61
+I1
+tp240
+a((g2
+S'dsDNA viruses, no RNA stage'
+g236
+S'Rudiviridae'
+p241
+S'Rudivirus'
+tg61
+I3
+tp242
+a((g2
+S'dsDNA viruses, no RNA stage'
+g236
+g241
+S'unclassified Rudiviridae'
+tg61
+I6
+tp243
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Nudiviridae'
+p244
+S'unclassified Nudiviridae'
+tg5
+I3
+tp245
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Papillomaviridae'
+p246
+S'Betapapillomavirus'
+p247
+S'unclassified Betapapillomavirus'
+tg5
+I1
+tp248
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+g247
+tg5
+I1
+tp249
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Chipapillomavirus'
+tg5
+I2
+tp250
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Deltapapillomavirus'
+p251
+S'unclassified Deltapapillomavirus'
+tg5
+I1
+tp252
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+g251
+tg5
+I2
+tp253
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyochipapillomavirus'
+tg5
+I1
+tp254
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyoetapapillomavirus'
+tg5
+I1
+tp255
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyokappapapillomavirus'
+tg5
+I1
+tp256
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyolambdapapillomavirus'
+tg5
+I1
+tp257
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyomupapillomavirus'
+tg5
+I1
+tp258
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyonupapillomavirus'
+tg5
+I1
+tp259
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyoomikronpapillomavirus'
+tg5
+I1
+tp260
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyopipapillomavirus'
+tg5
+I1
+tp261
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyorhopapillomavirus'
+tg5
+I1
+tp262
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyosigmapapillomavirus'
+tg5
+I1
+tp263
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Dyozetapapillomavirus'
+tg5
+I1
+tp264
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Epsilonpapillomavirus'
+S'unclassified Epsilonpapillomavirus'
+tg5
+I1
+tp265
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Gammapapillomavirus'
+p266
+S'unclassified Gammapapillomavirus'
+tg5
+I2
+tp267
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+g266
+tg5
+I17
+tp268
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Iotapapillomavirus'
+tg5
+I1
+tp269
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Lambdapapillomavirus'
+p270
+S'unclassified Lambdapapillomavirus'
+tg5
+I1
+tp271
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+g270
+tg5
+I2
+tp272
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Omikronpapillomavirus'
+tg5
+I1
+tp273
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Pipapillomavirus'
+p274
+S'unclassified Pipapillomavirus'
+tg5
+I1
+tp275
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+g274
+tg5
+I2
+tp276
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Psipapillomavirus'
+tg5
+I1
+tp277
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Taupapillomavirus'
+p278
+S'unclassified Taupapillomavirus'
+tg5
+I1
+tp279
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+g278
+tg5
+I2
+tp280
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Thetapapillomavirus'
+tg5
+I1
+tp281
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Treisepsilonpapillomavirus'
+tg5
+I1
+tp282
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Treiszetapapillomavirus'
+tg5
+I1
+tp283
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Upsilonpapillomavirus'
+tg5
+I2
+tp284
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'Xipapillomavirus'
+tg5
+I2
+tp285
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'unclassified Papillomaviridae'
+S'primate papillomaviruses'
+tg5
+I1
+tp286
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'unclassified Papillomaviridae'
+tg5
+I35
+tp287
+a((g2
+S'dsDNA viruses, no RNA stage'
+g246
+S'unclassified Papillomaviridae'
+tg5
+I1
+tp288
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Plasmaviridae'
+S'Plasmavirus'
+tg61
+I1
+tp289
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Polydnaviridae'
+p290
+S'Bracovirus'
+tg5
+I12
+tp291
+a((g2
+S'dsDNA viruses, no RNA stage'
+g290
+S'Ichnovirus'
+tg5
+I21
+tp292
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Polyomaviridae'
+p293
+S'unclassified Betapolyomavirus'
+tg5
+I1
+tp294
+a((g2
+S'dsDNA viruses, no RNA stage'
+g293
+S'unclassified Polyomaviridae'
+tg5
+I39
+tp295
+a((g2
+S'dsDNA viruses, no RNA stage'
+g293
+tg5
+I35
+tp296
+a((g2
+S'dsDNA viruses, no RNA stage'
+g293
+tg5
+I5
+tp297
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Poxviridae'
+p298
+S'Chordopoxvirinae'
+p299
+S'Capripoxvirus'
+tg5
+I1
+tp300
+a((g2
+S'dsDNA viruses, no RNA stage'
+g298
+g299
+S'unclassified Chordopoxvirinae'
+tg5
+I2
+tp301
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Salterprovirus'
+tg61
+I1
+tp302
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Tectiviridae'
+p303
+S'Tectivirus'
+p304
+S'unclassified Tectivirus'
+tg61
+I1
+tp305
+a((g2
+S'dsDNA viruses, no RNA stage'
+g303
+g304
+tg61
+I3
+tp306
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'Turriviridae'
+S'Alphaturrivirus'
+tg61
+I1
+tp307
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'unclassified dsDNA phages'
+tg61
+I13
+tp308
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'unclassified dsDNA viruses'
+S'unclassified archaeal dsDNA viruses'
+S'Haloviruses'
+tg61
+I2
+tp309
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'unclassified dsDNA viruses'
+S'unclassified archaeal dsDNA viruses'
+tg61
+I1
+tp310
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'unclassified dsDNA viruses'
+tg61
+I5
+tp311
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'unclassified dsDNA viruses'
+tg61
+I1
+tp312
+a((g2
+S'dsDNA viruses, no RNA stage'
+S'unclassified dsDNA viruses'
+tg5
+I2
+tp313
+a((g2
+S'dsDNA viruses, no RNA stage'
+tg61
+I1
+tp314
+a((g2
+S'dsRNA viruses'
+S'Amalgaviridae'
+p315
+S'Amalgavirus'
+tg5
+I3
+tp316
+a((g2
+S'dsRNA viruses'
+g315
+S'unclassified Amalgaviridae'
+tg5
+I4
+tp317
+a((g2
+S'dsRNA viruses'
+S'Birnaviridae'
+S'Aquabirnavirus'
+S'unclassified Aquabirnavirus'
+tg5
+I4
+tp318
+a((g2
+S'dsRNA viruses'
+S'Chrysoviridae'
+S'Chrysovirus'
+tg5
+I29
+tp319
+a((g2
+S'dsRNA viruses'
+S'Cystoviridae'
+p320
+S'Cystovirus'
+p321
+tg61
+I3
+tp322
+a((g2
+S'dsRNA viruses'
+g320
+tg61
+I12
+tp323
+a((g2
+S'dsRNA viruses'
+S'Endornaviridae'
+p324
+S'Alphaendornavirus'
+tg5
+I12
+tp325
+a((g2
+S'dsRNA viruses'
+g324
+S'Betaendornavirus'
+tg5
+I3
+tp326
+a((g2
+S'dsRNA viruses'
+g324
+S'unclassified Endornavirus'
+tg5
+I8
+tp327
+a((g2
+S'dsRNA viruses'
+S'Hypoviridae'
+p328
+S'Hypovirus'
+p329
+S'unclassified Hypovirus'
+tg5
+I4
+tp330
+a((g2
+S'dsRNA viruses'
+g328
+g329
+tg5
+I1
+tp331
+a((g2
+S'dsRNA viruses'
+g328
+S'unclassified Hypoviridae'
+tg5
+I4
+tp332
+a((g2
+S'dsRNA viruses'
+S'Partitiviridae'
+p333
+S'Alphapartitivirus'
+p334
+S'unclassified Alphapartitivirus'
+tg5
+I2
+tp335
+a((g2
+S'dsRNA viruses'
+g333
+g334
+tg5
+I4
+tp336
+a((g2
+S'dsRNA viruses'
+g333
+S'Betapartitivirus'
+p337
+S'unclassified Betapartitivirus'
+tg5
+I4
+tp338
+a((g2
+S'dsRNA viruses'
+g333
+g337
+tg5
+I16
+tp339
+a((g2
+S'dsRNA viruses'
+g333
+S'Deltapartitivirus'
+tg5
+I4
+tp340
+a((g2
+S'dsRNA viruses'
+g333
+S'Gammapartitivirus'
+tg5
+I9
+tp341
+a((g2
+S'dsRNA viruses'
+g333
+S'unclassified Partitiviridae'
+tg5
+I44
+tp342
+a((g2
+S'dsRNA viruses'
+g333
+S'unclassified Partitiviridae'
+tg5
+I2
+tp343
+a((g2
+S'dsRNA viruses'
+S'Picobirnaviridae'
+p344
+S'Picobirnavirus'
+p345
+S'unclassified Picobirnavirus'
+tg5
+I4
+tp346
+a((g2
+S'dsRNA viruses'
+g344
+g345
+S'unclassified Picobirnavirus'
+tg5
+I2
+tp347
+a((g2
+S'dsRNA viruses'
+S'Quadriviridae'
+S'Quadrivirus'
+tg5
+I4
+tp348
+a((g2
+S'dsRNA viruses'
+S'Reoviridae'
+p349
+S'Sedoreovirinae'
+p350
+S'Mimoreovirus'
+tg5
+I11
+tp351
+a((g2
+S'dsRNA viruses'
+g349
+g350
+S'Orbivirus'
+tg5
+I52
+tp352
+a((g2
+S'dsRNA viruses'
+g349
+g350
+S'Phytoreovirus'
+tg5
+I12
+tp353
+a((g2
+S'dsRNA viruses'
+g349
+g350
+S'Rotavirus'
+tg5
+I44
+tp354
+a((g2
+S'dsRNA viruses'
+g349
+S'Spinareovirinae'
+p355
+S'Aquareovirus'
+p356
+tg5
+I33
+tp357
+a((g2
+S'dsRNA viruses'
+g349
+g355
+S'Cypovirus'
+tg5
+I14
+tp358
+a((g2
+S'dsRNA viruses'
+g349
+g355
+S'Dinovernavirus'
+tg5
+I9
+tp359
+a((g2
+S'dsRNA viruses'
+g349
+g355
+S'Fijivirus'
+tg5
+I20
+tp360
+a((g2
+S'dsRNA viruses'
+g349
+g355
+S'Mycoreovirus'
+tg5
+I23
+tp361
+a((g2
+S'dsRNA viruses'
+g349
+g355
+S'Orthoreovirus'
+tg5
+I59
+tp362
+a((g2
+S'dsRNA viruses'
+g349
+S'unclassified Reoviridae'
+tg5
+I47
+tp363
+a((g2
+S'dsRNA viruses'
+g349
+S'unclassified Reoviridae'
+tg5
+I5
+tp364
+a((g2
+S'dsRNA viruses'
+S'Totiviridae'
+p365
+S'Leishmaniavirus'
+p366
+S'unclassified Leishmaniavirus'
+tg5
+I1
+tp367
+a((g2
+S'dsRNA viruses'
+g365
+g366
+tg5
+I1
+tp368
+a((g2
+S'dsRNA viruses'
+g365
+S'Totivirus'
+tg5
+I3
+tp369
+a((g2
+S'dsRNA viruses'
+g365
+S'Trichomonasvirus'
+tg5
+I1
+tp370
+a((g2
+S'dsRNA viruses'
+g365
+S'Victorivirus'
+p371
+S'unclassified Victorivirus'
+tg5
+I12
+tp372
+a((g2
+S'dsRNA viruses'
+g365
+g371
+tg5
+I5
+tp373
+a((g2
+S'dsRNA viruses'
+g365
+tg5
+I24
+tp374
+a((g2
+S'dsRNA viruses'
+g365
+tg5
+I1
+tp375
+a((g2
+S'dsRNA viruses'
+tg5
+I27
+tp376
+a((g2
+S'ssDNA viruses'
+S'Anelloviridae'
+p377
+S'Alphatorquevirus'
+p378
+S'unclassified Alphatorquevirus'
+tg5
+I5
+tp379
+a((g2
+S'ssDNA viruses'
+g377
+g378
+tg5
+I2
+tp380
+a((g2
+S'ssDNA viruses'
+g377
+S'Betatorquevirus'
+p381
+S'unclassified Betatorquevirus'
+tg5
+I3
+tp382
+a((g2
+S'ssDNA viruses'
+g377
+g381
+tg5
+I4
+tp383
+a((g2
+S'ssDNA viruses'
+g377
+S'Gammatorquevirus'
+p384
+tg5
+I2
+tp385
+a((g2
+S'ssDNA viruses'
+g377
+S'Iotatorquevirus'
+tg5
+I1
+tp386
+a((g2
+S'ssDNA viruses'
+g377
+S'Kappatorquevirus'
+tg5
+I1
+tp387
+a((g2
+S'ssDNA viruses'
+g377
+S'Lambdatorquevirus'
+tg5
+I1
+tp388
+a((g2
+S'ssDNA viruses'
+g377
+S'unclassified Anelloviridae'
+tg5
+I12
+tp389
+a((g2
+S'ssDNA viruses'
+S'Circoviridae'
+p390
+S'Circovirus'
+p391
+S'unclassified Circovirus'
+tg5
+I9
+tp392
+a((g2
+S'ssDNA viruses'
+g390
+g391
+S'unclassified Circovirus'
+tg5
+I1
+tp393
+a((g2
+S'ssDNA viruses'
+g390
+g391
+tg5
+I11
+tp394
+a((g2
+S'ssDNA viruses'
+g390
+S'Gyrovirus'
+S'unclassified Gyrovirus'
+tg5
+I5
+tp395
+a((g2
+S'ssDNA viruses'
+g390
+S'unclassified Circoviridae'
+tg5
+I56
+tp396
+a((g2
+S'ssDNA viruses'
+g390
+S'unclassified Circoviridae'
+tg5
+I1
+tp397
+a((g2
+S'ssDNA viruses'
+g390
+S'unclassified Cyclovirus'
+tg5
+I9
+tp398
+a((g2
+S'ssDNA viruses'
+g390
+S'unclassified Cyclovirus'
+tg5
+I1
+tp399
+a((g2
+S'ssDNA viruses'
+g390
+tg5
+I9
+tp400
+a((g2
+S'ssDNA viruses'
+S'Geminiviridae'
+p401
+S'Becurtovirus'
+tg5
+I1
+tp402
+a((g2
+S'ssDNA viruses'
+g401
+S'Begomovirus'
+p403
+S'unclassified Begomovirus'
+tg5
+I124
+tp404
+a((g2
+S'ssDNA viruses'
+g401
+g403
+S'unclassified Begomovirus'
+tg5
+I5
+tp405
+a((g2
+S'ssDNA viruses'
+g401
+g403
+tg5
+I172
+tp406
+a((g2
+S'ssDNA viruses'
+g401
+g403
+tg5
+I2
+tp407
+a((g2
+S'ssDNA viruses'
+g401
+S'Capulavirus'
+tg5
+I2
+tp408
+a((g2
+S'ssDNA viruses'
+g401
+S'Curtovirus'
+p409
+S'unclassified Curtovirus'
+tg5
+I1
+tp410
+a((g2
+S'ssDNA viruses'
+g401
+g409
+tg5
+I1
+tp411
+a((g2
+S'ssDNA viruses'
+g401
+S'Eragrovirus'
+tg5
+I1
+tp412
+a((g2
+S'ssDNA viruses'
+g401
+S'Grablovirus'
+tg5
+I1
+tp413
+a((g2
+S'ssDNA viruses'
+g401
+S'Mastrevirus'
+p414
+S'unclassified Mastrevirus'
+tg5
+I7
+tp415
+a((g2
+S'ssDNA viruses'
+g401
+g414
+tg5
+I17
+tp416
+a((g2
+S'ssDNA viruses'
+g401
+S'Turncurtovirus'
+p417
+S'unclassified Turncurtovirus'
+tg5
+I1
+tp418
+a((g2
+S'ssDNA viruses'
+g401
+g417
+tg5
+I1
+tp419
+a((g2
+S'ssDNA viruses'
+g401
+S'unclassified Geminiviridae'
+tg5
+I4
+tp420
+a((g2
+S'ssDNA viruses'
+g401
+S'unclassified Geminiviridae'
+tg5
+I1
+tp421
+a((g2
+S'ssDNA viruses'
+S'Inoviridae'
+p422
+S'Fibrovirus'
+tg61
+I3
+tp423
+a((g2
+S'ssDNA viruses'
+g422
+S'Habenivirus'
+tg61
+I2
+tp424
+a((g2
+S'ssDNA viruses'
+g422
+S'Inovirus'
+p425
+S'unclassified Inovirus'
+tg61
+I2
+tp426
+a((g2
+S'ssDNA viruses'
+g422
+g425
+tg61
+I1
+tp427
+a((g2
+S'ssDNA viruses'
+g422
+S'Lineavirus'
+tg61
+I2
+tp428
+a((g2
+S'ssDNA viruses'
+g422
+S'Plectrovirus'
+tg61
+I1
+tp429
+a((g2
+S'ssDNA viruses'
+g422
+S'Saetivirus'
+tg61
+I2
+tp430
+a((g2
+S'ssDNA viruses'
+g422
+S'Vespertiliovirus'
+tg61
+I3
+tp431
+a((g2
+S'ssDNA viruses'
+g422
+S'environmental samples'
+tg5
+I2
+tp432
+a((g2
+S'ssDNA viruses'
+g422
+S'unassigned Inoviridae'
+tg61
+I14
+tp433
+a((g2
+S'ssDNA viruses'
+g422
+S'unclassified Inoviridae'
+tg61
+I3
+tp434
+a((g2
+S'ssDNA viruses'
+S'Microviridae'
+p435
+S'Bullavirinae'
+p436
+S'Alpha3microvirus'
+tg61
+I3
+tp437
+a((g2
+S'ssDNA viruses'
+g435
+g436
+S'G4microvirus'
+tg61
+I3
+tp438
+a((g2
+S'ssDNA viruses'
+g435
+g436
+S'Phix174microvirus'
+tg61
+I1
+tp439
+a((g2
+S'ssDNA viruses'
+g435
+S'Gokushovirinae'
+p440
+S'Bdellomicrovirus'
+tg61
+I1
+tp441
+a((g2
+S'ssDNA viruses'
+g435
+g440
+S'Chlamydiamicrovirus'
+tg61
+I3
+tp442
+a((g2
+S'ssDNA viruses'
+g435
+g440
+S'Spiromicrovirus'
+tg61
+I1
+tp443
+a((g2
+S'ssDNA viruses'
+g435
+S'unclassified Microviridae'
+tg61
+I4
+tp444
+a((g2
+S'ssDNA viruses'
+g435
+S'unclassified Microviridae'
+tg5
+I3
+tp445
+a((g2
+S'ssDNA viruses'
+S'Nanoviridae'
+p446
+S'Babuvirus'
+p447
+tg5
+I6
+tp448
+a((g2
+S'ssDNA viruses'
+g446
+S'Nanovirus'
+tg5
+I34
+tp449
+a((g2
+S'ssDNA viruses'
+S'Parvoviridae'
+p450
+S'Densovirinae'
+p451
+S'Ambidensovirus'
+tg5
+I7
+tp452
+a((g2
+S'ssDNA viruses'
+g450
+g451
+S'Brevidensovirus'
+tg5
+I1
+tp453
+a((g2
+S'ssDNA viruses'
+g450
+g451
+S'Hepandensovirus'
+tg5
+I3
+tp454
+a((g2
+S'ssDNA viruses'
+g450
+g451
+S'Iteradensovirus'
+tg5
+I2
+tp455
+a((g2
+S'ssDNA viruses'
+g450
+g451
+S'unclassified Densovirinae'
+tg5
+I1
+tp456
+a((g2
+S'ssDNA viruses'
+g450
+g451
+tg5
+I1
+tp457
+a((g2
+S'ssDNA viruses'
+g450
+S'Parvovirinae'
+p458
+S'Amdoparvovirus'
+tg5
+I3
+tp459
+a((g2
+S'ssDNA viruses'
+g450
+g458
+S'Bocaparvovirus'
+tg5
+I20
+tp460
+a((g2
+S'ssDNA viruses'
+g450
+g458
+S'Copiparvovirus'
+tg5
+I1
+tp461
+a((g2
+S'ssDNA viruses'
+g450
+g458
+S'Dependoparvovirus'
+p462
+tg5
+I6
+tp463
+a((g2
+S'ssDNA viruses'
+g450
+g458
+S'Erythroparvovirus'
+tg5
+I1
+tp464
+a((g2
+S'ssDNA viruses'
+g450
+g458
+S'Protoparvovirus'
+tg5
+I5
+tp465
+a((g2
+S'ssDNA viruses'
+g450
+g458
+S'Tetraparvovirus'
+tg5
+I5
+tp466
+a((g2
+S'ssDNA viruses'
+g450
+g458
+tg5
+I4
+tp467
+a((g2
+S'ssDNA viruses'
+g450
+S'unclassified Parvoviridae'
+tg5
+I3
+tp468
+a((g2
+S'ssDNA viruses'
+g450
+S'unclassified Parvoviridae'
+tg5
+I1
+tp469
+a((g2
+S'ssDNA viruses'
+S'unclassified ssDNA viruses'
+tg61
+I1
+tp470
+a((g2
+S'ssDNA viruses'
+S'unclassified ssDNA viruses'
+tg5
+I41
+tp471
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+S'Arenaviridae'
+p472
+S'Mammarenavirus'
+tg5
+I24
+tp473
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g472
+S'Reptarenavirus'
+tg5
+I8
+tp474
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g472
+S'unclassified Arenaviridae'
+tg5
+I4
+tp475
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+S'Bunyavirales'
+p476
+S'Fimoviridae'
+p477
+tg5
+I37
+tp478
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+g477
+tg5
+I1
+tp479
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+S'Hantaviridae'
+tg5
+I50
+tp480
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+S'Nairoviridae'
+tg5
+I30
+tp481
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+S'Peribunyaviridae'
+tg5
+I66
+tp482
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+S'Phasmaviridae'
+tg5
+I3
+tp483
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+S'Phenuiviridae'
+p484
+tg5
+I41
+tp485
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+g484
+tg5
+I2
+tp486
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g476
+S'Tospoviridae'
+tg5
+I30
+tp487
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+S'Mononegavirales'
+p488
+S'Bornaviridae'
+p489
+tg5
+I11
+tp490
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Filoviridae'
+p491
+tg5
+I4
+tp492
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Mymonaviridae'
+tg5
+I1
+tp493
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Nyamiviridae'
+tg5
+I3
+tp494
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Paramyxoviridae'
+tg5
+I28
+tp495
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Pneumoviridae'
+p496
+tg5
+I2
+tp497
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Rhabdoviridae'
+p498
+tg5
+I97
+tp499
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+g498
+tNI1
+tp500
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+g498
+tg5
+I2
+tp501
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'Sunviridae'
+tg5
+I1
+tp502
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g488
+S'unassigned Mononegavirales'
+tg5
+I4
+tp503
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+S'Ophioviridae'
+p504
+S'Ophiovirus'
+tg5
+I1
+tp505
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+S'Orthomyxoviridae'
+p506
+S'Influenzavirus A'
+tg5
+I29
+tp507
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+g506
+S'Quaranjavirus'
+tg5
+I7
+tp508
+a((g2
+S'ssRNA viruses'
+S'ssRNA negative-strand viruses'
+S'unclassified ssRNA negative-strand viruses'
+tg5
+I25
+tp509
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Alphatetraviridae'
+S'Omegatetravirus'
+tg5
+I1
+tp510
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Astroviridae'
+p511
+S'Avastrovirus'
+tg5
+I2
+tp512
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g511
+S'Mamastrovirus'
+tg5
+I21
+tp513
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g511
+S'unclassified Astroviridae'
+tg5
+I12
+tp514
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g511
+S'unclassified Astroviridae'
+tg5
+I2
+tp515
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Benyviridae'
+S'Benyvirus'
+tg5
+I2
+tp516
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Bromoviridae'
+p517
+S'Anulavirus'
+tg5
+I9
+tp518
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g517
+S'Cucumovirus'
+tg5
+I6
+tp519
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g517
+S'Ilarvirus'
+tg5
+I29
+tp520
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g517
+S'Oleavirus'
+tg5
+I2
+tp521
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Caliciviridae'
+p522
+S'Lagovirus'
+tg5
+I1
+tp523
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+S'Nebovirus'
+tg5
+I2
+tp524
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+S'Norovirus'
+tg5
+I2
+tp525
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+S'Sapovirus'
+tg5
+I2
+tp526
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+S'St-Valerien swine virus'
+tg5
+I1
+tp527
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+S'Vesivirus'
+tg5
+I3
+tp528
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+tg5
+I4
+tp529
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g522
+tg5
+I1
+tp530
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Closteroviridae'
+p531
+S'Ampelovirus'
+tg5
+I4
+tp532
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g531
+S'Closterovirus'
+tg5
+I3
+tp533
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g531
+S'Crinivirus'
+tg5
+I14
+tp534
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g531
+S'unclassified Closteroviridae'
+tg5
+I4
+tp535
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Flaviviridae'
+p536
+S'Flavivirus'
+p537
+tg5
+I23
+tp538
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g536
+g537
+tg5
+I1
+tp539
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g536
+S'Hepacivirus'
+p540
+tg5
+I6
+tp541
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g536
+g540
+tg5
+I2
+tp542
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g536
+S'Pegivirus'
+tg5
+I7
+tp543
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g536
+S'Pestivirus'
+tg5
+I5
+tp544
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g536
+tg5
+I18
+tp545
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Hepeviridae'
+S'Orthohepevirus'
+tg5
+I1
+tp546
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Idaeovirus'
+p547
+S'unclassified Idaeovirus'
+tg5
+I4
+tp548
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Leviviridae'
+p549
+S'Allolevivirus'
+p550
+tg61
+I2
+tp551
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g549
+S'Levivirus'
+tg61
+I5
+tp552
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g549
+S'unclassified Leviviridae'
+tg61
+I1
+tp553
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Luteoviridae'
+p554
+S'Enamovirus'
+tg5
+I2
+tp555
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g554
+S'Luteovirus'
+tg5
+I1
+tp556
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g554
+S'Polerovirus'
+tg5
+I20
+tp557
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g554
+S'unclassified Luteoviridae'
+tg5
+I5
+tp558
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Narnaviridae'
+p559
+S'Mitovirus'
+tg5
+I21
+tp560
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g559
+S'Narnavirus'
+tg5
+I3
+tp561
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g559
+S'unclassified Narnaviridae'
+tg5
+I2
+tp562
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Nidovirales'
+p563
+S'Arteriviridae'
+tg5
+I11
+tp564
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g563
+S'Coronaviridae'
+tg5
+I34
+tp565
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g563
+S'Mesoniviridae'
+tg5
+I3
+tp566
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g563
+S'Roniviridae'
+tg5
+I1
+tp567
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g563
+S'unclassified Nidovirales'
+tg5
+I1
+tp568
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Nodaviridae'
+p569
+S'Alphanodavirus'
+tg5
+I1
+tp570
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g569
+S'Betanodavirus'
+tg5
+I2
+tp571
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g569
+S'unclassified Nodaviridae'
+tg5
+I10
+tp572
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Ourmiavirus'
+tg5
+I9
+tp573
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Picornavirales'
+p574
+S'Dicistroviridae'
+p575
+tg5
+I16
+tp576
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+S'Iflaviridae'
+tg5
+I25
+tp577
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+S'Picornaviridae'
+p578
+tg5
+I86
+tp579
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+g578
+tg5
+I2
+tp580
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+S'Secoviridae'
+tg5
+I34
+tp581
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+S'environmental samples'
+tNI4
+tp582
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+S'unclassified Picornavirales'
+tg5
+I13
+tp583
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g574
+S'unclassified Picornavirales'
+tg5
+I1
+tp584
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Polemovirus'
+tg5
+I1
+tp585
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Potyviridae'
+p586
+S'Brambyvirus'
+tg5
+I1
+tp587
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+S'Bymovirus'
+tg5
+I8
+tp588
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+S'Ipomovirus'
+tg5
+I4
+tp589
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+S'Macluravirus'
+tg5
+I2
+tp590
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+S'Poacevirus'
+tg5
+I2
+tp591
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+S'Potyvirus'
+tg5
+I57
+tp592
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+S'Tritimovirus'
+tg5
+I2
+tp593
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g586
+tg5
+I7
+tp594
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Sobemovirus'
+p595
+S'unclassified Sobemovirus'
+tg5
+I4
+tp596
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g595
+tg5
+I8
+tp597
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Togaviridae'
+p598
+S'Alphavirus'
+tg5
+I6
+tp599
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Tombusviridae'
+p600
+S'Alphacarmovirus'
+tg5
+I4
+tp601
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Alphanecrovirus'
+tg5
+I1
+tp602
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Aureusvirus'
+tg5
+I2
+tp603
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Gammacarmovirus'
+tg5
+I3
+tp604
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Macanavirus'
+tg5
+I1
+tp605
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Panicovirus'
+tg5
+I3
+tp606
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Pelarspovirus'
+tg5
+I3
+tp607
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Tombusvirus'
+tg5
+I3
+tp608
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Umbravirus'
+tg5
+I6
+tp609
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+S'Zeavirus'
+tg5
+I1
+tp610
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g600
+tg5
+I4
+tp611
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Tymovirales'
+p612
+S'Alphaflexiviridae'
+tg5
+I25
+tp613
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g612
+S'Betaflexiviridae'
+p614
+tg5
+I53
+tp615
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g612
+g614
+tg5
+I2
+tp616
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g612
+S'Gammaflexiviridae'
+tg5
+I1
+tp617
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g612
+S'Tymoviridae'
+tg5
+I16
+tp618
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g612
+S'unclassified Flexiviridae'
+tg5
+I2
+tp619
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g612
+S'unclassified Tymovirales'
+tg5
+I2
+tp620
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'Virgaviridae'
+p621
+S'Furovirus'
+tg5
+I4
+tp622
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g621
+S'Goravirus'
+tg5
+I2
+tp623
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g621
+S'Pecluvirus'
+tg5
+I1
+tp624
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g621
+S'Pomovirus'
+tg5
+I8
+tp625
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g621
+S'Tobamovirus'
+tg5
+I19
+tp626
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+g621
+S'unclassified Virgaviridae'
+tg5
+I1
+tp627
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+S'unclassified Higrevirus'
+tg5
+I3
+tp628
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+tg5
+I56
+tp629
+a((g2
+S'ssRNA viruses'
+S'ssRNA positive-strand viruses, no DNA stage'
+tg5
+I1
+tp630
+a((g2
+S'ssRNA viruses'
+S'unclassified ssRNA viruses'
+tg5
+I8
+tp631
+a((g2
+S'ssRNA viruses'
+S'unclassified ssRNA viruses'
+tg5
+I1
+tp632
+a((g2
+S'unassigned viruses'
+S'Bacilladnavirus'
+S'unclassified Bacilladnavirus'
+tg5
+I4
+tp633
+a((g2
+S'unassigned viruses'
+S'Invictavirus'
+tg5
+I1
+tp634
+a((g2
+S'unassigned viruses'
+S'Megabirnavirus'
+p635
+S'unclassified Megabirnavirus'
+tg5
+I4
+tp636
+a((g2
+S'unassigned viruses'
+g635
+tg5
+I2
+tp637
+a((g2
+S'unassigned viruses'
+S'Nyfulvavirus'
+tg5
+I1
+tp638
+a((g2
+S'unassigned viruses'
+tg5
+I10
+tp639
+a((g2
+S'unclassified RNA viruses'
+tg5
+I821
+tp640
+a((g2
+S'unclassified RNA viruses'
+tg5
+I2
+tp641
+a((g2
+S'unclassified archaeal viruses'
+tg61
+I2
+tp642
+a((g2
+S'unclassified bacterial viruses'
+tg61
+I33
+tp643
+a((g2
+S'unclassified viruses'
+tg5
+I93
+tp644
+a((g2
+S'unclassified viruses'
+tNI1
+tp645
+a((g2
+S'unclassified viruses'
+tg5
+I2
+tp646
+a.
