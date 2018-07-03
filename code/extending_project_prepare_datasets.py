@@ -52,9 +52,11 @@ attributes_test = np.concatenate((test_set_seed_plants, test_set_vertebrates, te
 print attributes_test.shape
 attributes_learn = np.concatenate((learn_set_seed_plants, learn_set_vertebrates, learn_set_arthropods, learn_set_other))
 print attributes_learn.shape
-classes_test = np.concatenate((test_classes_seed_plants, test_classes_vertebrates, test_classes_arthropods, test_classes_other))
+classes_test = np.concatenate(
+    (test_classes_seed_plants, test_classes_vertebrates, test_classes_arthropods, test_classes_other))
 print classes_test.shape
-classes_learn = np.concatenate((learn_classes_seed_plants, learn_classes_vertebrates, learn_classes_arthropods, learn_classes_other))
+classes_learn = np.concatenate(
+    (learn_classes_seed_plants, learn_classes_vertebrates, learn_classes_arthropods, learn_classes_other))
 print classes_learn.shape
 
 # scaling features
@@ -64,9 +66,44 @@ attributes_test = scaler.transform(attributes_test)
 
 # preparing crossvalidation splits
 skf = KFold(n_splits=5)
+seed_plants_indices = []
 indices = []
-for i, (train_index, test_index) in enumerate(skf.split(attributes_learn, classes_learn)): pass
+np.set_printoptions(threshold=np.nan)
+print len(learn_set_seed_plants), len(learn_classes_vertebrates), len(learn_classes_arthropods), len(
+    learn_classes_other)
+for train_indices, test_indices in skf.split(learn_set_seed_plants):
+    indices.append([train_indices, test_indices])
+for i, (train_indices, test_indices) in enumerate(skf.split(learn_set_vertebrates)):
+    indices[i][0] = np.concatenate((indices[i][0], train_indices + len(learn_set_seed_plants)))
+    indices[i][1] = np.concatenate((indices[i][1], test_indices + len(learn_set_seed_plants)))
+for i, (train_indices, test_indices) in enumerate(skf.split(learn_set_arthropods)):
+    indices[i][0] = np.concatenate(
+        (indices[i][0], train_indices + len(learn_set_seed_plants) + len(learn_set_vertebrates)))
+    indices[i][1] = np.concatenate(
+        (indices[i][1], test_indices + len(learn_set_seed_plants) + len(learn_set_vertebrates)))
+for i, (train_indices, test_indices) in enumerate(skf.split(learn_set_other)):
+    indices[i][0] = np.concatenate((indices[i][0],
+                                    train_indices + len(learn_set_seed_plants) + len(learn_set_vertebrates) + len(
+                                        learn_set_arthropods)))
+    indices[i][1] = np.concatenate((indices[i][1],
+                                    test_indices + len(learn_set_seed_plants) + len(learn_set_vertebrates) + len(
+                                        learn_set_arthropods)))
 
+# check
+all_data = []
+for i, (l, t) in enumerate(indices):
+    assert len(set(l) & set(t)) == 0
+    assert len(set(l) | set(t)) == len(attributes_learn)
+    all_data.extend(l)
+    all_data.extend(t)
+assert all([all_data.count(i) == 5 for i in range(len(attributes_learn))])
+
+# serializing data
+pickle.dump(attributes_learn, open(os.path.join('..', 'datasets', 'extension_attributes_learn.dump'), 'w'))
+pickle.dump(attributes_test, open(os.path.join('..', 'datasets', 'extension_attributes_test.dump'), 'w'))
+pickle.dump(classes_learn, open(os.path.join('..', 'datasets', 'extension_classes_learn.dump'), 'w'))
+pickle.dump(classes_test, open(os.path.join('..', 'datasets', 'extension_classes_test.dump'), 'w'))
+pickle.dump(indices, open(os.path.join('..', 'datasets', 'extension_cv_indices.dump'), 'w'))
 
 # host_lineages = [tuple(virus.host_lineage[:10]) for virus in other_eukaryotic_viruses]
 # host_lineages_cardinality = [(lineage, host_lineages.count(lineage)) for lineage in set(host_lineages)]
