@@ -39,13 +39,13 @@ print len(seed_plants_infecting), len(vertebrates_infecting), len(arthropods_inf
 
 test_set_fraction = 0.2
 attribs = ('molecule', 'nuc_frequencies', 'relative_nuc_frequencies_one_strand', 'relative_trinuc_freqs_one_strand')
-learn_set_seed_plants, test_set_seed_plants, learn_classes_seed_plants, test_classes_seed_plants, _, _ = prepare_attributes_classes_ids_for_learn_and_test(
+learn_set_seed_plants, test_set_seed_plants, learn_classes_seed_plants, test_classes_seed_plants, learn_ids_seed_plants, test_ids_seed_plants = prepare_attributes_classes_ids_for_learn_and_test(
     seed_plants_infecting, test_set_fraction, 0, attribs)
-learn_set_vertebrates, test_set_vertebrates, learn_classes_vertebrates, test_classes_vertebrates, _, _ = prepare_attributes_classes_ids_for_learn_and_test(
+learn_set_vertebrates, test_set_vertebrates, learn_classes_vertebrates, test_classes_vertebrates, learn_ids_vertebrates, test_ids_vertebrates = prepare_attributes_classes_ids_for_learn_and_test(
     vertebrates_infecting, test_set_fraction, 1, attribs)
-learn_set_arthropods, test_set_arthropods, learn_classes_arthropods, test_classes_arthropods, _, _ = prepare_attributes_classes_ids_for_learn_and_test(
+learn_set_arthropods, test_set_arthropods, learn_classes_arthropods, test_classes_arthropods, learn_ids_arthropods, test_ids_arthropods = prepare_attributes_classes_ids_for_learn_and_test(
     arthropods_infecting, test_set_fraction, 2, attribs)
-learn_set_other, test_set_other, learn_classes_other, test_classes_other, _, _ = prepare_attributes_classes_ids_for_learn_and_test(
+learn_set_other, test_set_other, learn_classes_other, test_classes_other, learn_ids_other, test_ids_other = prepare_attributes_classes_ids_for_learn_and_test(
     other_eukaryotic_viruses, test_set_fraction, 3, attribs)
 
 attributes_test = np.concatenate((test_set_seed_plants, test_set_vertebrates, test_set_arthropods, test_set_other))
@@ -58,6 +58,12 @@ print classes_test.shape
 classes_learn = np.concatenate(
     (learn_classes_seed_plants, learn_classes_vertebrates, learn_classes_arthropods, learn_classes_other))
 print classes_learn.shape
+ids_test = np.concatenate(
+    (test_ids_seed_plants, test_ids_vertebrates, test_ids_arthropods, test_ids_other))
+print ids_test.shape
+ids_learn = np.concatenate(
+    (learn_ids_seed_plants, learn_ids_vertebrates, learn_ids_arthropods, learn_ids_other))
+print ids_learn.shape
 
 # scaling features
 scaler = StandardScaler()
@@ -103,6 +109,8 @@ pickle.dump(attributes_learn, open(os.path.join('..', 'datasets', 'extension_att
 pickle.dump(attributes_test, open(os.path.join('..', 'datasets', 'extension_attributes_test.dump'), 'w'))
 pickle.dump(classes_learn, open(os.path.join('..', 'datasets', 'extension_classes_learn.dump'), 'w'))
 pickle.dump(classes_test, open(os.path.join('..', 'datasets', 'extension_classes_test.dump'), 'w'))
+pickle.dump(ids_learn, open(os.path.join('..', 'datasets', 'extension_ids_learn.dump'), 'w'))
+pickle.dump(ids_test, open(os.path.join('..', 'datasets', 'extension_ids_test.dump'), 'w'))
 pickle.dump(indices, open(os.path.join('..', 'datasets', 'extension_cv_indices.dump'), 'w'))
 
 # host_lineages = [tuple(virus.host_lineage[:10]) for virus in other_eukaryotic_viruses]
