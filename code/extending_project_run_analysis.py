@@ -63,10 +63,11 @@ if __name__ == '__main__':
         selected_attributes_test = select_features(attributes_test, model.coef_[0])
         lr.fit(selected_attributes_train, transformed_classes_learn)
         probas = lr.predict_proba(selected_attributes_test)
-        print class_num, np.mean(cross_val_score(lr, selected_attributes_train, transformed_classes_learn,
+        cv_score = cross_val_score(lr, selected_attributes_train, transformed_classes_learn,
                                                  scoring=make_scorer(roc_auc_scorer, needs_proba=True),
                                                  n_jobs=num_of_jobs,
-                                                 cv=indices)), roc_auc_scorer(transformed_classes_test, probas)
+                                                 cv=indices)
+        print class_num, cv_score, np.mean(cv_score), roc_auc_scorer(transformed_classes_test, probas)
         print 'SVC'
         svc_results = {}
         for C in c_range:
@@ -77,11 +78,11 @@ if __name__ == '__main__':
             selector.fit(attributes_learn, transformed_classes_learn)
             support = selector.get_support(indices=True)
             selected_attributes_train = attributes_learn[:, support]
-            result = np.mean(cross_val_score(estimator, selected_attributes_train, transformed_classes_learn,
+            result = cross_val_score(estimator, selected_attributes_train, transformed_classes_learn,
                                              scoring=make_scorer(roc_auc_scorer, needs_proba=True), n_jobs=num_of_jobs,
-                                             cv=indices))
+                                             cv=indices)
             svc_results[C] = (result, support)
-        best = max(svc_results.items(), key=lambda x:x[1][0])
+        best = max(svc_results.items(), key=lambda x:np.mean(x[1][0]))
         best_c = best[0]
         best_cv_res, best_indices = best[1]
         print best_c, best_indices
@@ -90,5 +91,5 @@ if __name__ == '__main__':
         svc = SVC(C=best_c, kernel='linear', probability=True)
         svc.fit(selected_attributes_train, transformed_classes_learn)
         probas = svc.predict_proba(selected_attributes_test)
-        print class_num, best_cv_res, roc_auc_scorer(transformed_classes_test, probas)
+        print class_num, best_cv_res, np.mean(best_cv_res), roc_auc_scorer(transformed_classes_test, probas)
         print '-----------------------------------------------------------'
