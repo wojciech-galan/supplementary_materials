@@ -9,21 +9,45 @@ from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 from prepare_attributes_classes_ids import virus_to_attributes
 
-
 # suppose I know, that a virus infect eukaryotic organism.
 # I wanna know, whether the organism is a seed plants (Spermatophyta), proto- or vertebrates
 
+lineage_fragments_test_set = ['Single stranded DNA satellites', 'Nanoviridae', 'Anelloviridae',
+                              'unclassified ssDNA viruses', 'Virgaviridae', 'Bromoviridae', 'Sobemovirus',
+                              'Picornavirales', 'Nodaviridae', 'Mononegavirales', 'Ophioviridae',
+                              'unclassified Reoviridae', 'Spinareovirinae', 'Picobirnaviridae', 'Totiviridae',
+                              'Adenoviridae', 'Baculoviridae']
 
-def prepare_attributes_classes_ids_for_learn_and_test(container, test_set_fraction, class_number,
+
+def check_virus_lineage_contains_one_of_fragments(virus, lineage_fragments):
+    for fragment in lineage_fragments:
+        if fragment in virus.lineage:
+            return True
+    return False
+
+
+def partition_learn_test_set(container, lineage_fragments_for_test_set):
+    learn_set, test_set = [], []
+    for virus in container:
+        if check_virus_lineage_contains_one_of_fragments(virus, lineage_fragments_for_test_set):
+            test_set.append(virus)
+        else:
+            learn_set.append(virus)
+    return learn_set, test_set
+
+
+def prepare_attributes_classes_ids_for_learn_and_test(container, lineage_fragments_for_test_set, class_number,
                                                       virus_attributes_to_be_considered):
-    container.sort(key=operator.attrgetter('lineage'))
+    learn_set, test_set = partition_learn_test_set(container, lineage_fragments_for_test_set)
+    learn_set.sort(key=operator.attrgetter('lineage'))
     classes = np.ones(len(container)) * class_number
-    ids = [virus.gi for virus in container]
-    num_of_elements_in_test_set = int(len(container) * test_set_fraction)
-    attributes = [virus_to_attributes(virus, virus_attributes_to_be_considered) for virus in container]
-    return np.array(attributes[num_of_elements_in_test_set:]), np.array(attributes[:num_of_elements_in_test_set]), \
-           classes[num_of_elements_in_test_set:], classes[:num_of_elements_in_test_set], \
-           ids[num_of_elements_in_test_set:], ids[:num_of_elements_in_test_set]
+    ids_learn = [virus.gi for virus in learn_set]
+    ids_test = [virus.gi for virus in test_set]
+    learn_attributes = [virus_to_attributes(virus, virus_attributes_to_be_considered) for virus in learn_set]
+    test_attributes = [virus_to_attributes(virus, virus_attributes_to_be_considered) for virus in test_set]
+    return np.array(learn_attributes), np.array(test_attributes), \
+           classes[:len(learn_set)], classes[len(learn_set):], \
+           ids_learn, ids_test
 
 
 with open(os.path.join('..', 'datasets', 'all_viruses_with_desired_attributes.dump')) as f:
@@ -37,16 +61,15 @@ other_eukaryotic_viruses = [virus for virus in viruses_container if virus not in
     seed_plants_infecting + vertebrates_infecting + arthropods_infecting) and 'Eukaryota' in virus.host_lineage]
 print len(seed_plants_infecting), len(vertebrates_infecting), len(arthropods_infecting), len(other_eukaryotic_viruses)
 
-test_set_fraction = 0.2
 attribs = ('molecule', 'nuc_frequencies', 'relative_nuc_frequencies_one_strand', 'relative_trinuc_freqs_one_strand')
 learn_set_seed_plants, test_set_seed_plants, learn_classes_seed_plants, test_classes_seed_plants, learn_ids_seed_plants, test_ids_seed_plants = prepare_attributes_classes_ids_for_learn_and_test(
-    seed_plants_infecting, test_set_fraction, 0, attribs)
+    seed_plants_infecting, lineage_fragments_test_set, 0, attribs)
 learn_set_vertebrates, test_set_vertebrates, learn_classes_vertebrates, test_classes_vertebrates, learn_ids_vertebrates, test_ids_vertebrates = prepare_attributes_classes_ids_for_learn_and_test(
-    vertebrates_infecting, test_set_fraction, 1, attribs)
+    vertebrates_infecting, lineage_fragments_test_set, 1, attribs)
 learn_set_arthropods, test_set_arthropods, learn_classes_arthropods, test_classes_arthropods, learn_ids_arthropods, test_ids_arthropods = prepare_attributes_classes_ids_for_learn_and_test(
-    arthropods_infecting, test_set_fraction, 2, attribs)
+    arthropods_infecting, lineage_fragments_test_set, 2, attribs)
 learn_set_other, test_set_other, learn_classes_other, test_classes_other, learn_ids_other, test_ids_other = prepare_attributes_classes_ids_for_learn_and_test(
-    other_eukaryotic_viruses, test_set_fraction, 3, attribs)
+    other_eukaryotic_viruses, lineage_fragments_test_set, 3, attribs)
 
 attributes_test = np.concatenate((test_set_seed_plants, test_set_vertebrates, test_set_arthropods, test_set_other))
 print attributes_test.shape
