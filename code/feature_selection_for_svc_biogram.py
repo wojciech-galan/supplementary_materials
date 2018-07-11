@@ -28,7 +28,7 @@ features_left = []
 for split in splits:
     binarized_attributes_learn = binarize(split[0])
     p_values = r.test_features(split[2], binarized_attributes_learn, quick=True)
-    significant_features = [x for x in range(len(p_values)) if p_values[x] < 0.0001]
+    significant_features = [x for x in range(len(p_values)) if p_values[x] < 0.01]
     feature_sets.append(np.array(significant_features))
     features_left.append(np.array(list(set(range(len(p_values))) - set(significant_features))))
 
