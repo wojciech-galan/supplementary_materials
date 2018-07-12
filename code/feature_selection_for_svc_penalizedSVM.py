@@ -21,11 +21,6 @@ if __name__ == '__main__':
                         help='directory for results')
     args = parser.parse_args()
 
-    # attributes_learn = pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump')))
-    # classes_learn = pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump')))
-    # attributes_test = pickle.load(open(os.path.join('..', 'datasets', 'attributes_test.dump')))
-    # classes_test = pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))
-    # indices = pickle.load(open(os.path.join('..', 'datasets', 'cv_indices.dump')))
     splits = pickle.load(open(args.infile))
     c_range = 2 ** np.linspace(-5, 5, 11)
     lambdas = 1/c_range
@@ -76,13 +71,3 @@ if __name__ == '__main__':
 
     pickle.dump(max_features, open(os.path.join(res_dir, 'best_features_penalizedSVM.dump'), 'w'))
     pickle.dump(max_c, open(os.path.join(res_dir, 'best_C_penalizedSVM.dump'), 'w'))
-    scores_for_left_features = []
-
-    clf = SVC(kernel='linear', probability=True)
-    clf.fit(attributes_learn, classes_learn)
-    probas = clf.predict_proba(attributes_test)
-    predicted = clf.predict(attributes_test)
-
-    print roc_auc_score(classes_test, probas[:,1])   # 0.982733136254
-    print accuracy_score(classes_test, predicted)    # 0.944672131148
-    print matthews_corrcoef(classes_test, predicted) # 0.889351731351
