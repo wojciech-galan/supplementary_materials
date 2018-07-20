@@ -20,8 +20,12 @@ def train_classifier(classifier, attributes, classes, features):
     classifier.fit(selected_attributes, classes)
     return classifier
 
+def print_feature_names(all_feature_names, feature_numbers):
+    print [all_feature_names[feat_num] for feat_num in feature_numbers]
+
 
 if __name__ == '__main__':
+    features = pickle.load(open(os.path.join('..', 'datasets', 'features.dump')))
     classes_learn = pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump')))
     classes_test = pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))
 
@@ -44,6 +48,7 @@ if __name__ == '__main__':
     # lr, lasso
     trained_lr = train_classifier(LogisticRegression(), attributes_all, classes_all, lasso_features)
     joblib.dump(scaler, os.path.join('..', 'datasets', 'classifier_lr.pkl'))
+    print_feature_names(features, lasso_features)
 
     # svc, rfe
     svc_RFE_results = pickle.load(open(os.path.join('..', 'svm_res', 'RFE.dump')))
@@ -52,11 +57,14 @@ if __name__ == '__main__':
     svc_RFE_best_C = best_result[1][1].estimator.C
     trained_lr = train_classifier(SVC(C=svc_RFE_best_C), attributes_all, classes_all, svc_RFE_best_features)
     joblib.dump(scaler, os.path.join('..', 'datasets', 'classifier_svc.pkl'))
+    print_feature_names(features, svc_RFE_best_features)
 
     # qda, ga 500
     trained_lr = train_classifier(QuadraticDiscriminantAnalysis(), attributes_all, classes_all, feats_ga_qda_500)
     joblib.dump(scaler, os.path.join('..', 'datasets', 'classifier_qda.pkl'))
+    print_feature_names(features, feats_ga_qda_500)
 
     # knn, ga 500
     trained_lr = train_classifier(KNeighborsClassifier(n_neighbors=9), attributes_all, classes_all, feats_ga_knn_500[9])
     joblib.dump(scaler, os.path.join('..', 'datasets', 'classifier_knn.pkl'))
+    print_feature_names(features, feats_ga_knn_500[9])
