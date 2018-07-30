@@ -123,9 +123,9 @@ def compute_statistics(indices, k_lowest, k_highest, attrs, classes, ids, descri
         random_indices_list.append(random_indices)
     points_ga, distances_0, distances_1 = compute_distances_for_given_indices(attrs, indices, ids,
                                                                               classes)
-    distances_0_1 = get_distances_between_two_groups_of_points(
-        [points_ga[x] for x in range(len(points_ga)) if classes[x] == 0],
-        [points_ga[x] for x in range(len(points_ga)) if classes[x] == 1]).values()
+    # distances_0_1 = get_distances_between_two_groups_of_points(
+    #     [points_ga[x] for x in range(len(points_ga)) if classes[x] == 0],
+    #     [points_ga[x] for x in range(len(points_ga)) if classes[x] == 1]).values()
 
     random_distances_0 = []
     random_distances_1 = []
@@ -136,36 +136,40 @@ def compute_statistics(indices, k_lowest, k_highest, attrs, classes, ids, descri
         random_distances_0.append(d0)
         random_distances_1.append(d1)
 
-    random_distances_0_1 = [
-        get_distances_between_two_groups_of_points([points[x] for x in range(len(points)) if classes[x] == 0],
-                                                   [points[x] for x in range(len(points)) if classes[x] == 1]).values()
-        for points in points_random]
+    # random_distances_0_1 = [
+    #     get_distances_between_two_groups_of_points([points[x] for x in range(len(points)) if classes[x] == 0],
+    #                                                [points[x] for x in range(len(points)) if classes[x] == 1]).values()
+    #     for points in points_random]
 
     for k in range(k_lowest, k_highest + 1):
         print k
-        distances_0_1_k = flatten([sorted_distances[:k] for sorted_distances in distances_0_1])
+        # distances_0_1_k = flatten([sorted_distances[:k] for sorted_distances in distances_0_1])
 
         k_nearest_0 = flatten([value for value in k_nearest(distances_0, k).values()])
         k_nearest_1 = flatten([value for value in k_nearest(distances_1, k).values()])
         print np.mean(k_nearest_0), np.median(k_nearest_0), np.std(k_nearest_0)
         print np.mean(k_nearest_1), np.median(k_nearest_1), np.std(k_nearest_1)
-        print np.mean(distances_0_1_k), np.median(distances_0_1_k), np.std(distances_0_1_k)
+        # print np.mean(distances_0_1_k), np.median(distances_0_1_k), np.std(distances_0_1_k)
 
-        random_distances_0_1_k = flatten(flatten([sorted_distances[:k] for sorted_distances in random_distances_0_1]))
+        # random_distances_0_1_k = flatten(flatten([sorted_distances[:k] for sorted_distances in random_distances_0_1]))
         k_nearest_0_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_0]))
         k_nearest_1_random = flatten(flatten([k_nearest(distances, k).values() for distances in random_distances_1]))
         print np.mean(k_nearest_0_random), np.median(k_nearest_0_random), np.std(k_nearest_0_random), \
-            mannwhitneyu(k_nearest_0, k_nearest_0_random, alternative='less')
+            mannwhitneyu(k_nearest_0, k_nearest_0_random, alternative='less'), mannwhitneyu(k_nearest_0,
+                                                                                            k_nearest_0_random,
+                                                                                            alternative='less').pvalue < 0.05 / 18
         print np.mean(k_nearest_1_random), np.median(k_nearest_1_random), np.std(k_nearest_1_random), \
-            mannwhitneyu(k_nearest_1, k_nearest_1_random, alternative='less')
-        print np.mean(random_distances_0_1_k), np.median(random_distances_0_1_k), np.std(random_distances_0_1_k), \
-            mannwhitneyu(distances_0_1_k, random_distances_0_1_k, alternative='greater')
+            mannwhitneyu(k_nearest_1, k_nearest_1_random, alternative='less'), mannwhitneyu(k_nearest_1,
+                                                                                            k_nearest_1_random,
+                                                                                            alternative='less').pvalue < 0.05 / 18
+        # print np.mean(random_distances_0_1_k), np.median(random_distances_0_1_k), np.std(random_distances_0_1_k), \
+        #     mannwhitneyu(distances_0_1_k, random_distances_0_1_k, alternative='greater')
         print '----------------------------------------------------'
-        data = Data(description, k, indices, random_indices, distances_0, random_distances_0, distances_1,
-                 random_distances_1, distances_0_1, random_distances_0_1, k_nearest_0, k_nearest_1, distances_0_1_k,
-                 k_nearest_0_random, k_nearest_1_random, random_distances_0_1_k)
-        with open(data.fname, 'w') as f:
-            pickle.dump(data, f)
+        # data = Data(description, k, indices, random_indices, distances_0, random_distances_0, distances_1,
+        #          random_distances_1, distances_0_1, random_distances_0_1, k_nearest_0, k_nearest_1, distances_0_1_k,
+        #          k_nearest_0_random, k_nearest_1_random, random_distances_0_1_k)
+        # with open(data.fname, 'w') as f:
+        #     pickle.dump(data, f)
 
 
 if __name__ == '__main__':
@@ -190,22 +194,17 @@ if __name__ == '__main__':
 
     k_low = 1
     k_high = 5
-    # compute_statistics(lasso_features, k_low, k_high, attributes, classes, ids, "LogisticRegression, lasso")
-    # compute_statistics(svc_RFE_best_features, k_low, k_high, attributes, classes, ids, "svm_RFE")
-    # compute_statistics(svc_SelectKBest_best_features, k_low, k_high, attributes, classes, ids, "SelectKBEst")
+    compute_statistics(lasso_features, k_low, k_high, attributes, classes, ids, "LogisticRegression, lasso")
+    compute_statistics(svc_RFE_best_features, k_low, k_high, attributes, classes, ids, "svm_RFE")
+    compute_statistics(svc_SelectKBest_best_features, k_low, k_high, attributes, classes, ids, "SelectKBEst")
     compute_statistics(svc_biogram_best_features, k_low, k_high, attributes, classes, ids, "svc_biogram_best_features")
-    # compute_statistics(svc_penalized_best_features, k_low, k_high, attributes, classes, ids,
-    #                    "svc_penalized_best_features")
-    # compute_statistics(qda_bottomup_best_features, k_low, k_high, attributes, classes, ids,
-    #                    "qda_bottomup_best_features")
-    # for neighbours, indices in feats_ga_knn.iteritems():
-    #     compute_statistics(indices, k_low, k_high, attributes, classes, ids, "feats_ga_knn%d" % neighbours)
-    # for neighbours, indices in feats_ga_knn_500.iteritems():
-    #     compute_statistics(indices, k_low, k_high, attributes, classes, ids, "feats_ga_knn_500%d" % neighbours)
-    # for neighbours, indices in feats_bottomup_knn.iteritems():
-    #     compute_statistics(indices, k_low, k_high, attributes, classes, ids, "feats_bottomup_knn%d" % neighbours)
-    # compute_statistics(feats_ga_qda, k_low, k_high, attributes, classes, ids, "feats_ga_qda")
-    # compute_statistics(feats_ga_qda_500, k_low, k_high, attributes, classes, ids, "feats_ga_qda_500")
+    compute_statistics(svc_penalized_best_features, k_low, k_high, attributes, classes, ids,
+                       "svc_penalized_best_features")
+    compute_statistics(qda_bottomup_best_features, k_low, k_high, attributes, classes, ids,
+                       "qda_bottomup_best_features")
+    compute_statistics(feats_ga_knn_500[9], k_low, k_high, attributes, classes, ids, "feats_ga_knn_500_9")
+    compute_statistics(feats_bottomup_knn[9], k_low, k_high, attributes, classes, ids, "feats_bottomup_knn_9")
+    compute_statistics(feats_ga_qda_500, k_low, k_high, attributes, classes, ids, "feats_ga_qda_500")
 
 # LogisticRegression, lasso
 # 1

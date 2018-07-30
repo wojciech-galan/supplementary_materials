@@ -100,20 +100,16 @@ if __name__ == '__main__':
     lengths = [len(x) for x in container_of_random_common_features]
     lengths_set = set(lengths)
     print [(x, lengths.count(x)) for x in lengths_set]  # [(0, 985703), (1, 14214), (2, 81), (3, 2)]
-    # import pdb
+
+    # random_keys, random_means, random_stds, data_list = statistics_for_histograms(container_or_random_feature_histograms)
+    # from scipy.stats import ks_2samp
+    # print ks_2samp([x[1] for x in counts], data_list)
     # pdb.set_trace()
-    random_keys, random_means, random_stds, data_list = statistics_for_histograms(container_or_random_feature_histograms)
-    from scipy.stats import ks_2samp
-    print ks_2samp([x[1] for x in counts], data_list)
-    print data_list
-
-    feat_sel_histogram = make_histogram([x[1] for x in counts])
-    print feat_sel_histogram
-    print random_keys, random_means, random_stds
-    plt.bar(np.array(random_keys)+0.4, random_means, yerr=random_stds, alpha=0.5, width=0.5)
-    plt.bar(feat_sel_histogram.keys(), feat_sel_histogram.values(), alpha=0.5, width=0.5)
-    plt.show()
-
-    # co jest istotne?
-    # po 1 sprawdzić ilość cech, która powstałaby po utworzeniu randomowych setów o tej długości
-    # po 2 - które cechy sa istotne? zastanowić się, jak to sprawdzić
+    # print data_list
+    #
+    # feat_sel_histogram = make_histogram([x[1] for x in counts])
+    # print feat_sel_histogram
+    # print random_keys, random_means, random_stds
+    # plt.bar(np.array(random_keys)+0.4, random_means, yerr=random_stds, alpha=0.5, width=0.5)
+    # plt.bar(feat_sel_histogram.keys(), feat_sel_histogram.values(), alpha=0.5, width=0.5)
+    # plt.show()
