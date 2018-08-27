@@ -55,7 +55,7 @@ if __name__ == '__main__':
     best_result = max(svc_RFE_results.items(), key=lambda item: item[1][0])
     svc_RFE_best_features = [i for i, b in enumerate(best_result[1][1].support_) if b]
     svc_RFE_best_C = best_result[1][1].estimator.C
-    trained_svc = train_classifier(SVC(C=svc_RFE_best_C), attributes_all, classes_all, svc_RFE_best_features)
+    trained_svc = train_classifier(SVC(C=svc_RFE_best_C, probability=True), attributes_all, classes_all, svc_RFE_best_features)
     joblib.dump(trained_svc, os.path.join('..', 'datasets', 'classifier_svc.pkl'))
     print_feature_names(features, svc_RFE_best_features)
 
