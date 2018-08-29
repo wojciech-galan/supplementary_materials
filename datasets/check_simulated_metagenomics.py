@@ -140,7 +140,7 @@ except OSError:
 
 for gi in gi_host_map:
     fasta = read_fasta_file(os.path.join(old_dir, gi))
-    write_fastas_to_a_file([fasta], os.path.join(new_dir, gi))
+    write_fastas_to_a_file([fasta], os.path.join(new_dir, gi)) # change seq description to gi
 subprocess.call('cat %s > /tmp/seq' % ' '.join([os.path.join(new_dir, gi) for gi in gi_host_map]), shell=True)
 
 evaluation_results = {}
