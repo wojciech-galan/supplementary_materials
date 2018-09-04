@@ -9,10 +9,9 @@ import urllib2
 import socket
 import subprocess
 from Bio import Entrez
-from viral_seq_fetcher.src.SeqContainer import Container
-from viral_seq_fetcher import src
 
 NUMBER_TO_ACID = {1:'dna', 0:'rna'}
+
 
 def download_fasta(directory, gi):
     path = os.path.join(directory, gi)
@@ -49,6 +48,8 @@ class Result(object):
         self.id = gi
 
 if __name__ == '__main__':
+    from viral_seq_fetcher.src.SeqContainer import Container
+    from viral_seq_fetcher import src
     container_old = Container.fromFile(os.path.join('..', 'datasets', 'container_Fri_Oct__6_14:26:35_2017.dump'))
     with_host_old = [v for v in container_old if v.host_lineage]
     ids_old = [v.gi for v in with_host_old]
