@@ -144,8 +144,8 @@ for gi in gi_host_map:
 subprocess.call('cat %s > /tmp/seq' % ' '.join([os.path.join(new_dir, gi) for gi in gi_host_map]), shell=True)
 
 evaluation_results = {}
-for length in (100, 250, 500):
-    for error_rate in (0, 0.02):
+for length in (1000, ):
+    for error_rate in (0, ):
         simulated_seq_path = 'blah_%f_%d.fastq'%(error_rate, length)
         if not os.path.exists(simulated_seq_path):
             cmd = 'wgsim /tmp/seq %s /dev/null -h -e %f -S 77 -d 0 -1 %d -N 100000'%(simulated_seq_path, error_rate, length)
@@ -156,4 +156,4 @@ for length in (100, 250, 500):
         print "starting classifier evaluation"
         results = Parallel(n_jobs=6)(delayed(predict_based_on_fasta_file)(fasta_seq=fasta, fasta_dir=fasta_dir, gi_molecule=gi_molecule_map, gi_host=gi_host_map, i=i) for i, fasta in enumerate(fastas))
         evaluation_results[(length, error_rate)] = [Result(result[0], result[1], result[2], result[3], result[4], result[5]) for result in results]
-        pickle.dump(evaluation_results, open(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_%.1f_%d.dump'%(error_rate, length)), 'w'))
+        pickle.dump(evaluation_results[(length, error_rate)], open(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_%.1f_%d.dump'%(error_rate, length)), 'w'))

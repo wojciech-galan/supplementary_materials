@@ -35,9 +35,9 @@ def compute_fpr_tpr_auc_mcc(proper, predicted):
     return fpr, tpr, auc, mcc
 
 
-def get_len_and_err_rate(regex, string):
+def get_err_rate_and_len_rate(regex, string):
     error_rate, length = re.findall(regex, string)[0]
-    return int(length), float(error_rate)
+    return float(error_rate), int(length)
 
 
 def get_proper_and_predicted_lr_svm_knn_qda(result_iterable):
@@ -64,26 +64,38 @@ def plot_results_in_one_subplot(subplot_obj, title, fpr_lr, tpr_lr, auc_lr, fpr_
     subplot_obj.set_xlabel('False Positive Rate')
 
 
-def comparator(a, b):pass
+def comparator(a, b):
+    if a[1][1] != b[1][1]:
+        return a[1][1] - b[1][1]
+    else:
+        return int(100*(a[1][0] - b[1][0]))
+
+
+def sort_paths(paths, regex):
+    d = {path: get_err_rate_and_len_rate(regex, path) for path in paths}
+    return [x[0] for x in sorted(d.items(), cmp=comparator)]
 
 
 if __name__ == '__main__':
-    num_of_columns = 3
-    num_of_rows = 3
-    f, axarr = plt.subplots(num_of_rows, num_of_columns, figsize=(20, 20))
-    #plt.show()
+    num_of_columns = 2
+    num_of_rows = 4
+    f, axarr = plt.subplots(num_of_rows, num_of_columns, figsize=(15, 25))
     re_path = os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_(.+)_(\d+).dump')
-    for i, path in enumerate(glob.glob(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_*'))):
-        length, error_rate = get_len_and_err_rate(re_path, path)
+    print sort_paths(glob.glob(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_*')), re_path)
+    for i, path in enumerate(sort_paths(glob.glob(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_*')), re_path)):
+        error_rate, length = get_err_rate_and_len_rate(re_path, path)
         print error_rate, length
         fpr_lr, tpr_lr, auc_lr, fpr_svm, tpr_svm, auc_svm, fpr_knn, tpr_knn, auc_knn, fpr_qda, tpr_qda, auc_qda = process_result_file(
             path)
+        print i / num_of_columns, i % num_of_columns
         plot_results_in_one_subplot(axarr[i / num_of_columns, i % num_of_columns],
                                     'Sequence length = %d, error rate = %.2f' % (length, error_rate), fpr_lr, tpr_lr,
                                     auc_lr, fpr_svm, tpr_svm, auc_svm, fpr_knn, tpr_knn, auc_knn, fpr_qda, tpr_qda,
                                     auc_qda)
     plt.setp([a.get_yticklabels() for a in axarr[:, 1]], visible=False)
-    plt.setp([a.get_yticklabels() for a in axarr[:, 2]], visible=False)
+    #plt.setp([a.get_yticklabels() for a in axarr[:, 2]], visible=False)
+    plt.setp([a.get_xticklabels() for a in axarr[2, :]], visible=False)
     plt.setp([a.get_xticklabels() for a in axarr[1, :]], visible=False)
     plt.setp([a.get_xticklabels() for a in axarr[0, :]], visible=False)
+    axarr[-1, -1].axis('off')
     plt.savefig(os.path.join('..', 'figures', 'check_simmulated_metagenomics.svg'), bbox_inches='tight')
