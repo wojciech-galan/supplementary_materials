@@ -8,6 +8,7 @@ import subprocess
 from joblib import Parallel, delayed
 from viral_seq_fetcher.src.SeqContainer import Container
 from viral_seq_fetcher import src
+from lib import write_fastas_to_a_file, read_fasta_file, read_fastq_file, fastq_to_fasta
 
 NUMBER_TO_ACID = {1:'dna', 0:'rna'}
 
@@ -21,75 +22,6 @@ class Result(object):
         self.proper = proper
         self.id = gi
 
-
-class AbstractSequence(object):
-    def __init__(self, seq):
-        super(AbstractSequence, self).__init__()
-        self.seq = seq.strip()
-
-    def __len__(self):
-        return len(self.seq)
-
-    def __contains__(self, item):
-        return item.seq in self.seq
-
-    def __bool__(self):
-        return bool(self.seq)
-
-    def __eq__(self, other):
-        return self.seq == other.seq
-
-    def __hash__(self):
-        return hash(self.seq)
-
-
-class FastQ(AbstractSequence):
-
-    def __init__(self, lines):
-        assert len(lines) == 4
-        super(FastQ, self).__init__(lines[1])
-        self.description = lines[0][1:].split('_')[0]
-        self.quality = lines[3]
-
-
-class Fasta(AbstractSequence):
-
-    def __init__(self, descr, seq):
-        super(Fasta, self).__init__(seq)
-        descr = str(descr)
-        if not descr.startswith('>'):
-            descr = '>' + descr
-        self.description = descr
-
-    def __str__(self):
-        return self.description + '\r\n' + self.seq
-
-
-def read_fastq_file(path):
-    ret_list = []
-    lines = []
-    for line in open(path):
-        lines.append(line.strip())
-        if len(lines) == 4:
-            ret_list.append(FastQ(lines))
-            lines = []
-    return ret_list
-
-
-def write_fastas_to_a_file(fastas, path):
-    with open(path, 'w') as f:
-        f.write('\r\n'.join([str(fasta) for fasta in fastas]))
-        f.write('\r\n')
-
-
-def fastq_to_fasta(fastq_obj):
-    return Fasta(fastq_obj.description, fastq_obj.seq)
-
-
-def read_fasta_file(path):
-    with open(path) as f:
-        f.readline()
-        return Fasta(os.path.basename(path), ''.join(f.readlines()))
 
 def translate_host_to_infecting(host_lineage):
     try:
