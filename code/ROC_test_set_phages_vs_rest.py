@@ -142,39 +142,39 @@ if __name__ == '__main__':
         with open(image_data_path) as f:
             res_dict = pickle.load(f)
 
+    axes_font_size = 16
+    title_font_size = 17
+    legend_font_size = 14
     f, axarr = plt.subplots(2, 2, figsize=(16, 12))
     axarr[0, 0].plot(res_dict['lr_fpr'], res_dict['lr_tpr'], label='LR  AUC = %0.3f' % res_dict['lr_auc'])
     axarr[0, 0].plot(res_dict['lr_lasso_fpr'], res_dict['lr_lasso_tpr'],
                      label='LR_Lasso AUC = %0.3f' % res_dict['lr_lasso_auc'])
     axarr[0, 0].plot([0, 1], [0, 1], 'r--', label='random')
-    axarr[0, 0].set_title('LR')
-    axarr[0, 0].legend(loc='lower right')
+    axarr[0, 0].set_title('LR', fontsize=title_font_size)
+    axarr[0, 0].legend(loc='lower right', fontsize=legend_font_size)
     axarr[0, 0].set_xlim([0, 0.6])
     axarr[0, 0].set_ylim([0.2, 1])
-    axarr[0, 0].set_ylabel('True Positive Rate')
-    axarr[0, 0].set_xlabel('False Positive Rate')
-    axarr[0, 1].set_title('QDA')
+    axarr[0, 0].set_ylabel('True Positive Rate', fontsize=axes_font_size)
+    axarr[0, 1].set_title('QDA', fontsize=title_font_size)
     axarr[0, 1].plot(res_dict['qda_fpr'], res_dict['qda_tpr'], label='QDA AUC = %0.3f' % res_dict['qda_auc'])
     axarr[0, 1].plot(res_dict['qda_bottomup_fpr'], res_dict['qda_bottomup_tpr'],
                      label='QDA_bottom-up AUC = %0.3f' % res_dict['qda_bottomup_auc'])
     axarr[0, 1].plot(res_dict['qda_ga_fpr'], res_dict['qda_ga_tpr'], label='QDA GA AUC = %0.3f' % res_dict['qda_ga_auc'])
     axarr[0, 1].plot([0, 1], [0, 1], 'r--', label='random')
-    axarr[0, 1].legend(loc='lower right')
+    axarr[0, 1].legend(loc='lower right', fontsize=legend_font_size)
     axarr[0, 1].set_xlim([0, 0.9])
     axarr[0, 1].set_ylim([0.2, 1])
-    axarr[0, 1].set_ylabel('True Positive Rate')
-    axarr[0, 1].set_xlabel('False Positive Rate')
-    axarr[1, 0].set_title('kNN')
+    axarr[1, 0].set_title('kNN', fontsize=title_font_size)
     axarr[1, 0].plot(res_dict['knn_fpr'], res_dict['knn_tpr'], label='kNN AUC = %0.3f' % res_dict['knn_auc'])
     axarr[1, 0].plot(res_dict['knn_bottomup_fpr'], res_dict['knn_bottomup_tpr'],
                      label='kNN bottom-up and GA AUC = %0.3f' % res_dict['knn_bottomup_auc'])
     axarr[1, 0].plot([0, 1], [0, 1], 'r--', label='random')
-    axarr[1, 0].legend(loc='lower right')
+    axarr[1, 0].legend(loc='lower right', fontsize=legend_font_size)
     axarr[1, 0].set_xlim([0, 1])
     axarr[1, 0].set_ylim([0, 1])
-    axarr[1, 0].set_ylabel('True Positive Rate')
-    axarr[1, 0].set_xlabel('False Positive Rate')
-    axarr[1, 1].set_title('SVC')
+    axarr[1, 0].set_ylabel('True Positive Rate', fontsize=axes_font_size)
+    axarr[1, 0].set_xlabel('False Positive Rate', fontsize=axes_font_size)
+    axarr[1, 1].set_title('SVC', fontsize=title_font_size)
     axarr[1, 1].plot(res_dict['svc_fpr'], res_dict['svc_tpr'], label='SVC AUC = %0.3f' % res_dict['svc_auc'])
     axarr[1, 1].plot(res_dict['svc_rfe_fpr'], res_dict['svc_rfe_tpr'], label='SVC RFE AUC = %0.3f' % res_dict['svc_rfe_auc'])
     axarr[1, 1].plot(res_dict['svc_kbest_fpr'], res_dict['svc_kbest_tpr'],
@@ -184,11 +184,12 @@ if __name__ == '__main__':
     axarr[1, 1].plot(res_dict['svc_penalized_fpr'], res_dict['svc_penalized_tpr'],
                      label='SVC penalizedSVM AUC = %0.3f' % res_dict['svc_penalized_auc'])
     axarr[1, 1].plot([0, 1], [0, 1], 'r--', label='random')
-    axarr[1, 1].legend(loc='lower right')
+    axarr[1, 1].legend(loc='lower right', fontsize=legend_font_size)
     axarr[1, 1].set_xlim([0, 0.77])
     axarr[1, 1].set_ylim([0, 1])
-    axarr[1, 1].set_ylabel('True Positive Rate')
-    axarr[1, 1].set_xlabel('False Positive Rate')
+    axarr[1, 1].set_xlabel('False Positive Rate', fontsize=axes_font_size)
     # Fine-tune figure; hide y ticks for right plots
     plt.setp([a.get_yticklabels() for a in axarr[:, 1]], visible=False)
+    f.subplots_adjust(wspace=0.06)
+    f.subplots_adjust(hspace=0.13)
     plt.savefig(os.path.join('..', 'figures', 'ROC_test_set_phages_vs_rest.svg'), bbox_inches='tight')
