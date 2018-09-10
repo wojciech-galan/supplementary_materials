@@ -73,3 +73,4 @@ if __name__ == '__main__':
     print "Read %d sequences" % len(fasta_seqs)
     fasta_fragments = create_random_fragments_for_set_of_seqs(fasta_seqs, args.length, args.num_of_fragments, args.substitution_rate, args.possible_bases)
     write_fastas_to_a_file(fasta_fragments, args.outfile)
+    print "Fragments written to", args.outfile

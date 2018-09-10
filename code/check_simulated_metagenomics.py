@@ -9,6 +9,7 @@ from joblib import Parallel, delayed
 from viral_seq_fetcher.src.SeqContainer import Container
 from viral_seq_fetcher import src
 from lib import write_fastas_to_a_file, read_fasta_file, read_fastq_file, fastq_to_fasta
+from my_read_simulator import read_fasta_file as read_multifasta_file
 
 NUMBER_TO_ACID = {1:'dna', 0:'rna'}
 
@@ -76,16 +77,26 @@ if __name__ == '__main__':
     subprocess.call('cat %s > /tmp/seq' % ' '.join([os.path.join(new_dir, gi) for gi in gi_host_map]), shell=True)
 
     evaluation_results = {}
-    for length in (1000, ):
-        for error_rate in (0, ):
-            simulated_seq_path = 'blah_%f_%d.fastq'%(error_rate, length)
+    simulator = 'mysim'
+    for length in (100, 250, 500):
+        for error_rate in (0.02, ):
+            simulated_seq_path = 'blah_mysim_%f_%d.fastq'%(error_rate, length)
             if not os.path.exists(simulated_seq_path):
-                cmd = 'wgsim /tmp/seq %s /dev/null -h -e %f -S 77 -d 0 -1 %d -N 100000'%(simulated_seq_path, error_rate, length)
+                if simulator == 'wgsim':
+                    cmd = 'wgsim /tmp/seq %s /dev/null -h -e %f -S 77 -d 0 -1 %d -N 100000'%(simulated_seq_path, error_rate, length)
+                elif simulator == 'mysim':
+                    cmd = 'python /home/wojtek/PycharmProjects/supplementary_materials/code/my_read_simulator.py /tmp/seq %d 100000 %f %s' %(length, error_rate, simulated_seq_path)
                 print cmd
                 subprocess.call(cmd, shell=True)
-            fastqs = read_fastq_file(simulated_seq_path)
-            fastas = [fastq_to_fasta(fastq) for fastq in fastqs]
+            if simulator == 'wgsim':
+                fastqs = read_fastq_file(simulated_seq_path)
+                fastas = [fastq_to_fasta(fastq) for fastq in fastqs]
+            elif simulator == 'mysim':
+                fastas = read_multifasta_file(simulated_seq_path)
             print "starting classifier evaluation"
-            results = Parallel(n_jobs=6)(delayed(predict_based_on_fasta_file)(fasta_seq=fasta, fasta_dir=fasta_dir, gi_molecule=gi_molecule_map, gi_host=gi_host_map, i=i) for i, fasta in enumerate(fastas))
+            results = Parallel(n_jobs=4)(delayed(predict_based_on_fasta_file)(fasta_seq=fasta, fasta_dir=fasta_dir, gi_molecule=gi_molecule_map, gi_host=gi_host_map, i=i) for i, fasta in enumerate(fastas))
             evaluation_results[(length, error_rate)] = [Result(result[0], result[1], result[2], result[3], result[4], result[5]) for result in results]
-            pickle.dump(evaluation_results[(length, error_rate)], open(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_%.1f_%d.dump'%(error_rate, length)), 'w'))
+            pickle.dump(evaluation_results[(length, error_rate)], open(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_mysim_%.2f_%d.dump'%(error_rate, length)), 'w'))
+            pickle.dump(evaluation_results[(length, error_rate)], open(os.path.join('..', 'datasets',
+                                                                                    'check_simmulated_metagenomics_results_mysim_copy_%.2f_%d.dump' % (
+                                                                                    error_rate, length)), 'w'))
