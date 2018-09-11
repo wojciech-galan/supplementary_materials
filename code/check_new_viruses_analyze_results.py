@@ -60,4 +60,4 @@ if __name__ == '__main__':
     plt.ylim([0, 1])
     plt.ylabel('True Positive Rate')
     plt.xlabel('False Positive Rate')
-    plt.savefig(os.path.join('..', 'figures', 'check_new_viruses_auc.png'), bbox_inches='tight')
+    plt.savefig(os.path.join('..', 'figures', 'check_new_viruses_auc.svg'), bbox_inches='tight')
