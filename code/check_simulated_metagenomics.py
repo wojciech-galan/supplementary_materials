@@ -78,8 +78,8 @@ if __name__ == '__main__':
 
     evaluation_results = {}
     simulator = 'mysim'
-    for length in (100, 250, 500):
-        for error_rate in (0.02, ):
+    for length in (100, 250, 500, 1000, 3000, 10000):
+        for error_rate in (0.00, 0.02):
             simulated_seq_path = 'blah_mysim_%f_%d.fastq'%(error_rate, length)
             if not os.path.exists(simulated_seq_path):
                 if simulator == 'wgsim':
@@ -94,7 +94,7 @@ if __name__ == '__main__':
             elif simulator == 'mysim':
                 fastas = read_multifasta_file(simulated_seq_path)
             print "starting classifier evaluation"
-            results = Parallel(n_jobs=4)(delayed(predict_based_on_fasta_file)(fasta_seq=fasta, fasta_dir=fasta_dir, gi_molecule=gi_molecule_map, gi_host=gi_host_map, i=i) for i, fasta in enumerate(fastas))
+            results = Parallel(n_jobs=8)(delayed(predict_based_on_fasta_file)(fasta_seq=fasta, fasta_dir=fasta_dir, gi_molecule=gi_molecule_map, gi_host=gi_host_map, i=i) for i, fasta in enumerate(fastas))
             evaluation_results[(length, error_rate)] = [Result(result[0], result[1], result[2], result[3], result[4], result[5]) for result in results]
             pickle.dump(evaluation_results[(length, error_rate)], open(os.path.join('..', 'datasets', 'check_simmulated_metagenomics_results_mysim_%.2f_%d.dump'%(error_rate, length)), 'w'))
             pickle.dump(evaluation_results[(length, error_rate)], open(os.path.join('..', 'datasets',
