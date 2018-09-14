@@ -61,6 +61,7 @@ axarr[1].set_title('Substitution rate = 0.02')
 axarr[0].set_ylabel('True Positive Rate', fontsize=axes_label_fontsize)
 axarr[0].set_xlabel('False Positive Rate', fontsize=axes_label_fontsize)
 axarr[1].set_xlabel('False Positive Rate', fontsize=axes_label_fontsize)
+plt.setp(axarr, xticks=lengths, xticklabels=lengths)
 plt.setp(axarr[1].get_yticklabels(), visible=False)
 plt.savefig(os.path.join('..', 'figures', 'check_simmulated_metagenomics_auc_as_a_function_of_len.svg'),
             bbox_inches='tight')
