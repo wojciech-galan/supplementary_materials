@@ -62,9 +62,7 @@ if __name__ == '__main__':
     gi_molecule_map = {v.gi:v.molecule for v in with_proper_host_ineage_diff}
 
     # save the gi list
-    # 1408259612 was removed from the list due to empty sequence
     gi_list = list(gi_host_map)
-    gi_list.remove('1408259612')
     with open(os.path.join('..', 'datasets', 'new_viruses_ids'), 'w') as f:
         f.write(os.linesep.join(gi_list))
 
