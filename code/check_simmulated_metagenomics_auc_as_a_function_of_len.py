@@ -50,10 +50,10 @@ axarr[1].semilogx(lengths, knn_aucs_, '-v', label='kNN')
 axarr[1].semilogx(lengths, qda_aucs_, '-s', label='QDA')
 axarr[1].semilogx([100, 10 ** 4], [0.5, 0.5], 'r--', label='random')
 for x in range(2):
-    axarr[x].set_xlim([90, 10 ** 4])
+    axarr[x].set_xlim([90, 11000])
     axarr[x].set_ylim([0.48, 1])
     axarr[x].legend(loc='upper left', fontsize=12)
-f.subplots_adjust(wspace=0.05)
+f.subplots_adjust(wspace=0.07)
 axes_label_fontsize = 12
 title_fontsize = 14
 axarr[0].set_title('Substitution rate = 0')
