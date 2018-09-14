@@ -50,7 +50,7 @@ def get_proper_and_predicted_lr_svm_knn_qda(result_iterable):
 def plot_results_in_one_subplot(subplot_obj, title, fpr_lr, tpr_lr, auc_lr, fpr_svm, tpr_svm, auc_svm, fpr_knn, tpr_knn,
                                 auc_knn, fpr_qda, tpr_qda, auc_qda):
     subplot_obj.plot(fpr_lr, tpr_lr, label='LR  AUC = %0.3f' % auc_lr)
-    subplot_obj.plot(fpr_svm, tpr_svm, label='SVM AUC = %0.3f' % auc_svm)
+    subplot_obj.plot(fpr_svm, tpr_svm, label='SVC AUC = %0.3f' % auc_svm)
     subplot_obj.plot(fpr_knn, tpr_knn, label='kNN AUC = %0.3f' % auc_knn)
     subplot_obj.plot(fpr_qda, tpr_qda, label='QDA AUC = %0.3f' % auc_qda)
     subplot_obj.plot([0, 1], [0, 1], 'r--', label='random')
