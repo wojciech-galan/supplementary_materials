@@ -100,6 +100,15 @@ if __name__ == '__main__':
     lengths = [len(x) for x in container_of_random_common_features]
     lengths_set = set(lengths)
     print [(x, lengths.count(x)) for x in lengths_set]  # [(0, 917675), (1, 79291), (2, 2965), (3, 67), (4, 2)]
+    plt.hist([0] * 917675 + [1] * 79291 + [2] * 2965 + [3] * 67 + [4] * 2, 4, align='left')  # , log=True)
+    plt.axis([-0.5, 4.5, 0, 1000000])
+    plt.grid(True)
+    print range(0, 1200000, 200000)
+    plt.yticks(range(0, 1200000, 200000), np.array(range(0, 12, 2)) / 10.)
+    plt.ylim([0, 10 ** 6])
+    plt.xlabel('Number of common elements in the intersection')
+    plt.ylabel('Fraction of intersections in each group')
+    plt.savefig(os.path.join('..', 'figures', 'intersections_histogram.svg'), bbox_inches='tight')
 
     # random_keys, random_means, random_stds, data_list = statistics_for_histograms(container_or_random_feature_histograms)
     # from scipy.stats import ks_2samp
