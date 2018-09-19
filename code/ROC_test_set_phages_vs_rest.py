@@ -64,7 +64,7 @@ if __name__ == '__main__':
                                                                                             attributes_test,
                                                                                             classes_learn,
                                                                                             classes_test)
-        save_feature_importances(classifier_lasso.coef_[0], os.path.join('..', 'datasets', 'laso_importances'))
+        save_feature_importances(classifier_lasso.coef_[0], os.path.join('..', 'datasets', 'lasso_importances'))
         # QDA
         qda_fpr, qda_tpr, qda_auc, _ = get_fpr_tpr_auc_classifier_for_classifier_and_feats('QuadraticDiscriminantAnalysis', {},
                                                                              range(num_of_feats),
