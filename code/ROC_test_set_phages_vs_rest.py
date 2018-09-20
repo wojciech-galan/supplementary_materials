@@ -117,7 +117,7 @@ if __name__ == '__main__':
                                                                                          attributes_learn,
                                                                                          attributes_test, classes_learn,
                                                                                          classes_test)
-        save_feature_importances(rfe_classifier.coef_[0], os.path.join('..', 'datasets', 'rfe_importances.csv'))
+        save_feature_importances(rfe_classifier.coef_[0], os.path.join('..', 'datasets', 'rfe_importances'))
         svc_kbest_fpr, svc_kbest_tpr, svc_kbest_auc, kbest_classifier = get_fpr_tpr_auc_classifier_for_classifier_and_feats('SVC', {
             'C': svc_RFE_SelectKBest_C, 'kernel': 'linear', 'probability': True},
                                                                                                svc_SelectKBest_best_features,
@@ -125,7 +125,7 @@ if __name__ == '__main__':
                                                                                                attributes_test,
                                                                                                classes_learn,
                                                                                                classes_test)
-        save_feature_importances(kbest_classifier.coef_[0], os.path.join('..', 'datasets', 'kbest_importances.csv'))
+        save_feature_importances(kbest_classifier.coef_[0], os.path.join('..', 'datasets', 'kbest_importances'))
         svc_biogram_fpr, svc_biogram_tpr, svc_biogram_auc, biogram_classifier = get_fpr_tpr_auc_classifier_for_classifier_and_feats('SVC', {
             'C': svc_biogram_best_c, 'kernel': 'linear', 'probability': True},
                                                                                                      svc_biogram_best_features,
@@ -133,7 +133,7 @@ if __name__ == '__main__':
                                                                                                      attributes_test,
                                                                                                      classes_learn,
                                                                                                      classes_test)
-        save_feature_importances(biogram_classifier.coef_[0], os.path.join('..', 'datasets', 'biogram_importances.csv'))
+        save_feature_importances(biogram_classifier.coef_[0], os.path.join('..', 'datasets', 'biogram_importances'))
         svc_penalized_fpr, svc_penalized_tpr, svc_penalized_auc, penalized_classifier = get_fpr_tpr_auc_classifier_for_classifier_and_feats('SVC', {
             'kernel': 'linear', 'probability': True, 'C': svc_penalized_best_c},
                                                                                                            svc_penalized_best_features,
@@ -141,7 +141,7 @@ if __name__ == '__main__':
                                                                                                            attributes_test,
                                                                                                            classes_learn,
                                                                                                            classes_test)
-        save_feature_importances(penalized_classifier.coef_[0], os.path.join('..', 'datasets', 'penalized_importances.csv'))
+        save_feature_importances(penalized_classifier.coef_[0], os.path.join('..', 'datasets', 'penalized_importances'))
         res_dict = {x: eval(x) for x in
                     'lr_fpr, lr_tpr, lr_auc, lr_lasso_fpr, lr_lasso_tpr, lr_lasso_auc, qda_fpr, qda_tpr, qda_auc, qda_bottomup_fpr, qda_bottomup_tpr, qda_bottomup_auc, qda_ga_fpr, qda_ga_tpr, qda_ga_auc, knn_fpr, knn_tpr, knn_auc, knn_bottomup_fpr, knn_bottomup_tpr, knn_bottomup_auc, knn_ga_fpr, knn_ga_tpr, knn_ga_auc, svc_fpr, svc_tpr, svc_auc, svc_rfe_fpr, svc_rfe_tpr, svc_rfe_auc, svc_kbest_fpr, svc_kbest_tpr, svc_kbest_auc, svc_biogram_fpr, svc_biogram_tpr, svc_biogram_auc, svc_penalized_fpr, svc_penalized_tpr, svc_penalized_auc'.split(
                         ', ')}
