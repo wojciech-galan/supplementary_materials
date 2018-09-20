@@ -189,9 +189,9 @@ if __name__ == '__main__':
     axarr[1, 1].plot(res_dict['svc_kbest_fpr'], res_dict['svc_kbest_tpr'],
                      label='SVC SelectKBest AUC = %0.3f' % res_dict['svc_kbest_auc'])
     axarr[1, 1].plot(res_dict['svc_biogram_fpr'], res_dict['svc_biogram_tpr'],
-                     label='SVC biogram AUC = %0.3f' % res_dict['svc_biogram_auc'])
+                     label='SVC QuiPT AUC = %0.3f' % res_dict['svc_biogram_auc'])
     axarr[1, 1].plot(res_dict['svc_penalized_fpr'], res_dict['svc_penalized_tpr'],
-                     label='SVC penalizedSVM AUC = %0.3f' % res_dict['svc_penalized_auc'])
+                     label='SVC SCAD AUC = %0.3f' % res_dict['svc_penalized_auc'])
     axarr[1, 1].plot([0, 1], [0, 1], 'r--', label='random')
     axarr[1, 1].legend(loc='lower right', fontsize=legend_font_size)
     axarr[1, 1].set_xlim([0, 0.77])
