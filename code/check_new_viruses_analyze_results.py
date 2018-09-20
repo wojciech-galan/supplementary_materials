@@ -44,7 +44,6 @@ if __name__ == '__main__':
     print 'AUC QDA %0.4f, MCC QDA %0.4f' % (
     roc_auc_score(proper, predicted_qda), matthews_corrcoef(proper, binarize([predicted_qda], 0.5)[0]))
 
-    fpr, tpr, threshold = roc_curve(proper, predicted_lr)
     plt.title('Receiver Operating Characteristic')
     fpr, tpr, auc = compute_fpr_tpr_auc(proper, predicted_lr)
     plt.plot(fpr, tpr, label='LR  AUC = %0.3f' % auc)
