@@ -44,14 +44,23 @@ if __name__ == '__main__':
     print 'AUC QDA %0.4f, MCC QDA %0.4f' % (
     roc_auc_score(proper, predicted_qda), matthews_corrcoef(proper, binarize([predicted_qda], 0.5)[0]))
 
+    fpr_tpr_dict = {}
     plt.title('Receiver Operating Characteristic')
     fpr, tpr, auc = compute_fpr_tpr_auc(proper, predicted_lr)
+    fpr_tpr_dict['fpr_lr'] = fpr
+    fpr_tpr_dict['tpr_lr'] = tpr
     plt.plot(fpr, tpr, label='LR  AUC = %0.3f' % auc)
     fpr, tpr, auc = compute_fpr_tpr_auc(proper, predicted_svm)
+    fpr_tpr_dict['fpr_svc'] = fpr
+    fpr_tpr_dict['tpr_svc'] = tpr
     plt.plot(fpr, tpr, label='SVC AUC = %0.3f' % auc)
     fpr, tpr, auc = compute_fpr_tpr_auc(proper, predicted_knn)
+    fpr_tpr_dict['fpr_knn'] = fpr
+    fpr_tpr_dict['tpr_knn'] = tpr
     plt.plot(fpr, tpr, label='kNN AUC = %0.3f' % auc)
     fpr, tpr, auc = compute_fpr_tpr_auc(proper, predicted_qda)
+    fpr_tpr_dict['fpr_qda'] = fpr
+    fpr_tpr_dict['tpr_qda'] = tpr
     plt.plot(fpr, tpr, label='QDA AUC = %0.3f' % auc)
     plt.plot([0, 1], [0, 1], 'r--', label='random')
     plt.legend(loc='lower right')
@@ -60,3 +69,6 @@ if __name__ == '__main__':
     plt.ylabel('True Positive Rate')
     plt.xlabel('False Positive Rate')
     plt.savefig(os.path.join('..', 'figures', 'check_new_viruses_auc.svg'), bbox_inches='tight')
+
+    with open(os.path.join('..', 'datasets', 'new_viruses_fpr_tpr.dump'), 'w') as f:
+        pickle.dump(fpr_tpr_dict, f)
