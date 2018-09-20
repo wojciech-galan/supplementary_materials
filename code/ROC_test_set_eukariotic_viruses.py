@@ -66,6 +66,22 @@ if __name__ == '__main__':
         'SVC', {'kernel': 'linear', 'probability': True, 'C': arthropods_c_svc}, arthropods_feat_ind_svc,
         attributes_learn, attributes_test, transform_classes(classes_learn, 2), transform_classes(classes_test, 2))
 
+    fpr_tpr_dict = {}
+    fpr_tpr_dict['fpr_plants_lr'] = fpr_plants_lr
+    fpr_tpr_dict['tpr_plants_lr'] = tpr_plants_lr
+    fpr_tpr_dict['fpr_plants_svc'] = fpr_plants_svc
+    fpr_tpr_dict['tpr_plants_svc'] = tpr_plants_svc
+    fpr_tpr_dict['fpr_vertebrates_lr'] = fpr_vertebrates_lr
+    fpr_tpr_dict['tpr_vertebrates_lr'] = tpr_vertebrates_lr
+    fpr_tpr_dict['fpr_vertebrates_svc'] = fpr_vertebrates_svc
+    fpr_tpr_dict['tpr_vertebrates_svc'] = tpr_vertebrates_svc
+    fpr_tpr_dict['fpr_arthropods_lr'] = fpr_arthropods_lr
+    fpr_tpr_dict['tpr_arthropods_lr'] = tpr_arthropods_lr
+    fpr_tpr_dict['fpr_arthropods_svc'] = fpr_arthropods_svc
+    fpr_tpr_dict['tpr_arthropods_svc'] = tpr_arthropods_svc
+    with open(os.path.join('..', 'datasets', 'eukaryotic_viruses_fpr_tpr.dump'), 'w') as f:
+        pickle.dump(fpr_tpr_dict, f)
+
     f, axarr = plt.subplots(3, 1, figsize=(6, 12))
     axarr[0].plot(fpr_plants_lr, tpr_plants_lr, label='LR  AUC = %0.3f' % auc_plants_lr)
     axarr[0].plot(fpr_plants_svc, tpr_plants_svc, label='SVC AUC = %0.3f' % auc_plants_svc)

@@ -20,6 +20,9 @@ def get_fpr_tpr_auc_classifier_for_classifier_and_feats(classifier_name, params,
     fpr, tpr, auc = compute_fpr_tpr_auc(y_test, probas[:, 1])
     return fpr, tpr, auc, classifier
 
+def get_fpr_tpr_auc_for_classifier_and_feats(classifier_name, params, features, x_learn, x_test, y_learn, y_test):
+    return get_fpr_tpr_auc_classifier_for_classifier_and_feats(classifier_name, params, features, x_learn, x_test, y_learn, y_test)[:3]
+
 def save_feature_importances(importances, path):
     np.savetxt(path, importances, delimiter=",")
 
