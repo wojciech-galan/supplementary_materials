@@ -9,8 +9,6 @@ These files are python data structures serialized with cPickle library.
 
 	# the code is compatible with python2 and requires numpy
   	import cPickle as pickle
-  	learning_ids = pickle.load(open('learning_ids_ssRNAplus.dump'))
-  	print len(learning_ids)
   	splits = pickle.load(open('splits.dump'))
   	print len(splits) # 10 cross-validation splits
   	print len(splits[0]) # 6 elements of each split: feature vectors belonging to the training (element0) and testing (1) data
