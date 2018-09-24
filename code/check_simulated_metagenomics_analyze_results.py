@@ -129,7 +129,7 @@ if __name__ == '__main__':
         print 'AUC QDA %0.4f, MCC QDA %0.4f' % (auc_qda, mcc_qda)
 
         plot_results_in_one_subplot(axarr[i / num_of_columns, i % num_of_columns],
-                                    'Sequence length = %d, error rate = %.2f' % (length, error_rate), fpr_lr, tpr_lr,
+                                    'Sequence length = %d, substitution rate = %.2f' % (length, error_rate), fpr_lr, tpr_lr,
                                     auc_lr, fpr_svm, tpr_svm, auc_svm, fpr_knn, tpr_knn, auc_knn, fpr_qda, tpr_qda,
                                     auc_qda)
 
