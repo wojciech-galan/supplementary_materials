@@ -112,4 +112,4 @@ if __name__ == '__main__':
     axarr[2].set_xlabel('False Positive Rate')
     plt.setp([a.get_xticklabels() for a in axarr[:-1]], visible=False)
     f.subplots_adjust(hspace=0.14)
-    plt.savefig(os.path.join('..', 'figures', 'ROC_test_set_eukariotic_viruses.svg'), bbox_inches='tight')
+    plt.savefig(os.path.join('..', 'figures', 'ROC_test_set_eukariotic_viruses.eps'), bbox_inches='tight')

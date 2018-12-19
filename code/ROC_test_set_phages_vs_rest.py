@@ -204,4 +204,4 @@ if __name__ == '__main__':
     plt.setp([a.get_yticklabels() for a in axarr[:, 1]], visible=False)
     f.subplots_adjust(wspace=0.06)
     f.subplots_adjust(hspace=0.13)
-    plt.savefig(os.path.join('..', 'figures', 'ROC_test_set_phages_vs_rest.svg'), bbox_inches='tight')
+    plt.savefig(os.path.join('..', 'figures', 'ROC_test_set_phages_vs_rest.eps'), bbox_inches='tight')

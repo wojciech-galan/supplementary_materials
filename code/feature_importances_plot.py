@@ -72,5 +72,5 @@ plt.ylim(bottom=-1.5)
 plt.xlabel("Feature weights set1")
 plt.ylabel("Feature weights set2")
 plt.title("Correlation between feature weights")
-plt.savefig(os.path.join('..', 'figures', 'correlation_between_feature_sets.svg'), bbox_inches='tight')
+plt.savefig(os.path.join('..', 'figures', 'correlation_between_feature_sets.eps'), bbox_inches='tight')
 # cross on the figure centered at (0, 0) is an effect of some feature importances after feature selection being set to 0
