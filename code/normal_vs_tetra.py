@@ -15,7 +15,7 @@ attributes_test_tetra = pickle.load(open(os.path.join('..', 'datasets', 'attribu
 
 classes_learn = pickle.load(open(os.path.join('..', 'datasets', 'classes_learn.dump')))
 classes_test = pickle.load(open(os.path.join('..', 'datasets', 'classes_test.dump')))
-print attributes_learn.shape
+print attributes_learn.shape, attributes_learn_tetra.shape
 indices = pickle.load(open(os.path.join('..', 'datasets', 'cv_indices.dump')))
 
 svc_clf = SVC(probability=True)
