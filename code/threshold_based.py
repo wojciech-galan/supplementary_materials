@@ -3,6 +3,7 @@
 
 import os
 import sys
+import subprocess
 import cPickle as pickle
 import matplotlib.pyplot as plt
 from check_new_viruses_analyze_results import compute_fpr_tpr_auc
@@ -10,7 +11,8 @@ from check_new_viruses import download_fasta
 from check_new_viruses import translate_host_to_infecting
 from check_new_viruses import NUMBER_TO_ACID
 from check_new_viruses_analyze_results import CLASS_TO_NUM
-from lib import write_fastas_to_a_file
+from lib import write_fastas_to_a_file, read_fasta_file
+from my_read_simulator import read_fasta_file as read_multifasta_file
 
 
 class ThresholdBasedClassifier(object):
@@ -59,6 +61,14 @@ def get_diff_between_two_viral_containers(newer_cont_path, older_cont_path):
     return with_proper_host_lineage_diff
 
 
+def description_to_gi(fasta):
+    '''
+    Transforms fasta description in form >gi to gi
+    :param fasta:
+    :return:
+    '''
+    return fasta.description.replace('>','')
+
 if __name__ == '__main__':
     # evaluation on test set
     attributes_learn = pickle.load(open(os.path.join('..', 'datasets', 'attributes_learn.dump')))
@@ -89,7 +99,7 @@ if __name__ == '__main__':
                                                    'check_simulated_metagenomics_threshold_based_results.dump')
     try:
         with open(simulated_metagenomics_res_name) as f:
-            fpr_simulated, tpr_simulated, auc_simulated = pickle.load(f)
+            res_simulated = pickle.load(f)
     except IOError:
         with_proper_host_lineage_diff = get_diff_between_two_viral_containers(
             os.path.join('..', 'datasets', 'container_Mon_Aug_27_16:51:14_2018.dump'),
@@ -115,13 +125,22 @@ if __name__ == '__main__':
         subprocess.call('cat %s > /tmp/seq' % ' '.join([os.path.join(new_dir, gi) for gi in gi_host_map]), shell=True)
 
         evaluation_results = {}
-        simulator = 'mysim'
         for length in (100, 250, 500, 1000, 3000, 10000):
-            for error_rate in (0.00, 0.02):
-                simulated_seq_path = 'blah_mysim_%f_%d.fastq' % (error_rate, length)
-                if not os.path.exists(simulated_seq_path):
-                    cmd = 'python /home/wojtek/PycharmProjects/supplementary_materials/code/my_read_simulator.py /tmp/seq %d 100000 %f %s' % (
-                            length, error_rate, simulated_seq_path)
-                    print cmd
-                    subprocess.call(cmd, shell=True)
-                fastas = read_multifasta_file(simulated_seq_path)
+            print length
+            simulated_seq_path = 'blah_mysim_%f_%d.fastq' % (0, length)
+            if not os.path.exists(simulated_seq_path):
+                cmd = 'python /home/wojtek/PycharmProjects/supplementary_materials/code/my_read_simulator.py /tmp/seq %d 100000 0 %s' % (
+                        length, simulated_seq_path)
+                print cmd
+                subprocess.call(cmd, shell=True)
+            fastas = read_multifasta_file(simulated_seq_path)
+            for fasta in fastas:
+                gi = fasta.description.replace('>', '')
+            proper_results = [CLASS_TO_NUM[gi_host_map[description_to_gi(fasta)]] for fasta in fastas]
+            results = [gi_molecule_map[description_to_gi(fasta)] for fasta in fastas]
+            fpr_simulated, tpr_simulated, auc_simulated = compute_fpr_tpr_auc(proper_results, results)
+            print auc_simulated
+            evaluation_results[length] = {'fpr':fpr_simulated,'tpr':tpr_simulated, 'auc':auc_simulated}
+        with open(simulated_metagenomics_res_name, 'w') as f:
+            pickle.dump(evaluation_results,f)
+
