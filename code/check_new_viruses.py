@@ -83,9 +83,10 @@ if __name__ == '__main__':
     command = 'viruses_classifier %s --nucleic_acid %s --classifier %s --probas'
     seq_directory = '/home/wojtek/PycharmProjects/Viral_feature_extractor/viral_seq_fetcher/files/sequences/'
     results = []
+    temp_dir = '/tmp/seqs'
+    os.makedirs(temp_dir)
     for i, v in enumerate(with_proper_host_ineage_diff):
         if not i%10: print i, 'Processed'
-        temp_dir = '/tmp/seqs'
         proper_result = translate_host_to_infecting(v.host_lineage)
         #print "Proper result for", v.gi, proper_result
         f_name = download_fasta(temp_dir, v.gi)
