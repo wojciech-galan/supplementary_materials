@@ -181,4 +181,24 @@ if __name__ == '__main__':
         with open(simulated_metagenomics_confusion_matrices_name,'w') as f:
             pickle.dump(simulated_metagenomics_confusion_matrices, f)
 
-
+    # plots
+    f, axarr = plt.subplots(1, 2)
+    axarr[0].plot(tb_fpr, tb_tpr, label='nucleic acid - based classifier AUC = %0.3f' % tb_auc)
+    axarr[1].plot(fpr_new_viruses, tpr_new_viruses, label='nucleic acid - based classifier AUC = %0.3f' % auc_new_viruses)
+    for x in range(2):
+        axarr[x].plot([0, 1], [0, 1], 'r--', label='random')
+        #axarr[x].set_title(title, fontsize=15)
+        axarr[x].legend(loc='lower right', fontsize=10)
+        axarr[x].set_xlim([0, 1])
+        axarr[x].set_ylim([0, 1])
+    plt.setp(axarr[1].get_yticklabels(), visible=False)
+    f.subplots_adjust(wspace=0.05)
+    axes_label_fontsize = 10
+    title_label_fontsize = 12
+    axarr[0].set_ylabel('True Positive Rate', fontsize=axes_label_fontsize)
+    axarr[0].set_xlabel('False Positive Rate', fontsize=axes_label_fontsize)
+    axarr[1].set_xlabel('False Positive Rate', fontsize=axes_label_fontsize)
+    axarr[0].set_title('AUC measured on test set', fontsize=title_label_fontsize)
+    axarr[1].set_title('AUC measured on new viruses', fontsize=title_label_fontsize)
+    plt.show()
+    f, axarr = plt.subplots(3, 2)
