@@ -6,10 +6,9 @@ import sys
 import subprocess
 import cPickle as pickle
 import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
 from check_new_viruses_analyze_results import compute_fpr_tpr_auc
-from check_new_viruses import download_fasta
 from check_new_viruses import translate_host_to_infecting
-from check_new_viruses import NUMBER_TO_ACID
 from check_new_viruses_analyze_results import CLASS_TO_NUM
 from lib import write_fastas_to_a_file, read_fasta_file
 from my_read_simulator import read_fasta_file as read_multifasta_file
@@ -67,7 +66,24 @@ def description_to_gi(fasta):
     :param fasta:
     :return:
     '''
-    return fasta.description.replace('>','')
+    return fasta.description.replace('>', '')
+
+
+def get_tp_tn_fp_fn(proper_dict, predicted_dict):
+    # dicts are in form gi:class
+    tp, tn, fp, fn = [],[], [], []
+    for k, proper_val in proper_dict.iteritems():
+        predicted_val = predicted_dict[k]
+        if proper_val == 1 and predicted_val == 1:
+            tp.append(k)
+        elif proper_val == 0 and predicted_val == 0:
+            tn.append(k)
+        elif proper_val == 1 and predicted_val == 0:
+            fn.append(k)
+        elif proper_val == 0 and predicted_val == 1:
+            fp.append(k)
+    return tp, tn, fp, fn
+
 
 if __name__ == '__main__':
     # evaluation on test set
@@ -97,15 +113,20 @@ if __name__ == '__main__':
     # evaluation on simulated subsequences
     simulated_metagenomics_res_name = os.path.join('..', 'datasets',
                                                    'check_simulated_metagenomics_threshold_based_results.dump')
+    simulated_metagenomics_confusion_matrices_name = os.path.join('..', 'datasets',
+                                                                  'check_simulated_metagenomics_threshold_based_confusion-matrices.dump')
     try:
         with open(simulated_metagenomics_res_name) as f:
             res_simulated = pickle.load(f)
+        with open(simulated_metagenomics_confusion_matrices_name) as f:
+            simulated_metagenomics_confusion_matrices = pickle.load(f)
     except IOError:
         with_proper_host_lineage_diff = get_diff_between_two_viral_containers(
             os.path.join('..', 'datasets', 'container_Mon_Aug_27_16:51:14_2018.dump'),
             os.path.join('..', 'datasets', 'container_Fri_Oct__6_14:26:35_2017.dump'))
         gi_host_map = {v.gi: translate_host_to_infecting(v.host_lineage) for v in with_proper_host_lineage_diff}
         gi_molecule_map = {v.gi: v.molecule for v in with_proper_host_lineage_diff}
+        gi_len_map = {v.gi: v.length for v in with_proper_host_lineage_diff}
         # assuming, that fasta sequences are stored in /tmp/seqs
         old_dir = '/tmp/seqs'
         new_dir = '/tmp/seqs2'
@@ -124,13 +145,15 @@ if __name__ == '__main__':
             write_fastas_to_a_file([fasta], os.path.join(new_dir, gi))  # change seq description to gi
         subprocess.call('cat %s > /tmp/seq' % ' '.join([os.path.join(new_dir, gi) for gi in gi_host_map]), shell=True)
 
-        evaluation_results = {}
-        for length in (100, 250, 500, 1000, 3000, 10000):
+        res_simulated = {}
+        simulated_metagenomics_confusion_matrices = {}
+
+        for i, length in enumerate([100, 250, 500, 1000, 3000, 10000]):
             print length
-            simulated_seq_path = 'blah_mysim_%f_%d.fastq' % (0, length)
+            simulated_seq_path = '/tmp/blah_mysim_%f_%d.fastq' % (0, length)
             if not os.path.exists(simulated_seq_path):
                 cmd = 'python /home/wojtek/PycharmProjects/supplementary_materials/code/my_read_simulator.py /tmp/seq %d 100000 0 %s' % (
-                        length, simulated_seq_path)
+                    length, simulated_seq_path)
                 print cmd
                 subprocess.call(cmd, shell=True)
             fastas = read_multifasta_file(simulated_seq_path)
@@ -140,7 +163,22 @@ if __name__ == '__main__':
             results = [gi_molecule_map[description_to_gi(fasta)] for fasta in fastas]
             fpr_simulated, tpr_simulated, auc_simulated = compute_fpr_tpr_auc(proper_results, results)
             print auc_simulated
-            evaluation_results[length] = {'fpr':fpr_simulated,'tpr':tpr_simulated, 'auc':auc_simulated}
+            # proper_res_dict = {description_to_gi(fasta): CLASS_TO_NUM[gi_host_map[description_to_gi(fasta)]] for fasta
+            #                    in fastas}
+            # res_dict = {description_to_gi(fasta): gi_molecule_map[description_to_gi(fasta)] for fasta in fastas}
+            # tp, tn, fp, fn = get_tp_tn_fp_fn(resu, proper_res_dict)
+            #_, _, auc_dict = compute_fpr_tpr_auc(proper_res_dict.values(), res_dict.values())
+
+
+            #print auc_dict
+            print confusion_matrix(proper_results, results)
+            #print confusion_matrix(proper_res_dict.values(), res_dict.values())
+            res_simulated[length] = {'fpr': fpr_simulated, 'tpr': tpr_simulated, 'auc': auc_simulated}
+            simulated_metagenomics_confusion_matrices[length] = confusion_matrix(proper_results, results)
+            # axarr[i].hist()
         with open(simulated_metagenomics_res_name, 'w') as f:
-            pickle.dump(evaluation_results,f)
+            pickle.dump(res_simulated, f)
+        with open(simulated_metagenomics_confusion_matrices_name,'w') as f:
+            pickle.dump(simulated_metagenomics_confusion_matrices, f)
+
 
