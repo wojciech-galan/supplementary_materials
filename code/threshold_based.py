@@ -188,17 +188,17 @@ if __name__ == '__main__':
     for x in range(2):
         axarr[x].plot([0, 1], [0, 1], 'r--', label='random')
         #axarr[x].set_title(title, fontsize=15)
-        axarr[x].legend(loc='lower right', fontsize=10)
+        axarr[x].legend(loc='lower right', fontsize=6)
         axarr[x].set_xlim([0, 1])
         axarr[x].set_ylim([0, 1])
     plt.setp(axarr[1].get_yticklabels(), visible=False)
-    f.subplots_adjust(wspace=0.05)
-    axes_label_fontsize = 10
-    title_label_fontsize = 12
+    f.subplots_adjust(wspace=0.1)
+    axes_label_fontsize = 9
+    title_label_fontsize = 11
     axarr[0].set_ylabel('True Positive Rate', fontsize=axes_label_fontsize)
     axarr[0].set_xlabel('False Positive Rate', fontsize=axes_label_fontsize)
     axarr[1].set_xlabel('False Positive Rate', fontsize=axes_label_fontsize)
     axarr[0].set_title('AUC measured on test set', fontsize=title_label_fontsize)
     axarr[1].set_title('AUC measured on new viruses', fontsize=title_label_fontsize)
-    plt.show()
-    f, axarr = plt.subplots(3, 2)
+    plt.savefig(os.path.join('..', 'figures', 'nucleic_acid_based.eps'), bbox_inches='tight')
+    f, axarr = plt.subplots(6, 2)
