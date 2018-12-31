@@ -4,6 +4,7 @@
 import os
 import sys
 import subprocess
+import itertools
 import cPickle as pickle
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix
@@ -201,4 +202,30 @@ if __name__ == '__main__':
     axarr[0].set_title('AUC measured on test set', fontsize=title_label_fontsize)
     axarr[1].set_title('AUC measured on new viruses', fontsize=title_label_fontsize)
     plt.savefig(os.path.join('..', 'figures', 'nucleic_acid_based.eps'), bbox_inches='tight')
-    f, axarr = plt.subplots(6, 2)
+    ticks = ('eukaryotic v.', 'phage')
+    f, axarr = plt.subplots(6, 2, gridspec_kw = {'width_ratios':[5, 2]})
+    label_size = 10
+    for i, length in enumerate([100, 250, 500, 1000, 3000, 10000]):
+        axarr[i, 0].plot(res_simulated[length]['fpr'], res_simulated[length]['tpr'], label='nucleic acid - based classifier AUC = %0.3f' % res_simulated[length]['auc'])
+        axarr[i, 0].plot([0, 1], [0, 1], 'r--', label='random')
+        axarr[i, 0].legend(loc='lower right', fontsize=7)
+        axarr[i, 0].set_xlim([0, 1])
+        axarr[i, 0].set_ylim([0, 1])
+        cm = simulated_metagenomics_confusion_matrices[length]
+        conf_matrix_plot = axarr[i, 1].imshow(cm, cmap=plt.cm.Blues)
+        axarr[i, 1].set_yticks(range(len(ticks)))
+        axarr[i, 1].set_yticklabels(ticks)
+        axarr[i, 1].set_ylabel('Proper', size=label_size)
+        for k, l in itertools.product(range(2), range(2)):
+            axarr[i, 1].text(l, k, format(cm[k, l], 'd'), horizontalalignment="center", size=7, color="white" if cm[k, l] > 20000 else "black")
+        f.colorbar(conf_matrix_plot, ax=axarr[i, 1])
+        axarr[i, 0].text(1.1, 1.05, 'Sequence length = %d' % length, horizontalalignment='right', size=9)
+    axarr[-1, 1].set_xticks(range(len(ticks)))
+    axarr[-1, 1].set_xticklabels(ticks, rotation=45)
+    axarr[-1, 1].set_xlabel('Predicted', size=label_size)
+    #[tick in ax.xaxis.get_major_ticks()
+    plt.setp([axarr[i, j].get_xticklabels() for i in range(5) for j in range(2)], visible=False)
+    f.subplots_adjust(hspace=0.25)
+    f.subplots_adjust(wspace=0.5)
+    f.set_size_inches(9, 15)
+    plt.savefig(os.path.join('..', 'figures', 'nucleic_acid_based_simulated.eps'), bbox_inches='tight')
