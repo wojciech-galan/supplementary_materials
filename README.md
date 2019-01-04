@@ -18,4 +18,5 @@ These files are python data structures serialized with cPickle library.
 
 Citation
 --------
-# TODO
+.. image:: https://zenodo.org/badge/70039462.svg
+   :target: https://zenodo.org/badge/latestdoi/70039462
