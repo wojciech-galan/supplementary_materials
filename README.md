@@ -10,3 +10,8 @@ If you'd like to reffer to stable version of the repository, you can use DOI bel
 
 .. image:: https://zenodo.org/badge/69867059.svg
    :target: https://zenodo.org/badge/latestdoi/69867059
+
+Questions/comments?
+-------------------
+
+Contact me via e-mail  wojciech.galan at gmail.com
