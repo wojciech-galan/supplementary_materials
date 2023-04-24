@@ -1,4 +1,8 @@
-numpy==1.8.2
+numpy==1.13.3
 scipy==0.13.3
 scikit-learn==0.19.2
 matplotlib==2.2.5
+json-tricks==3.16.1
+biopython==1.76
+deap==1.2.2
+psutil==5.9.5
