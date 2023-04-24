@@ -21,6 +21,27 @@ class Res(object):
         self.qda_mcc = float(qda_res[1])
 
 
+def create_basic_image(random_label):
+    f, axarr = plt.subplots(1, 2, figsize=(10, 5))
+    axarr[0].semilogx(lengths, lr_aucs, '-o', label='LR')
+    axarr[0].semilogx(lengths, svm_aucs, '-x', label='SVC')
+    axarr[0].semilogx(lengths, knn_aucs, '-v', label='kNN')
+    axarr[0].semilogx(lengths, qda_aucs, '-s', label='QDA')
+    axarr[0].semilogx([100, 10 ** 4], [0.5, 0.5], 'r--', label=random_label)
+    axarr[1].semilogx(lengths, lr_aucs_, '-o', label='LR')
+    axarr[1].semilogx(lengths, svm_aucs_, '-x', label='SVC')
+    axarr[1].semilogx(lengths, knn_aucs_, '-v', label='kNN')
+    axarr[1].semilogx(lengths, qda_aucs_, '-s', label='QDA')
+    axarr[1].semilogx([100, 10 ** 4], [0.5, 0.5], 'r--', label=random_label)
+    axarr[0].set_ylabel('AUC', fontsize=axes_label_fontsize)
+    for x in range(2):
+        axarr[x].set_xlim([90, 11000])
+        axarr[x].set_ylim([0.48, 1])
+        axarr[x].legend(loc='upper left', fontsize=12)
+    f.subplots_adjust(wspace=0.07)
+    return f, axarr
+
+
 simulated_metagenomics_all_results_path = os.path.join('..', 'datasets', 'results_for_stimulated_metagenomics.json')
 with open(simulated_metagenomics_all_results_path) as handle:
     res_dict = {eval(key): value for key, value in json_tricks.load(handle).iteritems()}
@@ -38,30 +59,26 @@ svm_aucs_ = [r.svm_auc for r in results if r.error != 0]
 knn_aucs_ = [r.knn_auc for r in results if r.error != 0]
 qda_aucs_ = [r.qda_auc for r in results if r.error != 0]
 lengths = [r.length for r in results if r.error == 0]
-f, axarr = plt.subplots(1, 2, figsize=(10, 5))
-axarr[0].semilogx(lengths, lr_aucs, '-o', label='LR')
-axarr[0].semilogx(lengths, svm_aucs, '-x', label='SVC')
-axarr[0].semilogx(lengths, knn_aucs, '-v', label='kNN')
-axarr[0].semilogx(lengths, qda_aucs, '-s', label='QDA')
-axarr[0].semilogx([100, 10 ** 4], [0.5, 0.5], 'r--', label='random')
-axarr[1].semilogx(lengths, lr_aucs_, '-o', label='LR')
-axarr[1].semilogx(lengths, svm_aucs_, '-x', label='SVC')
-axarr[1].semilogx(lengths, knn_aucs_, '-v', label='kNN')
-axarr[1].semilogx(lengths, qda_aucs_, '-s', label='QDA')
-axarr[1].semilogx([100, 10 ** 4], [0.5, 0.5], 'r--', label='random')
-for x in range(2):
-    axarr[x].set_xlim([90, 11000])
-    axarr[x].set_ylim([0.48, 1])
-    axarr[x].legend(loc='upper left', fontsize=12)
-f.subplots_adjust(wspace=0.07)
+
 axes_label_fontsize = 12
 title_fontsize = 14
+f, axarr = create_basic_image('random')
 axarr[0].set_title('Substitution rate = 0')
 axarr[1].set_title('Substitution rate = 0.02')
-axarr[0].set_ylabel('AUC', fontsize=axes_label_fontsize)
 axarr[0].set_xlabel('Fragment length', fontsize=axes_label_fontsize)
 axarr[1].set_xlabel('Fragment length', fontsize=axes_label_fontsize)
 plt.setp(axarr, xticks=lengths, xticklabels=lengths)
 plt.setp(axarr[1].get_yticklabels(), visible=False)
 plt.savefig(os.path.join('..', 'figures', 'check_simmulated_metagenomics_auc_as_a_function_of_len.eps'),
+            bbox_inches='tight')
+
+# the same as above, but in polish
+f, axarr = create_basic_image('klasyfikator losowy')
+axarr[0].set_title(u'Odsetek podstawionych nukleotydów = 0')
+axarr[1].set_title(u'Odsetek podstawionych nukleotydów = 0.02')
+axarr[0].set_xlabel(u'Długość fragmentu', fontsize=axes_label_fontsize)
+axarr[1].set_xlabel(u'Długość fragmentu', fontsize=axes_label_fontsize)
+plt.setp(axarr, xticks=lengths, xticklabels=lengths)
+plt.setp(axarr[1].get_yticklabels(), visible=False)
+plt.savefig(os.path.join('..', 'figures', 'check_simmulated_metagenomics_auc_as_a_function_of_len_polish.eps'),
             bbox_inches='tight')
