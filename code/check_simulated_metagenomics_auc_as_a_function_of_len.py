@@ -80,5 +80,5 @@ axarr[0].set_xlabel(u'Długość fragmentu', fontsize=axes_label_fontsize)
 axarr[1].set_xlabel(u'Długość fragmentu', fontsize=axes_label_fontsize)
 plt.setp(axarr, xticks=lengths, xticklabels=lengths)
 plt.setp(axarr[1].get_yticklabels(), visible=False)
-plt.savefig(os.path.join('..', 'figures', 'check_simmulated_metagenomics_auc_as_a_function_of_len_polish.eps'),
+plt.savefig(os.path.join('..', 'figures', 'check_simmulated_metagenomics_auc_as_a_function_of_len_polish.png'),
             bbox_inches='tight')
