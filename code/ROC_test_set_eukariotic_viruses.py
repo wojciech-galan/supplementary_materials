@@ -69,16 +69,22 @@ if __name__ == '__main__':
     fpr_tpr_dict = {}
     fpr_tpr_dict['fpr_plants_lr'] = fpr_plants_lr
     fpr_tpr_dict['tpr_plants_lr'] = tpr_plants_lr
+    fpr_tpr_dict['auc_plants_lr'] = auc_plants_lr
     fpr_tpr_dict['fpr_plants_svc'] = fpr_plants_svc
     fpr_tpr_dict['tpr_plants_svc'] = tpr_plants_svc
+    fpr_tpr_dict['auc_plants_svc'] = auc_plants_svc
     fpr_tpr_dict['fpr_vertebrates_lr'] = fpr_vertebrates_lr
     fpr_tpr_dict['tpr_vertebrates_lr'] = tpr_vertebrates_lr
+    fpr_tpr_dict['auc_vertebrates_lr'] = auc_vertebrates_lr
     fpr_tpr_dict['fpr_vertebrates_svc'] = fpr_vertebrates_svc
     fpr_tpr_dict['tpr_vertebrates_svc'] = tpr_vertebrates_svc
+    fpr_tpr_dict['auc_vertebrates_svc'] = auc_vertebrates_svc
     fpr_tpr_dict['fpr_arthropods_lr'] = fpr_arthropods_lr
     fpr_tpr_dict['tpr_arthropods_lr'] = tpr_arthropods_lr
+    fpr_tpr_dict['auc_arthropods_lr'] = auc_arthropods_lr
     fpr_tpr_dict['fpr_arthropods_svc'] = fpr_arthropods_svc
     fpr_tpr_dict['tpr_arthropods_svc'] = tpr_arthropods_svc
+    fpr_tpr_dict['auc_arthropods_svc'] = auc_arthropods_svc
     with open(os.path.join('..', 'datasets', 'eukaryotic_viruses_fpr_tpr.dump'), 'w') as f:
         pickle.dump(fpr_tpr_dict, f)
 
