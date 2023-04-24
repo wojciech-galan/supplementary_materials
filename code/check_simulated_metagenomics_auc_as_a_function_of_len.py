@@ -58,7 +58,7 @@ axes_label_fontsize = 12
 title_fontsize = 14
 axarr[0].set_title('Substitution rate = 0')
 axarr[1].set_title('Substitution rate = 0.02')
-axarr[0].set_ylabel('True Positive Rate', fontsize=axes_label_fontsize)
+axarr[0].set_ylabel('AUC', fontsize=axes_label_fontsize)
 axarr[0].set_xlabel('Fragment length', fontsize=axes_label_fontsize)
 axarr[1].set_xlabel('Fragment length', fontsize=axes_label_fontsize)
 plt.setp(axarr, xticks=lengths, xticklabels=lengths)
