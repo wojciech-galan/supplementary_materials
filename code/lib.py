@@ -7,6 +7,7 @@ import os
 import cPickle as pickle
 from functools import wraps
 from deap import creator
+from sklearn.metrics import roc_curve, roc_auc_score
 
 
 class AbstractSequence(object):
@@ -162,3 +163,9 @@ def timing(f):
         print time.time() - start, "seconds"
         return result
     return wrapper
+
+
+def compute_fpr_tpr_auc(proper, predicted):
+    fpr, tpr, _ = roc_curve(proper, predicted)
+    auc = roc_auc_score(proper, predicted)
+    return fpr, tpr, auc
